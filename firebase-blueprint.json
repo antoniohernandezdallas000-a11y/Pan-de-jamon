@@ -1,0 +1,463 @@
+{
+  "entities": {
+    "Bakery": {
+      "title": "Bakery",
+      "description": "Participating bakery in Ciudad Bolívar competing for El Fucking Mejor Pan de Jamón.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Unique bakery identifier."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Display name of the bakery."
+        },
+        "sector": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80,
+          "description": "Neighborhood or sector in Ciudad Bolívar."
+        },
+        "address": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 200,
+          "description": "Physical address in Ciudad Bolívar."
+        },
+        "masterBaker": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Name of the lead baker or culinary team."
+        },
+        "signatureRecipe": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 280,
+          "description": "Description of the bakery's Pan de Jamón recipe and technique."
+        },
+        "crustStyle": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80,
+          "description": "Style of dough and glaze (e.g., Brioche Melado Papelón, Tradicional Sobado)."
+        },
+        "portalCode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9\\-]+$",
+          "description": "Official competition portal code."
+        },
+        "accentHex": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 16,
+          "description": "Portal signature accent color."
+        },
+        "photoUrl": {
+          "type": "string",
+          "maxLength": 150000,
+          "description": "Firebase Storage URL, compressed data URL, or asset path for the bakery logo or facade."
+        },
+        "totalVotes": {
+          "type": "integer",
+          "description": "Atomically incremented count of verified QR votes."
+        },
+        "sumDoughScore": {
+          "type": "integer",
+          "description": "Cumulative stars (1-5) for Question 1: Masa y Dorado."
+        },
+        "sumFillingScore": {
+          "type": "integer",
+          "description": "Cumulative stars (1-5) for Question 2: Proporción y Calidad del Relleno."
+        },
+        "sumOverallScore": {
+          "type": "integer",
+          "description": "Cumulative stars (1-5) for Question 3: Experiencia Global y Tradición."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last atomic update timestamp."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "sector",
+        "address",
+        "masterBaker",
+        "signatureRecipe",
+        "crustStyle",
+        "portalCode",
+        "accentHex",
+        "photoUrl",
+        "totalVotes",
+        "sumDoughScore",
+        "sumFillingScore",
+        "sumOverallScore",
+        "updatedAt"
+      ]
+    },
+    "QrToken": {
+      "title": "QrToken",
+      "description": "Manipulable and camera-scannable QR voting token issued for a specific bakery in Ciudad Bolívar.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Token document ID and payload code."
+        },
+        "code": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 64,
+          "pattern": "^[A-Z0-9\\-]+$",
+          "description": "Human-readable and QR-encoded token string."
+        },
+        "bakeryId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Target bakery ID."
+        },
+        "bakeryName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Display name of the target bakery."
+        },
+        "batchLabel": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80,
+          "description": "Tasting batch, table number, or box identifier."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paused", "consumed", "revoked"],
+          "description": "Current lifecycle state of the QR token."
+        },
+        "maxUses": {
+          "type": "integer",
+          "description": "Maximum allowed redemptions for this token."
+        },
+        "usedCount": {
+          "type": "integer",
+          "description": "Number of times this token has been redeemed in atomic transactions."
+        },
+        "createdByUid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the creator (admin or bakery manager)."
+        },
+        "consumedByUid": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "UID of the last voter who redeemed this token."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modification or redemption server timestamp."
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "bakeryId",
+        "bakeryName",
+        "batchLabel",
+        "status",
+        "maxUses",
+        "usedCount",
+        "createdByUid",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Vote": {
+      "title": "Vote",
+      "description": "Verified atomic vote and 3-question star survey with comments for a bakery.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Unique vote ID."
+        },
+        "tokenId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "QR token ID used for this vote."
+        },
+        "tokenCode": {
+          "type": "string",
+          "minLength": 6,
+          "maxLength": 64,
+          "description": "QR token code string."
+        },
+        "bakeryId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Voted bakery ID."
+        },
+        "bakeryName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Voted bakery display name."
+        },
+        "voterUid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Authenticated voter UID."
+        },
+        "voterAlias": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80,
+          "description": "Public display name or alias of the voter."
+        },
+        "q1DoughScore": {
+          "type": "integer",
+          "description": "Question 1 star rating (1-5): Equilibrio de Masa y Dorado."
+        },
+        "q2FillingScore": {
+          "type": "integer",
+          "description": "Question 2 star rating (1-5): Proporción y Calidad del Relleno."
+        },
+        "q3OverallScore": {
+          "type": "integer",
+          "description": "Question 3 star rating (1-5): Experiencia Global y Tradición."
+        },
+        "comment": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 500,
+          "description": "Voter tasting notes and review comment."
+        },
+        "evidenceStoragePath": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Optional Firebase Storage path for uploaded bread photo evidence."
+        },
+        "txHash": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128,
+          "description": "Audit verification signature for the atomic transaction."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp."
+        }
+      },
+      "required": [
+        "id",
+        "tokenId",
+        "tokenCode",
+        "bakeryId",
+        "bakeryName",
+        "voterUid",
+        "voterAlias",
+        "q1DoughScore",
+        "q2FillingScore",
+        "q3OverallScore",
+        "comment",
+        "txHash",
+        "createdAt"
+      ]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable security and transaction audit log entry.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Audit log document ID."
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "VOTE_CAST_ATOMIC",
+            "TOKEN_CREATED",
+            "TOKEN_STATUS_UPDATED",
+            "ROLE_CHANGED",
+            "STORAGE_EVIDENCE_VALIDATED",
+            "BAKERY_SEEDED"
+          ],
+          "description": "Audited action type."
+        },
+        "actorUid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "UID of the user who triggered the event."
+        },
+        "actorRole": {
+          "type": "string",
+          "enum": ["voter", "judge", "bakery_manager", "admin"],
+          "description": "Role of the actor at execution time."
+        },
+        "targetId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Target entity ID (vote, token, or bakery)."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 300,
+          "description": "Human-readable audit description."
+        },
+        "integrityHash": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128,
+          "description": "Deterministic integrity hash of the operation."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the event."
+        }
+      },
+      "required": [
+        "id",
+        "action",
+        "actorUid",
+        "actorRole",
+        "targetId",
+        "summary",
+        "integrityHash",
+        "createdAt"
+      ]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Isolated user profile and role assignment record.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Firebase Auth UID."
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "User email address (PII isolated to owner and admin)."
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "User display name."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["voter", "judge", "bakery_manager", "admin"],
+          "description": "Assigned RBAC role."
+        },
+        "assignedBakeryId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Optional bakery ID managed by a bakery_manager."
+        },
+        "votesCastCount": {
+          "type": "integer",
+          "description": "Number of verified votes cast by this user."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation server timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last profile update server timestamp."
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "displayName",
+        "role",
+        "votesCastCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Trusted admin registry document indexed by UID.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "description": "Admin user UID."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Admin assignment timestamp."
+        }
+      },
+      "required": ["uid", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/bakeries/{bakeryId}": {
+      "schema": { "$ref": "#/entities/Bakery" },
+      "description": "Participating bakeries in Ciudad Bolívar and their atomic score counters."
+    },
+    "/qrTokens/{tokenId}": {
+      "schema": { "$ref": "#/entities/QrToken" },
+      "description": "Manipulable QR tokens used to authorize atomic votes."
+    },
+    "/votes/{voteId}": {
+      "schema": { "$ref": "#/entities/Vote" },
+      "description": "Immutable verified votes with 3-question star ratings and comments."
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Append-only audit trail for votes, token manipulations, and storage checks."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private user profiles isolated to the owner and admins."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Trusted admin lookup collection."
+    }
+  }
+}

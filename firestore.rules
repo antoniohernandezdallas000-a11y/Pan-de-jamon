@@ -1,0 +1,350 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net: Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // =========================================================================
+    // Global Hardened Primitives
+    // =========================================================================
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(uid) {
+      return isVerifiedUser() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && (
+        request.auth.token.email == 'restreposolution@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isBakeryManagerOrAdmin() {
+      return isAdmin() || (
+        isVerifiedUser() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['bakery_manager', 'judge', 'admin']
+      );
+    }
+
+    // =========================================================================
+    // Entity Validation Blueprints (Anti-Update-Gap)
+    // =========================================================================
+    function isValidBakery(data) {
+      return data.keys().hasAll([
+        'id', 'name', 'sector', 'address', 'masterBaker', 'signatureRecipe',
+        'crustStyle', 'portalCode', 'accentHex', 'photoUrl',
+        'totalVotes', 'sumDoughScore', 'sumFillingScore', 'sumOverallScore', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'id', 'name', 'sector', 'address', 'masterBaker', 'signatureRecipe',
+        'crustStyle', 'portalCode', 'accentHex', 'photoUrl',
+        'totalVotes', 'sumDoughScore', 'sumFillingScore', 'sumOverallScore', 'updatedAt'
+      ]) &&
+      data.id is string && data.id.size() >= 1 && data.id.size() <= 128 && data.id.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.name is string && data.name.size() >= 2 && data.name.size() <= 120 &&
+      data.sector is string && data.sector.size() >= 2 && data.sector.size() <= 80 &&
+      data.address is string && data.address.size() >= 4 && data.address.size() <= 200 &&
+      data.masterBaker is string && data.masterBaker.size() >= 2 && data.masterBaker.size() <= 100 &&
+      data.signatureRecipe is string && data.signatureRecipe.size() >= 5 && data.signatureRecipe.size() <= 280 &&
+      data.crustStyle is string && data.crustStyle.size() >= 2 && data.crustStyle.size() <= 80 &&
+      data.portalCode is string && data.portalCode.size() >= 3 && data.portalCode.size() <= 32 && data.portalCode.matches('^[A-Z0-9\\-]+$') &&
+      data.accentHex is string && data.accentHex.size() >= 4 && data.accentHex.size() <= 16 &&
+      data.photoUrl is string && data.photoUrl.size() >= 1 && data.photoUrl.size() <= 150000 &&
+      data.totalVotes is int && data.totalVotes >= 0 &&
+      data.sumDoughScore is int && data.sumDoughScore >= 0 &&
+      data.sumFillingScore is int && data.sumFillingScore >= 0 &&
+      data.sumOverallScore is int && data.sumOverallScore >= 0 &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidQrToken(data) {
+      return data.keys().hasAll([
+        'id', 'code', 'bakeryId', 'bakeryName', 'batchLabel', 'status',
+        'maxUses', 'usedCount', 'createdByUid', 'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'id', 'code', 'bakeryId', 'bakeryName', 'batchLabel', 'status',
+        'maxUses', 'usedCount', 'createdByUid', 'consumedByUid', 'createdAt', 'updatedAt'
+      ]) &&
+      data.id is string && data.id.size() >= 1 && data.id.size() <= 128 && data.id.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.code is string && data.code.size() >= 6 && data.code.size() <= 64 && data.code.matches('^[A-Z0-9\\-]+$') &&
+      data.bakeryId is string && data.bakeryId.size() >= 1 && data.bakeryId.size() <= 128 && data.bakeryId.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.bakeryName is string && data.bakeryName.size() >= 2 && data.bakeryName.size() <= 120 &&
+      data.batchLabel is string && data.batchLabel.size() >= 2 && data.batchLabel.size() <= 80 &&
+      data.status is string && data.status.size() <= 16 && data.status in ['active', 'paused', 'consumed', 'revoked'] &&
+      data.maxUses is int && data.maxUses >= 1 && data.maxUses <= 500 &&
+      data.usedCount is int && data.usedCount >= 0 && data.usedCount <= data.maxUses &&
+      data.createdByUid is string && data.createdByUid.size() >= 1 && data.createdByUid.size() <= 128 && data.createdByUid.matches('^[a-zA-Z0-9_\\-]+$') &&
+      (!('consumedByUid' in data) || (data.consumedByUid is string && data.consumedByUid.size() >= 1 && data.consumedByUid.size() <= 128)) &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidVote(data) {
+      return data.keys().hasAll([
+        'id', 'tokenId', 'tokenCode', 'bakeryId', 'bakeryName',
+        'voterUid', 'voterAlias', 'q1DoughScore', 'q2FillingScore', 'q3OverallScore',
+        'comment', 'txHash', 'createdAt'
+      ]) &&
+      data.keys().hasOnly([
+        'id', 'tokenId', 'tokenCode', 'bakeryId', 'bakeryName',
+        'voterUid', 'voterAlias', 'q1DoughScore', 'q2FillingScore', 'q3OverallScore',
+        'comment', 'evidenceStoragePath', 'txHash', 'createdAt'
+      ]) &&
+      data.id is string && data.id.size() >= 1 && data.id.size() <= 128 && data.id.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.tokenId is string && data.tokenId.size() >= 1 && data.tokenId.size() <= 128 && data.tokenId.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.tokenCode is string && data.tokenCode.size() >= 6 && data.tokenCode.size() <= 64 &&
+      data.bakeryId is string && data.bakeryId.size() >= 1 && data.bakeryId.size() <= 128 && data.bakeryId.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.bakeryName is string && data.bakeryName.size() >= 2 && data.bakeryName.size() <= 120 &&
+      data.voterUid is string && data.voterUid.size() >= 1 && data.voterUid.size() <= 128 && data.voterUid.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.voterAlias is string && data.voterAlias.size() >= 2 && data.voterAlias.size() <= 80 &&
+      data.q1DoughScore is int && data.q1DoughScore >= 1 && data.q1DoughScore <= 5 &&
+      data.q2FillingScore is int && data.q2FillingScore >= 1 && data.q2FillingScore <= 5 &&
+      data.q3OverallScore is int && data.q3OverallScore >= 1 && data.q3OverallScore <= 5 &&
+      data.comment is string && data.comment.size() >= 3 && data.comment.size() <= 500 &&
+      (!('evidenceStoragePath' in data) || (data.evidenceStoragePath is string && data.evidenceStoragePath.size() >= 1 && data.evidenceStoragePath.size() <= 300)) &&
+      data.txHash is string && data.txHash.size() >= 8 && data.txHash.size() <= 128 &&
+      data.createdAt is timestamp;
+    }
+
+    function isValidAuditLog(data) {
+      return data.keys().hasAll([
+        'id', 'action', 'actorUid', 'actorRole', 'targetId', 'summary', 'integrityHash', 'createdAt'
+      ]) &&
+      data.keys().hasOnly([
+        'id', 'action', 'actorUid', 'actorRole', 'targetId', 'summary', 'integrityHash', 'createdAt'
+      ]) &&
+      data.id is string && data.id.size() >= 1 && data.id.size() <= 128 && data.id.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.action is string && data.action.size() <= 40 && data.action in [
+        'VOTE_CAST_ATOMIC', 'TOKEN_CREATED', 'TOKEN_STATUS_UPDATED',
+        'ROLE_CHANGED', 'STORAGE_EVIDENCE_VALIDATED', 'BAKERY_SEEDED'
+      ] &&
+      data.actorUid is string && data.actorUid.size() >= 1 && data.actorUid.size() <= 128 && data.actorUid.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.actorRole is string && data.actorRole.size() <= 24 && data.actorRole in ['voter', 'judge', 'bakery_manager', 'admin'] &&
+      data.targetId is string && data.targetId.size() >= 1 && data.targetId.size() <= 128 && data.targetId.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.summary is string && data.summary.size() >= 4 && data.summary.size() <= 300 &&
+      data.integrityHash is string && data.integrityHash.size() >= 8 && data.integrityHash.size() <= 128 &&
+      data.createdAt is timestamp;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll([
+        'uid', 'email', 'displayName', 'role', 'votesCastCount', 'createdAt', 'updatedAt'
+      ]) &&
+      data.keys().hasOnly([
+        'uid', 'email', 'displayName', 'role', 'assignedBakeryId', 'votesCastCount', 'createdAt', 'updatedAt'
+      ]) &&
+      data.uid is string && data.uid.size() >= 1 && data.uid.size() <= 128 && data.uid.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.email is string && data.email.size() >= 3 && data.email.size() <= 200 &&
+      data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 100 &&
+      data.role is string && data.role.size() <= 24 && data.role in ['voter', 'judge', 'bakery_manager', 'admin'] &&
+      (!('assignedBakeryId' in data) || (data.assignedBakeryId is string && data.assignedBakeryId.size() >= 1 && data.assignedBakeryId.size() <= 128)) &&
+      data.votesCastCount is int && data.votesCastCount >= 0 &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidAdminRecord(data) {
+      return data.keys().hasAll(['uid', 'createdAt']) &&
+      data.keys().hasOnly(['uid', 'createdAt']) &&
+      data.uid is string && data.uid.size() >= 1 && data.uid.size() <= 128 && data.uid.matches('^[a-zA-Z0-9_\\-]+$') &&
+      data.createdAt is timestamp;
+    }
+
+    // =========================================================================
+    // Collection Rules
+    // =========================================================================
+
+    match /bakeries/{bakeryId} {
+      allow get: if isValidId(bakeryId);
+      allow list: if resource.data.totalVotes >= 0;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(bakeryId) &&
+        isValidBakery(incoming()) &&
+        incoming().id == bakeryId &&
+        incoming().updatedAt == request.time &&
+        isAdmin();
+
+      allow update: if isVerifiedUser() &&
+        isValidId(bakeryId) &&
+        isValidBakery(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().portalCode == existing().portalCode &&
+        incoming().updatedAt == request.time && (
+          isAdmin() ||
+          (
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'totalVotes', 'sumDoughScore', 'sumFillingScore', 'sumOverallScore', 'updatedAt'
+            ]) &&
+            incoming().totalVotes == existing().totalVotes + 1 &&
+            incoming().sumDoughScore >= existing().sumDoughScore + 1 &&
+            incoming().sumDoughScore <= existing().sumDoughScore + 5 &&
+            incoming().sumFillingScore >= existing().sumFillingScore + 1 &&
+            incoming().sumFillingScore <= existing().sumFillingScore + 5 &&
+            incoming().sumOverallScore >= existing().sumOverallScore + 1 &&
+            incoming().sumOverallScore <= existing().sumOverallScore + 5
+          )
+        );
+
+      allow delete: if isValidId(bakeryId) && isAdmin();
+    }
+
+    match /qrTokens/{tokenId} {
+      allow get: if isValidId(tokenId);
+      allow list: if resource.data.maxUses >= 1;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(tokenId) &&
+        isValidQrToken(incoming()) &&
+        incoming().id == tokenId &&
+        incoming().createdByUid == request.auth.uid &&
+        incoming().usedCount == 0 &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time &&
+        exists(/databases/$(database)/documents/bakeries/$(incoming().bakeryId)) &&
+        isBakeryManagerOrAdmin();
+
+      allow update: if isVerifiedUser() &&
+        isValidId(tokenId) &&
+        isValidQrToken(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().code == existing().code &&
+        incoming().bakeryId == existing().bakeryId &&
+        incoming().createdByUid == existing().createdByUid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time && (
+          isAdmin() ||
+          (
+            existing().status == 'active' &&
+            existing().usedCount < existing().maxUses &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'usedCount', 'status', 'consumedByUid', 'updatedAt'
+            ]) &&
+            incoming().usedCount == existing().usedCount + 1 &&
+            incoming().consumedByUid == request.auth.uid &&
+            (incoming().status == 'active' || incoming().status == 'consumed')
+          ) ||
+          (
+            existing().status != 'consumed' &&
+            existing().status != 'revoked' &&
+            (existing().createdByUid == request.auth.uid || isBakeryManagerOrAdmin()) &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'status', 'batchLabel', 'maxUses', 'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isValidId(tokenId) && isAdmin();
+    }
+
+    match /votes/{voteId} {
+      allow get: if isValidId(voteId);
+      allow list: if resource.data.q1DoughScore >= 1;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(voteId) &&
+        isValidVote(incoming()) &&
+        incoming().id == voteId &&
+        incoming().voterUid == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        exists(/databases/$(database)/documents/bakeries/$(incoming().bakeryId)) &&
+        exists(/databases/$(database)/documents/qrTokens/$(incoming().tokenId)) &&
+        getAfter(/databases/$(database)/documents/qrTokens/$(incoming().tokenId)).data.usedCount ==
+          get(/databases/$(database)/documents/qrTokens/$(incoming().tokenId)).data.usedCount + 1 &&
+        getAfter(/databases/$(database)/documents/bakeries/$(incoming().bakeryId)).data.totalVotes ==
+          get(/databases/$(database)/documents/bakeries/$(incoming().bakeryId)).data.totalVotes + 1;
+
+      allow update, delete: if false;
+    }
+
+    match /auditLogs/{logId} {
+      allow get: if isSignedIn() && isValidId(logId);
+      allow list: if isSignedIn() && resource.data.actorUid == request.auth.uid;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(logId) &&
+        isValidAuditLog(incoming()) &&
+        incoming().id == logId &&
+        incoming().actorUid == request.auth.uid &&
+        incoming().createdAt == request.time;
+
+      allow update, delete: if false;
+    }
+
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isVerifiedUser() && resource.data.uid == request.auth.uid;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(userId) &&
+        isValidUserProfile(incoming()) &&
+        incoming().uid == userId &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time && (
+          isAdmin() ||
+          (
+            isOwner(userId) &&
+            incoming().role == 'voter' &&
+            incoming().votesCastCount == 0
+          )
+        );
+
+      allow update: if isVerifiedUser() &&
+        isValidId(userId) &&
+        isValidUserProfile(incoming()) &&
+        incoming().uid == existing().uid &&
+        incoming().email == existing().email &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time && (
+          isAdmin() ||
+          (
+            isOwner(userId) &&
+            incoming().role == existing().role &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'displayName', 'votesCastCount', 'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isValidId(userId) && isAdmin();
+    }
+
+    match /admins/{adminId} {
+      allow get: if isValidId(adminId) && (isOwner(adminId) || isAdmin());
+      allow list: if isVerifiedUser() && resource.data.uid == request.auth.uid;
+
+      allow create: if isVerifiedUser() &&
+        isValidId(adminId) &&
+        isValidAdminRecord(incoming()) &&
+        incoming().uid == adminId &&
+        incoming().createdAt == request.time &&
+        isAdmin();
+
+      allow update, delete: if isValidId(adminId) && isAdmin();
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "El Fucking Mejor Pan de Jamón — Ciudad Bolívar",
+  "description": "PWA",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="112" fill="#09090B"/>
+  <rect x="24" y="24" width="464" height="464" rx="92" stroke="#F52D18" stroke-width="8" stroke-opacity="0.45"/>
+  <!-- Four-point stars inspired by the competition logo -->
+  <path d="M156 96L164 116L184 124L164 132L156 152L148 132L128 124L148 116L156 96Z" fill="#FAF8F5"/>
+  <path d="M356 96L364 116L384 124L364 132L356 152L348 132L328 124L348 116L356 96Z" fill="#FAF8F5"/>
+  <!-- Stylized Pan de Jamón cross-section roll -->
+  <rect x="88" y="176" width="336" height="172" rx="86" fill="#F52D18"/>
+  <rect x="116" y="202" width="280" height="120" rx="60" fill="#09090B"/>
+  <!-- Spiral ham & olive motif inside the bread -->
+  <path d="M168 262C168 236 192 222 222 222C258 222 282 244 282 268C282 292 256 304 228 304C204 304 190 288 196 270C202 252 222 248 238 256" stroke="#FAF8F5" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="328" cy="252" r="22" fill="#F59E0B"/>
+  <circle cx="328" cy="252" r="9" fill="#F52D18"/>
+  <circle cx="294" cy="284" r="10" fill="#FAF8F5"/>
+  <!-- Bold bottom emblem text -->
+  <text x="256" y="422" text-anchor="middle" fill="#FAF8F5" font-family="sans-serif" font-weight="900" font-size="54" letter-spacing="4">JAMÓN CB</text>
+</svg>
