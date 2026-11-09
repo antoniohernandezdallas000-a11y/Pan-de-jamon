@@ -3,33 +3,28 @@
 
 @layer base {
   :root {
-    --font-display: 'Barlow Condensed', sans-serif;
-    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #F8F5EE;
-    background-image: 
-      linear-gradient(#E8E0D0 1px, transparent 1px),
-      linear-gradient(90deg, #E8E0D0 1px, transparent 1px);
-    background-size: 28px 28px;
-    color: #181513;
+    background-color: #FAF8F5;
+    color: #1E293B;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .dark body, body.dark {
-    background-color: #181412;
-    background-image: 
-      linear-gradient(#29231E 1px, transparent 1px),
-      linear-gradient(90deg, #29231E 1px, transparent 1px);
-    background-size: 28px 28px;
-    color: #FAF4ED;
+    background-color: #121110;
+    color: #F1F5F9;
   }
 
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
     text-wrap: balance;
+    letter-spacing: -0.02em;
   }
 
   .font-mono, .tabular-nums {
@@ -38,101 +33,119 @@
   }
 }
 
-/* Neo-Brutalist & Youthful Creative Utilities (Inspired by crea-live) */
-.neo-box {
+/* Modern Consumer Food Elevation & Card System (Inspired by Donatto & UI/UX Pro Max) */
+.food-card,
+.card-warm {
   background: #FFFFFF;
-  border: 2.5px solid #181513;
-  box-shadow: 5px 5px 0px #181513;
-  border-radius: 22px;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.05);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  overflow: hidden;
 }
 
-.dark .neo-box {
-  background: #241E1A;
-  border: 2.5px solid #F5EFEB;
-  box-shadow: 5px 5px 0px #F5EFEB;
+.food-card:hover,
+.card-warm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -4px rgba(217, 119, 6, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  border-color: rgba(245, 158, 11, 0.3);
 }
 
-.neo-btn {
+.dark .food-card,
+.dark .card-warm {
+  background: #1C1917;
+  border: 1px solid rgba(41, 37, 36, 0.9);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+}
+
+.dark .food-card:hover,
+.dark .card-warm:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* Modern Pill Button */
+.btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-weight: 800;
-  border: 2px solid #181513;
-  box-shadow: 3px 3px 0px #181513;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #E11D48 0%, #C2410C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
-.neo-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px #181513;
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.35);
+  filter: brightness(1.05);
 }
 
-.neo-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px #181513;
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
-.dark .neo-btn {
-  border-color: #F5EFEB;
-  box-shadow: 3px 3px 0px #F5EFEB;
-}
-
-.sticker-badge {
-  font-family: var(--font-mono);
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border: 2px solid #181513;
-  box-shadow: 2px 2px 0px #181513;
-}
-
-.dark .sticker-badge {
-  border-color: #F5EFEB;
-  box-shadow: 2px 2px 0px #F5EFEB;
-}
-
-/* Window Title Bar with Traffic Light Dots */
-.window-bar {
-  display: flex;
+.btn-secondary {
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  background: #EFE7DA;
-  border-bottom: 2.5px solid #181513;
-  border-top-left-radius: 19px;
-  border-top-right-radius: 19px;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  color: #1E293B;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
-.dark .window-bar {
-  background: #2F2722;
-  border-bottom-color: #F5EFEB;
+.dark .btn-secondary {
+  background: #262220;
+  color: #F8FAFC;
+  border-color: #38322E;
 }
 
-/* Smooth artisanal scrollbar */
+.btn-secondary:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+
+.dark .btn-secondary:hover {
+  background: #2E2925;
+  border-color: #4D4540;
+}
+
+/* Glassmorphism Accents */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.dark .glass-panel {
+  background: rgba(24, 21, 19, 0.85);
+  border: 1px solid rgba(56, 50, 46, 0.5);
+}
+
+/* Smooth Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8CEBE;
-  border: 2px solid #181513;
+  background: #CBD5E1;
   border-radius: 9999px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #473E37;
-  border-color: #F5EFEB;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  background: #475569;
 }
