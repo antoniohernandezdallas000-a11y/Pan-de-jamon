@@ -10,6 +10,7 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
+  Star,
   Store,
   Sun,
   Ticket,
@@ -680,35 +681,39 @@ export default function App() {
       </header>
 
       {/* Main Responsive Container (max-w-7xl on desktop, mobile-first touch layout) */}
-      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
-        {/* Hero Section with Official Competition Logo & Workspace Utility Bar */}
-        <section className="rounded-3xl bg-zinc-950 border border-zinc-800/90 overflow-hidden shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-            {/* Left 7 Columns: Editorial Headline, Regional Context & Primary Controls */}
-            <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 font-bold">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                    <span>EDICIÓN OFICIAL 2026</span>
-                  </span>
-                  <span className="text-zinc-400">CIUDAD BOLÍVAR, VENEZUELA</span>
-                  <span aria-hidden="true" className="text-zinc-600">·</span>
-                  <span className="text-[#F52D18] font-bold">VOTACIÓN ATÓMICA CERTIFICADA</span>
-                </div>
+      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-10">
+        {/* Modern Organic Culinary Hero (No more rigid square boxes) */}
+        <section className="relative rounded-[36px] bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-white/10 overflow-hidden shadow-2xl p-6 sm:p-10 lg:p-12">
+          {/* Ambient Warm Glow */}
+          <div
+            aria-hidden="true"
+            className="absolute -top-32 right-0 w-[500px] h-[400px] bg-gradient-to-b from-amber-500/15 via-[#F52D18]/10 to-transparent blur-3xl pointer-events-none rounded-full"
+          />
 
-                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.03]">
-                  EL CONCURSO DEFINITIVO DEL{' '}
-                  <span className="text-gold-shimmer">MEJOR PAN DE JAMÓN</span> EN CIUDAD BOLÍVAR
-                </h1>
-
-                <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
-                  Explora los portales de las panaderías participantes desde el Paseo Orinoco hasta Vista Hermosa. Escanea tu token QR en mesa con la cámara, evalúa masa, relleno y tradición en la encuesta oficial de 3 preguntas, y audita cada voto en tiempo real.
-                </p>
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+            {/* Left Content Column */}
+            <div className="flex-1 space-y-6 text-center lg:text-left">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>TEMPORADA GASTRONÓMICA 2026</span>
+                </span>
+                <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-zinc-300">
+                  Ciudad Bolívar · Venezuela
+                </span>
               </div>
 
-              {/* Workspace Toolbar (PWA Install, Google Auth, Admin Add Bakery & Theme Switch) */}
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.05]">
+                EL CONCURSO DEFINITIVO DEL{' '}
+                <span className="text-gold-shimmer">MEJOR PAN DE JAMÓN</span>
+              </h1>
+
+              <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                Desde las panaderías del Paseo Orinoco hasta Vista Hermosa. Escanea tu token QR en mesa con la cámara, califica la masa brioche, el relleno ahumado y la receta tradicional en vivo.
+              </p>
+
+              {/* Modern Action Buttons with Fluid Pill Silhouettes */}
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <button
                   type="button"
                   onClick={() => {
@@ -716,7 +721,7 @@ export default function App() {
                     setModalInitialTokenCode(null);
                     setIsQrModalOpen(true);
                   }}
-                  className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-lg"
+                  className="min-h-[48px] px-6 py-2.5 rounded-full bg-gradient-to-r from-[#F52D18] via-rose-600 to-amber-600 hover:opacity-95 text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow-xl glow-red active:scale-98 cursor-pointer"
                 >
                   <QrCode className="w-4 h-4" />
                   <span>Abrir Cámara QR y Votar</span>
@@ -726,10 +731,10 @@ export default function App() {
                   type="button"
                   onClick={handleOpenCreateBakeryModal}
                   data-testid="hero-add-bakery-btn"
-                  className="min-h-[44px] px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-amber-500/40 text-xs sm:text-sm font-bold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                  className="min-h-[48px] px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>Agregar Panadería (Admin)</span>
+                  <span>Inscribir Panadería (Admin)</span>
                 </button>
 
                 <PWAInstallButton />
@@ -737,9 +742,9 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsAuthModalOpen(true)}
-                  className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`min-h-[48px] px-5 py-2.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md ${
                     currentUser
-                      ? 'bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border-zinc-700 hover:border-amber-500/50'
+                      ? 'bg-zinc-900/90 hover:bg-zinc-800 text-zinc-100 border-white/10 hover:border-amber-500/40'
                       : 'bg-[#F52D18] hover:bg-[#d92310] text-white border-transparent shadow-md'
                   }`}
                   title="Gestionar perfil, rol o conectar Google"
@@ -761,7 +766,7 @@ export default function App() {
                       return next;
                     });
                   }}
-                  className="min-h-[44px] min-w-[44px] px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  className="min-h-[48px] min-w-[48px] px-4 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                   aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
                 >
                   {isDark ? (
@@ -774,12 +779,12 @@ export default function App() {
               </div>
 
               {authBannerError && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5">
                   <span>{authBannerError}</span>
                   <button
                     type="button"
                     onClick={() => setIsAuthModalOpen(true)}
-                    className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold cursor-pointer shrink-0"
+                    className="px-3 py-1 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold cursor-pointer shrink-0"
                   >
                     Usar Perfil Simulado
                   </button>
@@ -787,125 +792,102 @@ export default function App() {
               )}
             </div>
 
-            {/* Right 5 Columns: Official Competition Logo Showcase */}
-            <div className="lg:col-span-5 bg-black border-t lg:border-t-0 lg:border-l border-zinc-800/80 p-6 sm:p-8 flex flex-col items-center justify-center relative">
-              <div
-                className="absolute inset-0 opacity-25 pointer-events-none"
-                style={{
-                  background: 'radial-gradient(circle at 50% 50%, #F52D18, transparent 70%)',
-                }}
-              />
-              <div className="relative z-10 w-56 sm:w-64 md:w-72 aspect-[3/4] rounded-2xl bg-black p-3 border border-zinc-800 shadow-2xl flex items-center justify-center">
+            {/* Right Visual Emblem */}
+            <div className="shrink-0 flex flex-col items-center">
+              <div className="relative w-48 sm:w-56 aspect-square rounded-full bg-gradient-to-tr from-amber-500/20 via-black to-[#F52D18]/20 p-2 shadow-2xl flex items-center justify-center border-2 border-white/10 animate-pulse-glow">
                 <img
                   src={COMPETITION_LOGO_PATH}
-                  alt="Logo Oficial The Fucking Mejor Pan de Jamón Ciudad Bolívar"
+                  alt="Logo Oficial El Fucking Mejor Pan de Jamón"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain"
+                  className="w-4/5 h-4/5 object-contain"
                 />
               </div>
-              <div className="relative z-10 mt-3 text-center text-xs font-mono text-zinc-400">
-                IDENTIDAD OFICIAL · TEMPORADA GASTRONÓMICA CIUDAD BOLÍVAR
-              </div>
+              <span className="mt-3 text-xs font-mono text-zinc-400 tracking-wider">
+                SELLO OFICIAL CIUDAD BOLÍVAR
+              </span>
             </div>
           </div>
 
-          {/* Full-width 4-Column KPI Strip below the Hero Split */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-zinc-800/90 bg-zinc-900/60 divide-y lg:divide-y-0 lg:divide-x divide-zinc-800/90 tabular-nums">
-            <div className="p-4 sm:p-5">
-              <div className="text-xs text-zinc-400">Panaderías Oficiales</div>
-              <div
-                className="mt-1 font-mono text-2xl sm:text-3xl font-bold text-white"
-                data-testid="kpi-total-bakeries"
-              >
-                {bakeries.length} Portales
-              </div>
-              <div className="text-xs text-zinc-400 mt-0.5">
-                Paseo Orinoco · Vista Hermosa · Casco Histórico
-              </div>
+          {/* Fluid Floating KPI Capsules (Replaces old rigid divide-x boxes) */}
+          <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-between gap-3.5 tabular-nums">
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span className="font-mono text-base font-black text-white" data-testid="kpi-total-bakeries">
+                {bakeries.length}
+              </span>
+              <span className="text-xs text-zinc-400">Panaderías Oficiales</span>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs text-zinc-400">Votos Atómicos Registrados</div>
-              <div
-                className="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#F52D18]"
-                data-testid="kpi-total-votes"
-              >
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#F52D18]" />
+              <span className="font-mono text-base font-black text-[#F52D18]" data-testid="kpi-total-votes">
                 {totalVotesCount}
-              </div>
-              <div className="text-xs text-zinc-400 mt-0.5">
-                Verificados vía runTransaction en Firestore
-              </div>
+              </span>
+              <span className="text-xs text-zinc-400">Votos Verificados</span>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs text-zinc-400">Promedio Global (3 Preguntas)</div>
-              <div className="mt-1 font-mono text-2xl sm:text-3xl font-bold text-amber-400">
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              <span className="font-mono text-base font-black text-amber-400">
                 {overallCompetitionAverage} ★
-              </div>
-              <div className="text-xs text-zinc-400 mt-0.5">
-                Masa · Proporción de Relleno · Tradición
-              </div>
+              </span>
+              <span className="text-xs text-zinc-400">Promedio Global</span>
             </div>
 
-            <div className="p-4 sm:p-5">
-              <div className="text-xs text-zinc-400">Tokens QR Activos en Mesa</div>
-              <div
-                className="mt-1 font-mono text-2xl sm:text-3xl font-bold text-emerald-400"
-                data-testid="kpi-active-tokens"
-              >
-                {activeTokensCount} disponibles
-              </div>
-              <div className="text-xs text-zinc-400 mt-0.5">
-                Rol actual: <strong className="uppercase text-zinc-200">{userRole}</strong>
-              </div>
+            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
+              <Ticket className="w-4 h-4 text-emerald-400" />
+              <span className="font-mono text-base font-black text-emerald-400" data-testid="kpi-active-tokens">
+                {activeTokensCount}
+              </span>
+              <span className="text-xs text-zinc-400">Mesas Activas</span>
             </div>
           </div>
         </section>
 
         {/* Active View Switcher Content */}
         {activeSection === 'portals' && (
-          <section className="space-y-6" aria-label="Portales de Panaderías de Ciudad Bolívar">
-            {/* Filter, Search & Admin Bakery Registration Bar */}
+          <section className="space-y-8" aria-label="Portales de Panaderías de Ciudad Bolívar">
+            {/* Filter, Search & Admin Bakery Registration Bar with Organic Shapes */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white tracking-wide">
-                  01. Portales Oficiales de Panaderías en Ciudad Bolívar
+                <h2 className="font-display text-3xl sm:text-4xl font-black text-white tracking-wide">
+                  Panaderías en Competencia
                 </h2>
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-                  Cada panadería cuenta con su portal personalizado con foto de su logo o fachada, sello de la competencia y tokens QR
+                <p className="text-xs sm:text-sm text-zinc-400">
+                  Explora las casas panaderas artesanales de Ciudad Bolívar y vota por tu favorita
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                {/* Search Input */}
-                <div className="relative w-full sm:w-64">
-                  <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                {/* Search Input (Pill rounded) */}
+                <div className="relative w-full sm:w-72">
+                  <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Buscar panadería, sector o maestro..."
+                    placeholder="Buscar panadería, sector..."
                     aria-label="Buscar panadería en Ciudad Bolívar"
-                    className="w-full min-h-[44px] pl-10 pr-4 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-[#F52D18]"
+                    className="w-full min-h-[46px] pl-11 pr-4 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                   />
                 </div>
 
-                {/* Admin Button to Register a New Bakery with Logo/Facade */}
+                {/* Admin Button */}
                 <button
                   type="button"
                   onClick={handleOpenCreateBakeryModal}
                   data-testid="open-admin-bakery-modal-btn"
-                  className="min-h-[44px] px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-white text-white dark:text-zinc-950 text-xs font-bold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+                  className="min-h-[46px] px-5 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shrink-0"
                 >
                   <Building2 className="w-4 h-4 text-[#F52D18]" />
-                  <span>+ Agregar Panadería (Solo Admin)</span>
+                  <span>+ Agregar Panadería</span>
                 </button>
               </div>
             </div>
 
-            {/* Interactive Sector Filter Controls (Functional Buttons) */}
+            {/* Interactive Sector Filter Capsule Bar (No rigid box) */}
             <div
-              className="flex items-center gap-1.5 p-1.5 bg-zinc-200/70 dark:bg-zinc-900 rounded-2xl overflow-x-auto"
+              className="flex items-center gap-2 p-1 overflow-x-auto no-scrollbar"
               role="tablist"
               aria-label="Filtrar panaderías por sector de Ciudad Bolívar"
             >
@@ -918,13 +900,13 @@ export default function App() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setSelectedSector(sec)}
-                    className={`min-h-[40px] px-4 py-2 rounded-xl text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                    className={`min-h-[40px] px-5 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                       active
-                        ? 'bg-[#F52D18] text-white shadow-sm'
-                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                        ? 'bg-gradient-to-r from-[#F52D18] to-amber-600 text-white shadow-md shadow-red-500/20 font-bold'
+                        : 'bg-zinc-900/90 text-zinc-400 hover:text-white border border-white/5'
                     }`}
                   >
-                    {sec === 'ALL' ? 'Todos los Sectores CB' : sec}
+                    {sec === 'ALL' ? 'Todos los Sectores' : sec}
                   </button>
                 );
               })}

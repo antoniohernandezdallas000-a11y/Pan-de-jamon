@@ -39,196 +39,121 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
 
   return (
     <article
-      className="group relative rounded-3xl bg-zinc-950/80 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-800/90 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/10 hover:border-amber-500/40 flex flex-col justify-between"
+      className="group relative rounded-[32px] bg-zinc-900/80 border border-white/10 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/15 hover:border-amber-500/30 flex flex-col justify-between backdrop-blur-md"
       data-testid={`bakery-portal-card-${bakery.id}`}
     >
-      {/* Bespoke Aesthetic Portal Banner with Local Logo/Facade + Official Competition Logo */}
-      <div className="relative h-52 bg-zinc-950 overflow-hidden border-b border-zinc-800/80">
-        {/* Optional background facade image wash if custom photo was uploaded */}
-        {hasCustomLocalImage && (
-          <img
-            src={bakery.photoUrl}
-            alt=""
-            aria-hidden="true"
-            referrerPolicy="no-referrer"
-            className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 group-hover:opacity-35 transition-all duration-700 pointer-events-none"
-          />
-        )}
-
-        {/* Subtle artisanal radial glow keyed to the bakery's signature accent */}
-        <div
-          className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(circle at 82% 22%, ${bakery.accentHex}, transparent 65%)`,
-          }}
+      {/* Top Visual Imagery Showcase */}
+      <div className="relative h-60 w-full overflow-hidden bg-zinc-950">
+        <img
+          src={bakery.photoUrl || COMPETITION_LOGO_PATH}
+          alt={`Fachada o logo de ${bakery.name}`}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 
-        {/* Decorative artisanal bread slash geometry */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
-          viewBox="0 0 400 192"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M-20 160 C 90 90, 210 210, 420 60"
-            stroke={bakery.accentHex}
-            strokeWidth="2"
-            strokeDasharray="6 6"
-          />
-          <circle cx="330" cy="96" r="68" stroke="#FAF8F5" strokeWidth="1" strokeOpacity="0.25" />
-          <circle cx="330" cy="96" r="42" stroke={bakery.accentHex} strokeWidth="1.5" strokeOpacity="0.4" />
-        </svg>
+        {/* Soft Vignette Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
 
-        <div className="relative z-10 h-full p-5 flex items-center justify-between gap-4">
-          {/* Left: Portal Identity & Rank */}
-          <div className="flex flex-col justify-between h-full max-w-[65%] min-w-0">
-            <div className="flex items-center gap-2 text-xs font-mono tabular-nums min-w-0">
-              <span
-                className={`px-2 py-0.5 rounded-lg font-bold text-xs shadow-md ${
-                  bakery.rank === 1
-                    ? 'bg-amber-400 text-zinc-950 border border-yellow-200'
-                    : bakery.rank === 2
-                    ? 'bg-slate-200 text-zinc-950 border border-white'
-                    : bakery.rank === 3
-                    ? 'bg-amber-700 text-white border border-amber-500'
-                    : 'bg-zinc-800/90 text-zinc-300 border border-zinc-700'
-                }`}
-              >
-                #{bakery.rank}
-              </span>
-              <span className="text-zinc-400 font-medium whitespace-nowrap shrink-0">{bakery.portalCode}</span>
-              <span aria-hidden="true" className="text-zinc-500 shrink-0">·</span>
-              <span className="truncate text-zinc-300">{bakery.sector}</span>
-            </div>
+        {/* Floating Capsule Badges */}
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
+          <div className="flex items-center gap-2">
+            <span
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-black shadow-lg backdrop-blur-md ${
+                bakery.rank === 1
+                  ? 'bg-amber-400 text-zinc-950 border border-yellow-200'
+                  : bakery.rank === 2
+                  ? 'bg-slate-200 text-zinc-950 border border-white'
+                  : bakery.rank === 3
+                  ? 'bg-amber-700 text-white border border-amber-500'
+                  : 'bg-black/70 text-zinc-300 border border-white/10'
+              }`}
+            >
+              #{bakery.rank} · {bakery.portalCode}
+            </span>
 
-            <div>
-              <h3 className="font-display text-2xl font-extrabold tracking-wide text-white leading-tight line-clamp-2 drop-shadow-sm group-hover:text-amber-200 transition-colors">
-                {bakery.name}
-              </h3>
-              <p className="mt-1 text-xs text-zinc-300 line-clamp-1 flex items-center gap-1.5">
-                <Utensils className="w-3 h-3 text-amber-400 shrink-0" />
-                <span>{bakery.masterBaker} · {bakery.crustStyle}</span>
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2.5 text-xs text-zinc-200 tabular-nums">
-              <span className="inline-flex items-center gap-1 font-black text-amber-400 bg-black/60 px-2 py-0.5 rounded-md border border-amber-500/30">
-                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                {bakery.metrics.compositeAverage.toFixed(2)}
-              </span>
-              <span aria-hidden="true" className="text-zinc-500">·</span>
-              <span className="text-zinc-300 font-mono text-[11px]">{bakery.totalVotes} votos</span>
-              {isAdmin && onEditBakeryByAdmin && (
-                <>
-                  <span aria-hidden="true" className="text-zinc-500">·</span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEditBakeryByAdmin(bakery);
-                    }}
-                    className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-300 hover:text-white underline underline-offset-4 cursor-pointer"
-                    title="Editar información e imagen del local (Admin)"
-                  >
-                    <Pencil className="w-3 h-3" />
-                    <span>Editar</span>
-                  </button>
-                </>
-              )}
-            </div>
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-medium text-zinc-300 border border-white/10">
+              {bakery.sector}
+            </span>
           </div>
 
-          {/* Right: Local Logo/Facade Image + Official Competition Emblem */}
-          <div className="shrink-0 flex flex-col items-center">
-            <div
-              className="relative w-24 h-28 rounded-2xl bg-black p-1 border-2 shadow-2xl flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105"
-              style={{ borderColor: bakery.accentHex }}
-            >
-              <img
-                src={bakery.photoUrl || COMPETITION_LOGO_PATH}
-                alt={`Imagen de ${bakery.name}`}
-                referrerPolicy="no-referrer"
-                className={
-                  hasCustomLocalImage
-                    ? 'w-full h-full object-cover rounded-xl'
-                    : 'w-full h-full object-contain'
-                }
-              />
-              {hasCustomLocalImage && (
-                <div
-                  className="absolute bottom-1 right-1 w-7 h-8 rounded-lg bg-black/95 p-0.5 border border-zinc-700 shadow-md"
-                  title="Sello Oficial El Fucking Mejor Pan de Jamón"
-                >
-                  <img
-                    src={COMPETITION_LOGO_PATH}
-                    alt="Sello competencia"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              )}
-            </div>
-            <span className="mt-1.5 text-[9px] font-mono font-bold text-zinc-400 tracking-wider uppercase">
-              {hasCustomLocalImage ? 'Logo Panadería' : 'Sello Oficial'}
-            </span>
+          {/* Sello Competencia Official */}
+          <div className="w-10 h-10 rounded-full bg-black/80 backdrop-blur-md p-1 border border-white/20 shadow-xl flex items-center justify-center">
+            <img
+              src={COMPETITION_LOGO_PATH}
+              alt="Sello oficial"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Bottom Banner Identity */}
+        <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3">
+          <div className="space-y-0.5">
+            <h3 className="font-display text-2xl sm:text-3xl font-black text-white drop-shadow-md leading-tight group-hover:text-amber-200 transition-colors">
+              {bakery.name}
+            </h3>
+            <p className="text-xs text-amber-200/90 font-medium flex items-center gap-1.5">
+              <Utensils className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>{bakery.masterBaker} · {bakery.crustStyle}</span>
+            </p>
+          </div>
+
+          <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-black/75 backdrop-blur-md border border-amber-500/30 text-amber-400 font-mono font-bold text-sm shadow-lg shrink-0">
+            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+            <span>{bakery.metrics.compositeAverage.toFixed(2)}</span>
           </div>
         </div>
       </div>
 
-      {/* Portal Body */}
-      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
-        <div className="space-y-3">
+      {/* Card Content Body */}
+      <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+        <div className="space-y-4">
           <p className="text-xs text-zinc-400 flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#F52D18] shrink-0" />
+            <MapPin className="w-4 h-4 text-[#F52D18] shrink-0" />
             <span className="truncate">{bakery.address}</span>
           </p>
 
-          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-2">
-            {bakery.signatureRecipe}
+          <p className="text-sm text-zinc-300 leading-relaxed italic line-clamp-2">
+            “{bakery.signatureRecipe}”
           </p>
 
-          {/* 3-Question Mini Breakdown with pill styling */}
-          <div className="pt-2 border-t border-zinc-800/80 grid grid-cols-3 gap-2 text-center tabular-nums">
-            <div className="rounded-xl bg-zinc-900/90 border border-zinc-800/80 p-2">
-              <div className="text-[10px] uppercase font-mono text-zinc-400">Masa Brioche</div>
-              <div className="text-xs sm:text-sm font-mono font-bold text-amber-300">
-                {bakery.metrics.avgDough.toFixed(2)} ★
-              </div>
+          {/* Fluid Modern Score Badges (no rigid boxes) */}
+          <div className="flex flex-wrap items-center gap-2 pt-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
+              <span className="text-zinc-400">Masa:</span>
+              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgDough.toFixed(1)} ★</span>
             </div>
-            <div className="rounded-xl bg-zinc-900/90 border border-zinc-800/80 p-2">
-              <div className="text-[10px] uppercase font-mono text-zinc-400">Relleno</div>
-              <div className="text-xs sm:text-sm font-mono font-bold text-amber-300">
-                {bakery.metrics.avgFilling.toFixed(2)} ★
-              </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
+              <span className="text-zinc-400">Relleno:</span>
+              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgFilling.toFixed(1)} ★</span>
             </div>
-            <div className="rounded-xl bg-zinc-900/90 border border-zinc-800/80 p-2">
-              <div className="text-[10px] uppercase font-mono text-zinc-400">Tradición</div>
-              <div className="text-xs sm:text-sm font-mono font-bold text-amber-300">
-                {bakery.metrics.avgOverall.toFixed(2)} ★
-              </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
+              <span className="text-zinc-400">Tradición:</span>
+              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgOverall.toFixed(1)} ★</span>
             </div>
+            <span className="text-[11px] font-mono text-zinc-500 ml-auto">{bakery.totalVotes} votos</span>
           </div>
         </div>
 
-        {/* Footer Actions (44px min touch targets) */}
-        <div className="pt-2 flex items-center justify-between gap-2.5">
+        {/* Footer Actions with Pill Curves */}
+        <div className="pt-2 flex items-center gap-3">
           <button
             type="button"
             onClick={() => onOpenPortal(bakery.id)}
-            className="min-h-[44px] flex-1 px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors whitespace-nowrap cursor-pointer border border-zinc-700/60"
+            className="flex-1 min-h-[46px] px-4 rounded-full bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-white/10 hover:border-white/20 active:scale-98"
           >
-            <span>Ver Ficha</span>
+            <span>Ver Historia</span>
             <ChevronRight className="w-4 h-4 text-zinc-400" />
           </button>
 
           <button
             type="button"
             onClick={() => onQuickVoteWithQr(bakery.id)}
-            className="min-h-[44px] flex-1 px-3.5 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all whitespace-nowrap cursor-pointer shadow-md glow-red active:scale-95"
+            className="flex-1 min-h-[46px] px-4 rounded-full bg-gradient-to-r from-[#F52D18] via-rose-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-lg glow-red active:scale-98"
           >
             <QrCode className="w-4 h-4 shrink-0" />
-            <span>Votar con QR ({activeTokenCount})</span>
+            <span>Votar QR ({activeTokenCount})</span>
           </button>
         </div>
       </div>
@@ -271,9 +196,9 @@ export const BakeryPortalModal: React.FC<BakeryPortalModalProps> = ({
       aria-modal="true"
       aria-labelledby="bakery-portal-modal-title"
     >
-      <div className="w-full max-w-3xl rounded-t-3xl md:rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
+      <div className="w-full max-w-3xl rounded-t-[36px] md:rounded-[36px] bg-zinc-950 border border-white/10 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
         {/* Portal Hero Header with Local Logo/Facade + Official Competition Logo */}
-        <div className="relative bg-zinc-950 p-6 md:p-8 border-b border-zinc-800 shrink-0">
+        <div className="relative bg-zinc-950 p-6 md:p-8 border-b border-white/10 shrink-0">
           <div
             className="absolute inset-0 opacity-35 pointer-events-none"
             style={{
@@ -509,22 +434,22 @@ export const BakeryPortalModal: React.FC<BakeryPortalModalProps> = ({
         </div>
 
         {/* Sticky Portal Bottom Action Bar */}
-        <div className="p-4 md:px-8 bg-zinc-100 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-3 shrink-0">
+        <div className="p-4 md:px-8 bg-zinc-950 border-t border-white/10 flex items-center justify-between gap-3 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[44px] px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="min-h-[46px] px-5 py-2.5 rounded-full bg-zinc-900 border border-white/10 text-zinc-300 text-xs font-semibold hover:bg-zinc-800 transition-colors cursor-pointer"
           >
-            Volver al Padrón
+            Volver al Catálogo
           </button>
 
           <button
             type="button"
             onClick={() => onOpenQrScannerForBakery(bakery.id)}
-            className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors shadow-lg cursor-pointer"
+            className="min-h-[46px] px-6 py-2.5 rounded-full bg-gradient-to-r from-[#F52D18] to-amber-600 hover:opacity-95 text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow-lg glow-red cursor-pointer"
           >
             <QrCode className="w-4 h-4" />
-            <span>Escanear Cámara QR y Calificar Panadería</span>
+            <span>Calificar con Token QR</span>
           </button>
         </div>
       </div>

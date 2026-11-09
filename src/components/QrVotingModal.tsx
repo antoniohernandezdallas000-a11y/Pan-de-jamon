@@ -471,9 +471,9 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
       aria-modal="true"
       aria-labelledby="qr-voting-modal-title"
     >
-      <div className="w-full max-w-2xl rounded-t-3xl md:rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
+      <div className="w-full max-w-2xl rounded-t-[36px] md:rounded-[36px] bg-zinc-950 border border-white/10 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
         {/* Modal Header */}
-        <div className="p-5 md:px-7 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between gap-4 shrink-0">
+        <div className="p-6 md:px-8 bg-zinc-950 border-b border-white/10 flex items-center justify-between gap-4 shrink-0">
           <div className="flex items-center gap-3.5">
             <img
               src={COMPETITION_LOGO_PATH}
@@ -735,12 +735,12 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                           key={t.id}
                           type="button"
                           onClick={() => setRawCodeInput(t.code)}
-                          className={`min-h-[40px] px-3 py-1.5 rounded-xl font-mono text-xs font-semibold border transition-colors cursor-pointer flex items-center gap-1.5 ${
+                          className={`min-h-[40px] px-4 py-1.5 rounded-full font-mono text-xs font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
                             isSelected
-                              ? 'bg-[#F52D18] text-white border-[#F52D18]'
+                              ? 'bg-gradient-to-r from-[#F52D18] to-amber-600 text-white border-transparent shadow-md'
                               : isUsable
-                              ? 'bg-zinc-100 dark:bg-zinc-800/90 text-zinc-900 dark:text-zinc-100 border-zinc-300 dark:border-zinc-700 hover:border-[#F52D18]'
-                              : 'bg-zinc-100/50 dark:bg-zinc-900 text-zinc-400 border-zinc-200 dark:border-zinc-800'
+                              ? 'bg-zinc-900 text-zinc-200 border-white/10 hover:border-amber-500/40'
+                              : 'bg-zinc-900/40 text-zinc-500 border-white/5'
                           }`}
                         >
                           <QrCode className="w-3.5 h-3.5 shrink-0" />
