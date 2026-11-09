@@ -2,14 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   BarChart3,
   Building2,
+  Flame,
   LogIn,
   Moon,
   Plus,
   QrCode,
   Search,
   ShieldCheck,
+  Sparkles,
   Store,
   Sun,
+  Ticket,
+  Trophy,
 } from 'lucide-react';
 import {
   AuditLog,
@@ -58,6 +62,8 @@ import { QrTokenLabView } from './components/QrTokenLabView';
 import { LiveResultsView } from './components/LiveResultsView';
 import { AuditAndSecurityView } from './components/AuditAndSecurityView';
 import { OfflineIndicator, PWAInstallButton } from './components/PWAInstallBanner';
+import { AuthModal, AppUser } from './components/AuthModal';
+import { ToastContainer, ToastData } from './components/Toast';
 
 type ActiveSection = 'portals' | 'tokens' | 'results' | 'audit';
 
@@ -73,9 +79,26 @@ export default function App() {
 
   // Auth & Role State
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<AppUser | null>({
+    uid: 'admin_restrepo_01',
+    email: 'restreposolution@gmail.com',
+    displayName: 'Restrepo Solution (Admin)',
+    isSimulated: true,
+  });
   const [userRole, setUserRole] = useState<UserRole>('admin');
   const [firestoreConnected, setFirestoreConnected] = useState<boolean>(false);
   const [authBannerError, setAuthBannerError] = useState<string | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+
+  // Toast Notification System
+  const [toasts, setToasts] = useState<ToastData[]>([]);
+  const showToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
+    const id = `toast_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    setToasts((prev) => [...prev, { id, message, type }]);
+  };
+  const dismissToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
 
   // Filters & Modals
   const [selectedSector, setSelectedSector] = useState<string>('ALL');
@@ -107,8 +130,17 @@ export default function App() {
     let autoSeeded = false;
     const unsubAuth = onAuthStateChanged(auth, (user) => {
       setFirebaseUser(user);
-      if (user?.email === 'restreposolution@gmail.com') {
-        setUserRole('admin');
+      if (user) {
+        setCurrentUser({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          isSimulated: false,
+        });
+        if (user?.email === 'restreposolution@gmail.com') {
+          setUserRole('admin');
+        }
       }
       unsubSnapshots();
       if (user) {
@@ -148,9 +180,9 @@ export default function App() {
     };
   }, []);
 
-  const currentUserUid = firebaseUser?.uid || 'catador-bolivar-local';
+  const currentUserUid = currentUser?.uid || 'catador-bolivar-local';
   const currentUserDisplayName =
-    firebaseUser?.displayName || 'Jurado / Catador Ciudad Bolívar';
+    currentUser?.displayName || 'Jurado / Catador Ciudad Bolívar';
 
   const rankedBakeries = useMemo(() => rankBakeries(bakeries), [bakeries]);
 
@@ -201,18 +233,50 @@ export default function App() {
   const handleGoogleSignIn = async () => {
     setAuthBannerError(null);
     try {
-      await signInWithGooglePopup();
+      const user = await signInWithGooglePopup();
+      setCurrentUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        isSimulated: false,
+      });
+      showToast(`¡Sesión iniciada con Google: ${user.email}!`);
+      setIsAuthModalOpen(false);
     } catch (err) {
-      setAuthBannerError(
-        err instanceof Error
-          ? `Aviso de ventana emergente Google Auth: ${err.message}`
-          : 'No se pudo completar el inicio de sesión con Google.'
-      );
+      const msg = err instanceof Error ? err.message : String(err);
+      if (
+        msg.includes('auth/unauthorized-domain') ||
+        msg.includes('localhost') ||
+        msg.includes('popup-closed-by-user')
+      ) {
+        setAuthBannerError(
+          'En localhost, Google OAuth requiere configuración de dominios en Firebase Cloud. Puedes elegir un perfil simulado a continuación para probar todas las funciones.'
+        );
+      } else {
+        setAuthBannerError(`Aviso Google Auth: ${msg}`);
+      }
+      setIsAuthModalOpen(true);
     }
   };
 
   const handleGoogleSignOut = async () => {
-    await signOutUser();
+    try {
+      await signOutUser();
+    } catch {
+      // Ignored
+    }
+    setCurrentUser(null);
+    setUserRole('voter');
+    showToast('Sesión cerrada correctamente.', 'info');
+    setIsAuthModalOpen(false);
+  };
+
+  const handleSelectSimulatedProfile = (profile: AppUser, nextRole: UserRole) => {
+    setCurrentUser(profile);
+    setUserRole(nextRole);
+    handleSwitchRoleSimulation(nextRole);
+    showToast(`Sesión activa como ${profile.displayName} (${nextRole.toUpperCase()})`);
   };
 
   const handleOpenVotingForBakery = (bakeryId: string, tokenCode?: string) => {
@@ -263,6 +327,11 @@ export default function App() {
       setTokens((prev) => [transition.initialToken!, ...prev]);
     }
     setAuditLogs((prev) => [transition.auditLog, ...prev]);
+    showToast(
+      transition.isNew
+        ? `Panadería "${finalBakery.name}" registrada con éxito.`
+        : `Panadería "${finalBakery.name}" actualizada.`
+    );
 
     // 3. Persist to Firestore if authenticated
     let syncedToCloud = false;
@@ -314,6 +383,7 @@ export default function App() {
     setTokens(transition.nextState.tokens);
     setVotes(transition.nextState.votes);
     setAuditLogs(transition.nextState.auditLogs);
+    showToast(`¡Voto atómico registrado para ${transition.updatedBakery.name}!`);
 
     // 3. Also execute real Firestore runTransaction when authenticated with Firebase
     let syncedToCloud = false;
@@ -374,6 +444,7 @@ export default function App() {
 
     setTokens((prev) => [newToken, ...prev]);
     setAuditLogs((prev) => [newLog, ...prev]);
+    showToast(`Token QR "${newToken.code}" emitido para ${newToken.bakeryName}.`);
 
     if (firebaseUser) {
       try {
@@ -419,6 +490,7 @@ export default function App() {
       createdAt: nowIso,
     };
     setAuditLogs((prev) => [newLog, ...prev]);
+    showToast(`Token ${target.code} actualizado a estado: ${updates.status.toUpperCase()}`);
 
     if (firebaseUser) {
       try {
@@ -432,6 +504,39 @@ export default function App() {
   const handleSwitchRoleSimulation = (nextRole: UserRole) => {
     const nowIso = new Date().toISOString();
     setUserRole(nextRole);
+
+    if (currentUser?.isSimulated) {
+      const presets: Record<UserRole, { name: string; email: string; uid: string }> = {
+        admin: {
+          name: 'Restrepo Solution (Admin)',
+          email: 'restreposolution@gmail.com',
+          uid: 'admin_restrepo_01',
+        },
+        judge: {
+          name: 'Chef María Bolívar (Jurado)',
+          email: 'jurado.bolivar@gastronomia.ve',
+          uid: 'judge_angostura_01',
+        },
+        voter: {
+          name: 'Carlos Mendoza (Catador)',
+          email: 'catador.orinoco@gmail.com',
+          uid: 'voter_orinoco_01',
+        },
+        bakery_manager: {
+          name: 'Don Celestino (Horno Orinoco)',
+          email: 'horno.orinoco@panaderias.ve',
+          uid: 'manager_paseo_01',
+        },
+      };
+      const p = presets[nextRole];
+      setCurrentUser({
+        uid: p.uid,
+        email: p.email,
+        displayName: p.name,
+        isSimulated: true,
+      });
+    }
+
     const logEntry: AuditLog = {
       id: `log_role_${Date.now()}`,
       action: 'ROLE_CHANGED',
@@ -443,6 +548,7 @@ export default function App() {
       createdAt: nowIso,
     };
     setAuditLogs((prev) => [logEntry, ...prev]);
+    showToast(`Rol activo cambiado a: ${nextRole.toUpperCase()}`);
   };
 
   const handleRecordStorageValidationAudit = (
@@ -471,72 +577,92 @@ export default function App() {
       <OfflineIndicator />
 
       {/* Strict 3-Zone Top Bar Contract (frontend-design/SKILL.md §2) */}
-      <header className="sticky top-0 z-30 h-14 flex items-center justify-between gap-3 sm:gap-8 px-4 sm:px-6 lg:px-8 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800/90">
-        {/* Zone 1: Single text element wordmark */}
-        <a
-          href="#top"
-          onClick={(e) => {
-            e.preventDefault();
-            setActiveSection('portals');
-          }}
-          className="font-display text-lg sm:text-2xl font-extrabold tracking-wide text-zinc-900 dark:text-white whitespace-nowrap truncate min-w-0"
-        >
-          El Fucking Mejor Pan de Jamón
-        </a>
+      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-8 px-4 sm:px-6 lg:px-8 bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80">
+        {/* Zone 1: Wordmark + Live Pulse Indicator */}
+        <div className="flex items-center gap-3 min-w-0">
+          <a
+            href="#top"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveSection('portals');
+            }}
+            className="font-display text-lg sm:text-2xl font-extrabold tracking-wide text-white whitespace-nowrap truncate min-w-0 flex items-center gap-2"
+          >
+            <span>El Fucking Mejor Pan de Jamón</span>
+          </a>
+          <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold tracking-wider shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span>EN VIVO</span>
+          </span>
+        </div>
 
-        {/* Zone 2: 4 concise single-line text navigation links */}
+        {/* Zone 2: Modern Pill Navigation Bar */}
         <nav
           aria-label="Navegación principal"
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-300"
+          className="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-xs font-semibold"
         >
           <button
             type="button"
             onClick={() => setActiveSection('portals')}
-            className={`hover:text-[#F52D18] transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
               activeSection === 'portals'
-                ? 'text-[#F52D18] underline underline-offset-8 decoration-2'
-                : ''
+                ? 'bg-[#F52D18] text-white shadow-md font-bold'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
-            Portales
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveSection('tokens')}
-            className={`hover:text-[#F52D18] transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-              activeSection === 'tokens'
-                ? 'text-[#F52D18] underline underline-offset-8 decoration-2'
-                : ''
-            }`}
-          >
-            Tokens QR
+            <Store className="w-3.5 h-3.5" />
+            <span>Portales</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('results')}
-            className={`hover:text-[#F52D18] transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
               activeSection === 'results'
-                ? 'text-[#F52D18] underline underline-offset-8 decoration-2'
-                : ''
+                ? 'bg-[#F52D18] text-white shadow-md font-bold'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
-            Resultados
+            <Trophy className="w-3.5 h-3.5" />
+            <span>Podio & Ranking</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveSection('tokens')}
+            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeSection === 'tokens'
+                ? 'bg-[#F52D18] text-white shadow-md font-bold'
+                : 'text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Ticket className="w-3.5 h-3.5" />
+            <span>Tokens QR</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('audit')}
-            className={`hover:text-[#F52D18] transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
               activeSection === 'audit'
-                ? 'text-[#F52D18] underline underline-offset-8 decoration-2'
-                : ''
+                ? 'bg-[#F52D18] text-white shadow-md font-bold'
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
-            Auditoría
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Auditoría</span>
           </button>
         </nav>
 
-        {/* Zone 3: 1 primary action */}
-        <div className="flex items-center shrink-0">
+        {/* Zone 3: 1 primary action + Quick Profile Pill */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => setIsAuthModalOpen(true)}
+            className="flex items-center gap-2 min-h-[40px] px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-700/80 text-xs font-semibold text-zinc-200 hover:border-amber-500/60 transition-colors cursor-pointer"
+            title="Cambiar perfil o rol de usuario"
+          >
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <span className="font-mono uppercase text-[11px] text-amber-400 font-bold">{userRole}</span>
+          </button>
+
           <button
             type="button"
             onClick={() => {
@@ -544,9 +670,11 @@ export default function App() {
               setModalInitialTokenCode(null);
               setIsQrModalOpen(true);
             }}
-            className="min-h-[40px] px-3 sm:px-4 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs sm:text-sm font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            className="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-md glow-red flex items-center gap-1.5"
           >
-            Escanear QR
+            <QrCode className="w-4 h-4" />
+            <span className="hidden sm:inline">Escanear QR</span>
+            <span className="sm:hidden">Votar</span>
           </button>
         </div>
       </header>
@@ -559,21 +687,23 @@ export default function App() {
             {/* Left 7 Columns: Editorial Headline, Regional Context & Primary Controls */}
             <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-zinc-400">
-                  <span className="text-[#F52D18] font-bold">EDICIÓN OFICIAL CIUDAD BOLÍVAR</span>
-                  <span aria-hidden="true">·</span>
-                  <span>ESTADO BOLÍVAR, VENEZUELA</span>
-                  <span aria-hidden="true">·</span>
-                  <span>VOTACIÓN ATÓMICA FIRESTORE</span>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 font-bold">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>EDICIÓN OFICIAL 2026</span>
+                  </span>
+                  <span className="text-zinc-400">CIUDAD BOLÍVAR, VENEZUELA</span>
+                  <span aria-hidden="true" className="text-zinc-600">·</span>
+                  <span className="text-[#F52D18] font-bold">VOTACIÓN ATÓMICA CERTIFICADA</span>
                 </div>
 
                 <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.03]">
                   EL CONCURSO DEFINITIVO DEL{' '}
-                  <span className="text-[#F52D18]">MEJOR PAN DE JAMÓN</span> EN CIUDAD BOLÍVAR
+                  <span className="text-gold-shimmer">MEJOR PAN DE JAMÓN</span> EN CIUDAD BOLÍVAR
                 </h1>
 
                 <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
-                  Explora los portales estéticos de las panaderías participantes desde el Paseo Orinoco hasta Vista Hermosa. Escanea tu token QR en mesa con la cámara, evalúa masa, relleno y tradición en la encuesta de 3 preguntas, y audita cada voto en tiempo real.
+                  Explora los portales de las panaderías participantes desde el Paseo Orinoco hasta Vista Hermosa. Escanea tu token QR en mesa con la cámara, evalúa masa, relleno y tradición en la encuesta oficial de 3 preguntas, y audita cada voto en tiempo real.
                 </p>
               </div>
 
@@ -604,29 +734,33 @@ export default function App() {
 
                 <PWAInstallButton />
 
-                {!firebaseUser ? (
-                  <button
-                    type="button"
-                    onClick={() => void handleGoogleSignIn()}
-                    className="min-h-[44px] px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-zinc-700 text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
-                  >
-                    <LogIn className="w-4 h-4 text-amber-400" />
-                    <span>Conectar Google</span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setActiveSection('audit')}
-                    className="min-h-[44px] px-3.5 py-2 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
-                  >
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>{firebaseUser.displayName || firebaseUser.email}</span>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                    currentUser
+                      ? 'bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border-zinc-700 hover:border-amber-500/50'
+                      : 'bg-[#F52D18] hover:bg-[#d92310] text-white border-transparent shadow-md'
+                  }`}
+                  title="Gestionar perfil, rol o conectar Google"
+                >
+                  <ShieldCheck className="w-4 h-4 text-amber-400" />
+                  <span>
+                    {currentUser
+                      ? `${currentUser.displayName?.split(' ')[0]} (${userRole.toUpperCase()})`
+                      : 'Identidad / Iniciar Sesión'}
+                  </span>
+                </button>
 
                 <button
                   type="button"
-                  onClick={() => setIsDark((prev) => !prev)}
+                  onClick={() => {
+                    setIsDark((prev) => {
+                      const next = !prev;
+                      showToast(next ? 'Modo Noche activado' : 'Modo Día activado', 'info');
+                      return next;
+                    });
+                  }}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
                 >
@@ -640,9 +774,16 @@ export default function App() {
               </div>
 
               {authBannerError && (
-                <p className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
-                  {authBannerError}
-                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3">
+                  <span>{authBannerError}</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsAuthModalOpen(true)}
+                    className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold cursor-pointer shrink-0"
+                  >
+                    Usar Perfil Simulado
+                  </button>
+                </div>
               )}
             </div>
 
@@ -858,16 +999,21 @@ export default function App() {
             auditLogs={auditLogs}
             bakeries={bakeries}
             currentUserUid={currentUserUid}
-            currentUserEmail={firebaseUser?.email || null}
+            currentUserEmail={currentUser?.email || null}
             currentUserDisplayName={currentUserDisplayName}
             currentUserRole={userRole}
-            isGoogleAuthenticated={!!firebaseUser}
+            isGoogleAuthenticated={!!currentUser}
             firestoreConnected={firestoreConnected}
             onGoogleSignIn={handleGoogleSignIn}
             onGoogleSignOut={handleGoogleSignOut}
             onSwitchRoleSimulation={handleSwitchRoleSimulation}
             onSyncSeedToFirestore={async () => {
-              await seedInitialDataToFirestore(bakeries, tokens, currentUserUid, userRole);
+              try {
+                await seedInitialDataToFirestore(bakeries, tokens, currentUserUid, userRole);
+                showToast('Padrón de panaderías sincronizado en Firestore.');
+              } catch {
+                showToast('Padrón guardado en memoria local.');
+              }
             }}
             onRecordStorageValidationAudit={handleRecordStorageValidationAudit}
           />
@@ -911,61 +1057,77 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Mobile Fixed Bottom Tab Bar (references/10_mobile_touch_apps.md §3 Pattern 1) */}
+      {/* Mobile-Only Floating Luxury Dock (UX/UI Pro Max) */}
       <nav
         aria-label="Navegación móvil inferior"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 grid grid-cols-4 items-center"
+        className="md:hidden fixed bottom-3 left-3 right-3 z-40 rounded-2xl bg-zinc-950/95 backdrop-blur-2xl border border-zinc-800/90 shadow-2xl px-2 py-1.5 flex items-center justify-between"
       >
         <button
           type="button"
           onClick={() => setActiveSection('portals')}
-          className={`min-h-[44px] flex flex-col items-center justify-center cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
             activeSection === 'portals'
-              ? 'text-[#F52D18]'
-              : 'text-zinc-500 dark:text-zinc-400'
+              ? 'text-white bg-zinc-800/90 font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          <Store className="w-5 h-5" />
-          <span className="text-[10px] font-semibold tracking-tight mt-0.5">Portales</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveSection('tokens')}
-          className={`min-h-[44px] flex flex-col items-center justify-center cursor-pointer ${
-            activeSection === 'tokens'
-              ? 'text-[#F52D18]'
-              : 'text-zinc-500 dark:text-zinc-400'
-          }`}
-        >
-          <QrCode className="w-5 h-5" />
-          <span className="text-[10px] font-semibold tracking-tight mt-0.5">Tokens QR</span>
+          <Store className="w-4 h-4 text-amber-400" />
+          <span className="text-[10px] tracking-tight mt-0.5">Portales</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('results')}
-          className={`min-h-[44px] flex flex-col items-center justify-center cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
             activeSection === 'results'
-              ? 'text-[#F52D18]'
-              : 'text-zinc-500 dark:text-zinc-400'
+              ? 'text-white bg-zinc-800/90 font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          <BarChart3 className="w-5 h-5" />
-          <span className="text-[10px] font-semibold tracking-tight mt-0.5">Resultados</span>
+          <Trophy className="w-4 h-4 text-yellow-400" />
+          <span className="text-[10px] tracking-tight mt-0.5">Podio</span>
+        </button>
+
+        {/* Central Floating QR Scan Action Button */}
+        <div className="flex-1 flex items-center justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              setModalInitialBakeryId(null);
+              setModalInitialTokenCode(null);
+              setIsQrModalOpen(true);
+            }}
+            className="w-12 h-12 -mt-7 rounded-2xl bg-gradient-to-tr from-[#F52D18] via-rose-600 to-amber-500 text-white flex items-center justify-center shadow-xl glow-red active:scale-95 transition-transform cursor-pointer border-2 border-zinc-900"
+            aria-label="Escanear QR y Votar"
+          >
+            <QrCode className="w-6 h-6" />
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setActiveSection('tokens')}
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
+            activeSection === 'tokens'
+              ? 'text-white bg-zinc-800/90 font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
+          }`}
+        >
+          <Ticket className="w-4 h-4 text-emerald-400" />
+          <span className="text-[10px] tracking-tight mt-0.5">Tokens</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('audit')}
-          className={`min-h-[44px] flex flex-col items-center justify-center cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
             activeSection === 'audit'
-              ? 'text-[#F52D18]'
-              : 'text-zinc-500 dark:text-zinc-400'
+              ? 'text-white bg-zinc-800/90 font-bold'
+              : 'text-zinc-400 hover:text-zinc-200'
           }`}
         >
-          <ShieldCheck className="w-5 h-5" />
-          <span className="text-[10px] font-semibold tracking-tight mt-0.5">Auditoría</span>
+          <ShieldCheck className="w-4 h-4 text-blue-400" />
+          <span className="text-[10px] tracking-tight mt-0.5">Auditoría</span>
         </button>
       </nav>
 
@@ -1008,6 +1170,21 @@ export default function App() {
         onClose={() => setIsQrModalOpen(false)}
         onSubmitAtomicVote={handleSubmitAtomicVote}
       />
+
+      {/* Identity & Role Management Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        currentUser={currentUser}
+        currentUserRole={userRole}
+        onSelectSimulatedProfile={handleSelectSimulatedProfile}
+        onGoogleSignIn={handleGoogleSignIn}
+        onSignOut={handleGoogleSignOut}
+        authBannerError={authBannerError}
+      />
+
+      {/* Global Interactive Notification Toasts */}
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
 }
