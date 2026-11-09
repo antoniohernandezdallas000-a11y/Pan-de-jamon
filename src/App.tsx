@@ -574,12 +574,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-24 md:pb-16 transition-colors">
+    <div className="min-h-screen bg-[#FAF6EE] dark:bg-[#141210] text-[#181513] dark:text-[#F5EFE6] pb-28 md:pb-16 transition-colors">
       <OfflineIndicator />
 
-      {/* Human, Warm Navigation Bar */}
-      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 lg:px-8 bg-[#FAF6F0]/90 dark:bg-[#191614]/90 backdrop-blur-md border-b border-[#E8DEC8] dark:border-[#332A24]">
-        {/* Brand & Region */}
+      {/* Retro Neo-Brutalist Header */}
+      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 lg:px-8 bg-[#FFFDF8]/95 dark:bg-[#1C1815]/95 backdrop-blur-md border-b-2 border-[#181513] dark:border-[#38312B]">
+        {/* Brand & Sticker */}
         <div className="flex items-center gap-3 min-w-0">
           <a
             href="#top"
@@ -587,63 +587,63 @@ export default function App() {
               e.preventDefault();
               setActiveSection('portals');
             }}
-            className="font-display text-xl sm:text-2xl font-black text-[#2D241E] dark:text-[#F7F2EC] whitespace-nowrap truncate min-w-0 flex items-center gap-2"
+            className="font-display text-xl sm:text-2xl font-black text-[#181513] dark:text-[#FFFDF8] tracking-tight whitespace-nowrap truncate min-w-0 flex items-center gap-2 hover:opacity-85 transition-opacity"
           >
-            <span>El Mejor Pan de Jamón</span>
+            <span>🥖 Pan de Jamón CB</span>
           </a>
-          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#EFE4D2] dark:bg-[#2A231E] text-[#8C4A28] dark:text-[#E29D74] text-[11px] font-medium shrink-0">
-            Ciudad Bolívar
+          <span className="hidden sm:inline-block sticker-badge bg-[#FFD60A] text-[#181513] text-[10px] font-black uppercase tracking-wider shrink-0">
+            Edición 2026
           </span>
         </div>
 
-        {/* Human Navigation Links */}
+        {/* Neo-Brutalist Tactile Navigation */}
         <nav
           aria-label="Navegación principal"
-          className="hidden md:flex items-center gap-1 text-sm font-medium"
+          className="hidden md:flex items-center gap-2 text-xs font-black uppercase tracking-wider"
         >
           <button
             type="button"
             onClick={() => setActiveSection('portals')}
-            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
+            className={`neo-btn px-4 py-1.5 transition-all cursor-pointer ${
               activeSection === 'portals'
-                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
-                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
+                ? 'bg-[#FFD60A] text-[#181513] shadow-[2px_2px_0px_#181513]'
+                : 'bg-white dark:bg-[#25201C] text-[#554D47] dark:text-[#D5CCC3]'
             }`}
           >
-            Panaderías
+            🥖 Panaderías
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('results')}
-            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
+            className={`neo-btn px-4 py-1.5 transition-all cursor-pointer ${
               activeSection === 'results'
-                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
-                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
+                ? 'bg-[#FFD60A] text-[#181513] shadow-[2px_2px_0px_#181513]'
+                : 'bg-white dark:bg-[#25201C] text-[#554D47] dark:text-[#D5CCC3]'
             }`}
           >
-            Posiciones en Vivo
+            🏆 Posiciones
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('tokens')}
-            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
+            className={`neo-btn px-4 py-1.5 transition-all cursor-pointer ${
               activeSection === 'tokens'
-                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
-                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
+                ? 'bg-[#FFD60A] text-[#181513] shadow-[2px_2px_0px_#181513]'
+                : 'bg-white dark:bg-[#25201C] text-[#554D47] dark:text-[#D5CCC3]'
             }`}
           >
-            Códigos de Mesa
+            🎟️ Mesas
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('audit')}
-            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
+            className={`neo-btn px-4 py-1.5 transition-all cursor-pointer ${
               activeSection === 'audit'
-                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
-                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
+                ? 'bg-[#FFD60A] text-[#181513] shadow-[2px_2px_0px_#181513]'
+                : 'bg-white dark:bg-[#25201C] text-[#554D47] dark:text-[#D5CCC3]'
             }`}
           >
-            Transparencia
+            🔍 Auditoría
           </button>
         </nav>
 
@@ -652,10 +652,10 @@ export default function App() {
           <button
             type="button"
             onClick={() => setIsAuthModalOpen(true)}
-            className="flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 rounded-full bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-xs font-semibold text-[#4A3D34] dark:text-[#E2D6CB] hover:border-[#C84B31] transition-colors cursor-pointer shadow-xs"
+            className="neo-btn bg-white dark:bg-[#25201C] min-h-[38px] px-3 py-1 text-xs font-black text-[#181513] dark:text-[#F5EFE6] flex items-center gap-1.5 cursor-pointer shadow-[2px_2px_0px_#181513]"
             title="Cambiar perfil o usuario"
           >
-            <ShieldCheck className="w-4 h-4 text-[#C84B31]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#E11D48]" />
             <span className="capitalize">{currentUser?.displayName?.split(' ')[0] || userRole}</span>
           </button>
 
@@ -666,7 +666,7 @@ export default function App() {
               setModalInitialTokenCode(null);
               setIsQrModalOpen(true);
             }}
-            className="min-h-[40px] px-4 py-2 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-sm flex items-center gap-1.5"
+            className="neo-btn bg-[#E11D48] hover:bg-[#D01640] text-white min-h-[38px] px-4 py-1 text-xs font-black uppercase tracking-wider whitespace-nowrap shrink-0 cursor-pointer shadow-[2px_2px_0px_#181513] flex items-center gap-1.5"
           >
             <QrCode className="w-4 h-4" />
             <span>Votar</span>
@@ -675,25 +675,45 @@ export default function App() {
       </header>
 
       {/* Main Responsive Container */}
-      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-10">
-        {/* Authentic, Warm Gastronomy Hero */}
-        <section className="relative rounded-3xl bg-[#F4ECE1] dark:bg-[#231E1B] border border-[#E5DAC6] dark:border-[#38312B] overflow-hidden p-6 sm:p-10 lg:p-12 shadow-sm">
+      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
+        {/* Playful Neo-Brutalist Hero Card */}
+        <section className="neo-box bg-[#FFFDF8] dark:bg-[#1E1B18] p-6 sm:p-10 relative overflow-hidden">
+          {/* Window Title Bar */}
+          <div className="flex items-center justify-between pb-4 mb-6 border-b-2 border-[#181513] dark:border-[#3A342E]">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#E11D48] border border-[#181513]" />
+              <span className="w-3 h-3 rounded-full bg-[#FFD60A] border border-[#181513]" />
+              <span className="w-3 h-3 rounded-full bg-[#10B981] border border-[#181513]" />
+              <span className="ml-2 font-mono text-xs font-bold text-[#8A7D73] uppercase tracking-wider hidden sm:inline">
+                concurso-pan-de-jamon-2026.app
+              </span>
+            </div>
+            <span className="sticker-badge bg-[#FFD60A] text-[#181513] text-[10px] font-black uppercase">
+              🔴 EN VIVO · GUAYANA
+            </span>
+          </div>
+
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Left Content Column */}
-            <div className="flex-1 space-y-5 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EADBCA] dark:bg-[#2F2723] text-[#7A3E20] dark:text-[#E8A57E] text-xs font-semibold">
-                <span>Tradición Navideña Guayanesa · Diciembre 2026</span>
+            <div className="flex-1 space-y-4 text-center lg:text-left">
+              <div>
+                <span className="inline-block sticker-badge bg-[#FEF08A] text-[#181513] font-black text-xs uppercase mb-2 rotate-[-1deg]">
+                  🎄 Tradición Navideña Guayanesa · Diciembre 2026
+                </span>
               </div>
 
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-[#2D241E] dark:text-[#FAF6F0] leading-tight">
-                El Concurso del Mejor Pan de Jamón en Ciudad Bolívar
+              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black text-[#181513] dark:text-[#FFFDF8] leading-[1.08] tracking-tight">
+                El Mejor Pan de Jamón <br className="hidden sm:inline" />
+                <span className="inline-block bg-[#FFD60A] text-[#181513] px-3 py-1 rounded border-2 border-[#181513] shadow-[3px_3px_0px_#181513] rotate-[1deg] mt-1">
+                  de Ciudad Bolívar
+                </span>
               </h1>
 
-              <p className="text-sm sm:text-base text-[#57493E] dark:text-[#CBBDB2] max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                Un homenaje a los maestros panaderos que llenan nuestras mesas de sabor decembrino. Recorre las panaderías del Paseo Orinoco, Vista Hermosa y el Casco Histórico, prueba cada receta y vota por tu favorita.
+              <p className="text-sm sm:text-base font-medium text-[#5A5048] dark:text-[#C5BAAF] max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                Los maestros panaderos del Paseo Orinoco, Vista Hermosa y el Casco Histórico compiten por la receta de oro. Degusta, califica y apoya a tu panadería favorita con tu voto real en mesa.
               </p>
 
-              {/* Natural Action Buttons */}
+              {/* Neo-Brutalist Tactile Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <button
                   type="button"
@@ -702,7 +722,7 @@ export default function App() {
                     setModalInitialTokenCode(null);
                     setIsQrModalOpen(true);
                   }}
-                  className="min-h-[46px] px-6 py-2.5 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer"
+                  className="neo-btn bg-[#E11D48] text-white min-h-[46px] px-6 py-2.5 text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2 shadow-[4px_4px_0px_#181513] cursor-pointer"
                 >
                   <QrCode className="w-4 h-4" />
                   <span>Votar con Código de Mesa</span>
@@ -714,9 +734,9 @@ export default function App() {
                     const el = document.getElementById('catalogo-panaderias');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="min-h-[46px] px-5 py-2.5 rounded-full bg-white dark:bg-[#2E2723] hover:bg-[#FAF6F0] dark:hover:bg-[#38302B] text-[#3D322B] dark:text-[#EAE0D6] border border-[#D5C7B2] dark:border-[#423831] text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+                  className="neo-btn bg-white dark:bg-[#25201C] text-[#181513] dark:text-[#FFFDF8] min-h-[46px] px-5 py-2.5 text-xs sm:text-sm font-black flex items-center gap-2 shadow-[4px_4px_0px_#181513] cursor-pointer"
                 >
-                  <Store className="w-4 h-4 text-[#C84B31]" />
+                  <Store className="w-4 h-4 text-[#E11D48]" />
                   <span>Ver Panaderías</span>
                 </button>
 
@@ -727,7 +747,7 @@ export default function App() {
                     type="button"
                     onClick={handleOpenCreateBakeryModal}
                     data-testid="hero-add-bakery-btn"
-                    className="min-h-[46px] px-4 py-2.5 rounded-full bg-white dark:bg-[#2E2723] text-[#7A3E20] dark:text-[#E8A57E] border border-[#D5C7B2] dark:border-[#423831] text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    className="neo-btn bg-[#FFD60A] text-[#181513] min-h-[46px] px-4 py-2.5 text-xs font-black uppercase flex items-center gap-1.5 shadow-[4px_4px_0px_#181513] cursor-pointer"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Inscribir Panadería</span>
@@ -743,13 +763,13 @@ export default function App() {
                       return next;
                     });
                   }}
-                  className="min-h-[46px] min-w-[46px] px-3.5 py-2 rounded-full bg-white dark:bg-[#2E2723] text-[#4A3D34] dark:text-[#CBBDB2] border border-[#D5C7B2] dark:border-[#423831] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  className="neo-btn bg-white dark:bg-[#25201C] text-[#181513] dark:text-[#FFFDF8] min-h-[46px] min-w-[46px] px-3.5 py-2 text-xs font-black flex items-center justify-center gap-1.5 shadow-[4px_4px_0px_#181513] cursor-pointer"
                   aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
                 >
                   {isDark ? (
                     <Sun className="w-4 h-4 text-amber-500" />
                   ) : (
-                    <Moon className="w-4 h-4 text-zinc-600" />
+                    <Moon className="w-4 h-4 text-[#181513]" />
                   )}
                   <span className="hidden sm:inline">{isDark ? 'Día' : 'Noche'}</span>
                 </button>
@@ -758,7 +778,7 @@ export default function App() {
 
             {/* Right Emblem Card */}
             <div className="shrink-0 flex flex-col items-center">
-              <div className="w-40 sm:w-48 aspect-square rounded-3xl bg-white dark:bg-[#28221E] p-3 shadow-md flex items-center justify-center border border-[#E2D5BF] dark:border-[#3D332C]">
+              <div className="neo-box bg-white dark:bg-[#25201C] p-4 w-40 sm:w-48 aspect-square flex items-center justify-center rotate-[2deg] hover:rotate-0 transition-transform">
                 <img
                   src={COMPETITION_LOGO_PATH}
                   alt="Sello del Concurso de Pan de Jamón Ciudad Bolívar"
@@ -766,44 +786,48 @@ export default function App() {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <span className="mt-2 text-xs text-[#7A6B5F] dark:text-[#AFA195] font-medium">
-                Concurso Oficial · Edición 2026
+              <span className="mt-3 sticker-badge bg-[#E2E8F0] dark:bg-[#2A2420] text-[#181513] dark:text-[#E2D6CB] text-[10px] font-black uppercase">
+                Edición Oficial 2026
               </span>
             </div>
           </div>
 
-          {/* Simple, Human Stats Strip */}
-          <div className="mt-8 pt-6 border-t border-[#E5DAC6] dark:border-[#38312B] flex flex-wrap items-center justify-center lg:justify-between gap-4 text-sm text-[#4E4137] dark:text-[#D5C8BD] tabular-nums">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#C84B31]" />
-              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-total-bakeries">
+          {/* Chunky Neo-Brutalist Stats Strip */}
+          <div className="mt-8 pt-6 border-t-2 border-[#181513] dark:border-[#3A342E] grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="neo-box bg-[#FEF3C7] dark:bg-[#2D241E] p-3 text-center">
+              <span className="text-[11px] font-black text-[#7A6B5F] dark:text-[#B5A599] uppercase tracking-wider block">
+                Panaderías
+              </span>
+              <strong className="font-display text-2xl sm:text-3xl font-black text-[#181513] dark:text-[#FFFDF8]" data-testid="kpi-total-bakeries">
                 {bakeries.length}
-              </strong>{' '}
-              panaderías artesanales
+              </strong>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-600" />
-              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-total-votes">
+            <div className="neo-box bg-[#FCE7F3] dark:bg-[#2D241E] p-3 text-center">
+              <span className="text-[11px] font-black text-[#7A6B5F] dark:text-[#B5A599] uppercase tracking-wider block">
+                Votos de la Comunidad
+              </span>
+              <strong className="font-display text-2xl sm:text-3xl font-black text-[#181513] dark:text-[#FFFDF8]" data-testid="kpi-total-votes">
                 {totalVotesCount}
-              </strong>{' '}
-              votos de la comunidad
+              </strong>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-              <strong className="text-base text-[#2D241E] dark:text-white">
+            <div className="neo-box bg-[#FEF08A] dark:bg-[#2D241E] p-3 text-center">
+              <span className="text-[11px] font-black text-[#7A6B5F] dark:text-[#B5A599] uppercase tracking-wider block">
+                Promedio General
+              </span>
+              <strong className="font-display text-2xl sm:text-3xl font-black text-[#181513] dark:text-[#FFFDF8]">
                 {overallCompetitionAverage} ★
-              </strong>{' '}
-              calificación promedio
+              </strong>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-active-tokens">
+            <div className="neo-box bg-[#D1FAE5] dark:bg-[#2D241E] p-3 text-center">
+              <span className="text-[11px] font-black text-[#7A6B5F] dark:text-[#B5A599] uppercase tracking-wider block">
+                Mesas Activas
+              </span>
+              <strong className="font-display text-2xl sm:text-3xl font-black text-[#181513] dark:text-[#FFFDF8]" data-testid="kpi-active-tokens">
                 {activeTokensCount}
-              </strong>{' '}
-              mesas de degustación
+              </strong>
             </div>
           </div>
         </section>
@@ -814,25 +838,30 @@ export default function App() {
             {/* Filter, Search & Admin Registration Bar */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="font-display text-3xl font-extrabold text-[#2D241E] dark:text-[#FAF6F0] tracking-wide">
-                  Panaderías Participantes
-                </h2>
-                <p className="text-xs sm:text-sm text-[#66564B] dark:text-[#B8A99D]">
-                  Conoce a los maestros panaderos, sus secretos de receta y apóyalos con tu voto
+                <div className="flex items-center gap-2">
+                  <h2 className="font-display text-2xl sm:text-3xl font-black text-[#181513] dark:text-[#FFFDF8] tracking-tight">
+                    Panaderías Participantes
+                  </h2>
+                  <span className="sticker-badge bg-[#FFD60A] text-[#181513] text-xs font-black">
+                    {filteredBakeries.length}
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm font-medium text-[#6B5E54] dark:text-[#B8A99D]">
+                  Conoce a los maestros panaderos, sus secretos de receta y califica su sabor
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                {/* Clean Search Input */}
+                {/* Search Input in Neo Box */}
                 <div className="relative w-full sm:w-72">
-                  <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Search className="w-4 h-4 text-[#181513] dark:text-[#FAF6EE] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar panadería o sector..."
                     aria-label="Buscar panadería en Ciudad Bolívar"
-                    className="w-full min-h-[44px] pl-11 pr-4 py-2 rounded-full bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-sm text-[#2D241E] dark:text-[#F7F2EC] placeholder:text-zinc-400 focus:outline-none focus:border-[#C84B31] transition-colors shadow-xs"
+                    className="w-full min-h-[42px] pl-10 pr-3 py-1.5 rounded-lg bg-white dark:bg-[#25201C] border-2 border-[#181513] dark:border-[#3A342E] text-xs font-bold text-[#181513] dark:text-[#F7F2EC] placeholder:text-[#8A7D73] focus:outline-none focus:bg-[#FFFDF8] shadow-[2px_2px_0px_#181513] transition-all"
                   />
                 </div>
 
@@ -841,7 +870,7 @@ export default function App() {
                     type="button"
                     onClick={handleOpenCreateBakeryModal}
                     data-testid="open-admin-bakery-modal-btn"
-                    className="min-h-[44px] px-4 py-2 rounded-full bg-[#2D241E] dark:bg-white text-white dark:text-[#2D241E] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs shrink-0"
+                    className="neo-btn bg-[#FFD60A] text-[#181513] min-h-[42px] px-4 py-1.5 text-xs font-black uppercase flex items-center justify-center gap-1.5 shadow-[2px_2px_0px_#181513] cursor-pointer shrink-0"
                   >
                     <Building2 className="w-4 h-4" />
                     <span>+ Inscribir Panadería</span>
@@ -850,9 +879,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* Clean Sector Filter Pills */}
+            {/* Sector Filter Neo Pills */}
             <div
-              className="flex items-center gap-2 overflow-x-auto pb-1"
+              className="flex items-center gap-2 overflow-x-auto pb-2"
               role="tablist"
               aria-label="Filtrar por sector de Ciudad Bolívar"
             >
@@ -865,13 +894,13 @@ export default function App() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setSelectedSector(sec)}
-                    className={`min-h-[38px] px-4 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                    className={`neo-btn px-4 py-1.5 text-xs font-black rounded-full uppercase tracking-wider whitespace-nowrap shrink-0 cursor-pointer ${
                       active
-                        ? 'bg-[#C84B31] text-white font-semibold shadow-xs'
-                        : 'bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-[#5A4B40] dark:text-[#C5B8AC] hover:text-[#2D241E]'
+                        ? 'bg-[#181513] text-white dark:bg-[#FFD60A] dark:text-[#181513] shadow-[2px_2px_0px_#181513]'
+                        : 'bg-white dark:bg-[#25201C] text-[#554D47] dark:text-[#D5CCC3] shadow-[2px_2px_0px_#181513]'
                     }`}
                   >
-                    {sec === 'ALL' ? 'Todas las Zonas' : sec}
+                    {sec === 'ALL' ? '🗺️ Todas las Zonas' : `📍 ${sec}`}
                   </button>
                 );
               })}
@@ -879,9 +908,10 @@ export default function App() {
 
             {/* Bakery Portals Responsive Grid */}
             {filteredBakeries.length === 0 ? (
-              <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-10 text-center space-y-3">
-                <p className="text-sm text-zinc-500">
-                  No se encontraron panaderías que coincidan con el filtro seleccionado.
+              <div className="neo-box bg-white dark:bg-[#25201C] p-10 text-center space-y-4">
+                <span className="text-4xl block">🔍</span>
+                <p className="text-sm font-bold text-[#554D47] dark:text-[#D5CCC3]">
+                  No se encontraron panaderías que coincidan con la búsqueda.
                 </p>
                 <button
                   type="button"
@@ -889,7 +919,7 @@ export default function App() {
                     setSelectedSector('ALL');
                     setSearchQuery('');
                   }}
-                  className="min-h-[44px] px-4 py-2 rounded-xl bg-[#F52D18] text-white text-xs font-semibold cursor-pointer"
+                  className="neo-btn bg-[#FFD60A] text-[#181513] px-4 py-2 text-xs font-black uppercase shadow-[2px_2px_0px_#181513] cursor-pointer"
                 >
                   Restablecer Filtros
                 </button>
@@ -967,72 +997,76 @@ export default function App() {
         )}
       </main>
 
-      {/* Quiet Editorial Footer */}
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 pt-6 border-t border-zinc-200 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
-        <div>
-          El Fucking Mejor Pan de Jamón · Ciudad Bolívar, Estado Bolívar · PWA Oficial
+      {/* Neo-Brutalist Friendly Footer */}
+      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 pt-6 border-t-2 border-[#181513] dark:border-[#38312B] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-[#655950] dark:text-[#B5A79C]">
+        <div className="flex items-center gap-2">
+          <span>🥖</span>
+          <span>Concurso Oficial del Mejor Pan de Jamón · Ciudad Bolívar, Estado Bolívar</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setActiveSection('portals')}
-            className="hover:text-[#F52D18] cursor-pointer"
+            className="hover:text-[#E11D48] cursor-pointer"
           >
-            Portales
+            Panaderías
           </button>
+          <span>·</span>
           <button
             type="button"
             onClick={() => setActiveSection('tokens')}
-            className="hover:text-[#F52D18] cursor-pointer"
+            className="hover:text-[#E11D48] cursor-pointer"
           >
-            Laboratorio QR
+            Mesas QR
           </button>
+          <span>·</span>
           <button
             type="button"
             onClick={() => setActiveSection('results')}
-            className="hover:text-[#F52D18] cursor-pointer"
+            className="hover:text-[#E11D48] cursor-pointer"
           >
-            Resultados en Vivo
+            Posiciones
           </button>
+          <span>·</span>
           <button
             type="button"
             onClick={() => setActiveSection('audit')}
-            className="hover:text-[#F52D18] cursor-pointer"
+            className="hover:text-[#E11D48] cursor-pointer"
           >
-            Auditoría & Storage
+            Auditoría
           </button>
         </div>
       </footer>
 
-      {/* Mobile-Only Warm Artisanal Bottom Dock */}
+      {/* Mobile-Only Neo-Brutalist Bottom Dock */}
       <nav
         aria-label="Navegación móvil inferior"
-        className="md:hidden fixed bottom-3 left-3 right-3 z-40 rounded-full bg-[#FAF6F0]/95 dark:bg-[#1C1816]/95 backdrop-blur-xl border border-[#DDD2C0] dark:border-[#382F2A] shadow-lg px-2 py-1 flex items-center justify-between"
+        className="md:hidden fixed bottom-3 left-3 right-3 z-40 rounded-2xl bg-[#FFFDF8] dark:bg-[#1E1B18] border-2 border-[#181513] dark:border-[#38312B] shadow-[4px_4px_0px_#181513] px-2 py-1.5 flex items-center justify-between"
       >
         <button
           type="button"
           onClick={() => setActiveSection('portals')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
             activeSection === 'portals'
-              ? 'text-[#C84B31] font-bold'
-              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
+              ? 'text-[#181513] dark:text-[#FFFDF8] font-black'
+              : 'text-[#8A7D73] dark:text-[#8E8278] hover:text-[#181513]'
           }`}
         >
           <Store className="w-4 h-4" />
-          <span className="text-[10px] tracking-tight mt-0.5">Panaderías</span>
+          <span className="text-[10px] font-black tracking-tight mt-0.5">Panaderías</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('results')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
             activeSection === 'results'
-              ? 'text-[#C84B31] font-bold'
-              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
+              ? 'text-[#181513] dark:text-[#FFFDF8] font-black'
+              : 'text-[#8A7D73] dark:text-[#8E8278] hover:text-[#181513]'
           }`}
         >
           <Trophy className="w-4 h-4" />
-          <span className="text-[10px] tracking-tight mt-0.5">Posiciones</span>
+          <span className="text-[10px] font-black tracking-tight mt-0.5">Posiciones</span>
         </button>
 
         {/* Central Action Button */}
@@ -1044,7 +1078,7 @@ export default function App() {
               setModalInitialTokenCode(null);
               setIsQrModalOpen(true);
             }}
-            className="w-12 h-12 -mt-6 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer border-2 border-white dark:border-[#1C1816]"
+            className="w-12 h-12 -mt-6 rounded-xl bg-[#E11D48] text-white flex items-center justify-center border-2 border-[#181513] shadow-[3px_3px_0px_#181513] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all cursor-pointer"
             aria-label="Votar con código de mesa"
           >
             <QrCode className="w-5 h-5" />
@@ -1054,27 +1088,27 @@ export default function App() {
         <button
           type="button"
           onClick={() => setActiveSection('tokens')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
             activeSection === 'tokens'
-              ? 'text-[#C84B31] font-bold'
-              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
+              ? 'text-[#181513] dark:text-[#FFFDF8] font-black'
+              : 'text-[#8A7D73] dark:text-[#8E8278] hover:text-[#181513]'
           }`}
         >
           <Ticket className="w-4 h-4" />
-          <span className="text-[10px] tracking-tight mt-0.5">Mesas</span>
+          <span className="text-[10px] font-black tracking-tight mt-0.5">Mesas</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('audit')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1 rounded-xl transition-all cursor-pointer ${
             activeSection === 'audit'
-              ? 'text-[#C84B31] font-bold'
-              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
+              ? 'text-[#181513] dark:text-[#FFFDF8] font-black'
+              : 'text-[#8A7D73] dark:text-[#8E8278] hover:text-[#181513]'
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
-          <span className="text-[10px] tracking-tight mt-0.5">Detalles</span>
+          <span className="text-[10px] font-black tracking-tight mt-0.5">Detalles</span>
         </button>
       </nav>
 

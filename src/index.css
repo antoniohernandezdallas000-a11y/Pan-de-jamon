@@ -10,14 +10,21 @@
 
   body {
     font-family: var(--font-sans);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    background-color: #FAF6F0;
-    color: #2D241E;
+    background-color: #F8F5EE;
+    background-image: 
+      linear-gradient(#E8E0D0 1px, transparent 1px),
+      linear-gradient(90deg, #E8E0D0 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: #181513;
   }
 
   .dark body, body.dark {
-    background-color: #191614;
-    color: #F7F2EC;
+    background-color: #181412;
+    background-image: 
+      linear-gradient(#29231E 1px, transparent 1px),
+      linear-gradient(90deg, #29231E 1px, transparent 1px);
+    background-size: 28px 28px;
+    color: #FAF4ED;
   }
 
   h1, h2, h3, .font-display {
@@ -31,33 +38,94 @@
   }
 }
 
-/* Warm artisanal cards & subtle paper shadows */
-.card-warm {
+/* Neo-Brutalist & Youthful Creative Utilities (Inspired by crea-live) */
+.neo-box {
   background: #FFFFFF;
-  border: 1px solid #EFE8DC;
-  box-shadow: 0 4px 20px -2px rgba(45, 36, 30, 0.05);
+  border: 2.5px solid #181513;
+  box-shadow: 5px 5px 0px #181513;
+  border-radius: 22px;
 }
 
-.dark .card-warm {
-  background: #231E1B;
-  border: 1px solid #38312B;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.25);
+.dark .neo-box {
+  background: #241E1A;
+  border: 2.5px solid #F5EFEB;
+  box-shadow: 5px 5px 0px #F5EFEB;
+}
+
+.neo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  border: 2px solid #181513;
+  box-shadow: 3px 3px 0px #181513;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+.neo-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #181513;
+}
+
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #181513;
+}
+
+.dark .neo-btn {
+  border-color: #F5EFEB;
+  box-shadow: 3px 3px 0px #F5EFEB;
+}
+
+.sticker-badge {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 2px solid #181513;
+  box-shadow: 2px 2px 0px #181513;
+}
+
+.dark .sticker-badge {
+  border-color: #F5EFEB;
+  box-shadow: 2px 2px 0px #F5EFEB;
+}
+
+/* Window Title Bar with Traffic Light Dots */
+.window-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #EFE7DA;
+  border-bottom: 2.5px solid #181513;
+  border-top-left-radius: 19px;
+  border-top-right-radius: 19px;
+}
+
+.dark .window-bar {
+  background: #2F2722;
+  border-bottom-color: #F5EFEB;
 }
 
 /* Smooth artisanal scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #D8CEBE;
+  border: 2px solid #181513;
   border-radius: 9999px;
 }
 .dark ::-webkit-scrollbar-thumb {
   background: #473E37;
+  border-color: #F5EFEB;
 }
 
 @media (prefers-reduced-motion: reduce) {
