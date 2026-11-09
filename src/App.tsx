@@ -577,9 +577,9 @@ export default function App() {
     <div className="min-h-screen bg-[#FAF8F5] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-24 md:pb-16 transition-colors">
       <OfflineIndicator />
 
-      {/* Strict 3-Zone Top Bar Contract (frontend-design/SKILL.md §2) */}
-      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-8 px-4 sm:px-6 lg:px-8 bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80">
-        {/* Zone 1: Wordmark + Live Pulse Indicator */}
+      {/* Human, Warm Navigation Bar */}
+      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 lg:px-8 bg-[#FAF6F0]/90 dark:bg-[#191614]/90 backdrop-blur-md border-b border-[#E8DEC8] dark:border-[#332A24]">
+        {/* Brand & Region */}
         <div className="flex items-center gap-3 min-w-0">
           <a
             href="#top"
@@ -587,81 +587,76 @@ export default function App() {
               e.preventDefault();
               setActiveSection('portals');
             }}
-            className="font-display text-lg sm:text-2xl font-extrabold tracking-wide text-white whitespace-nowrap truncate min-w-0 flex items-center gap-2"
+            className="font-display text-xl sm:text-2xl font-black text-[#2D241E] dark:text-[#F7F2EC] whitespace-nowrap truncate min-w-0 flex items-center gap-2"
           >
-            <span>El Fucking Mejor Pan de Jamón</span>
+            <span>El Mejor Pan de Jamón</span>
           </a>
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold tracking-wider shrink-0">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>EN VIVO</span>
+          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#EFE4D2] dark:bg-[#2A231E] text-[#8C4A28] dark:text-[#E29D74] text-[11px] font-medium shrink-0">
+            Ciudad Bolívar
           </span>
         </div>
 
-        {/* Zone 2: Modern Pill Navigation Bar */}
+        {/* Human Navigation Links */}
         <nav
           aria-label="Navegación principal"
-          className="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-xs font-semibold"
+          className="hidden md:flex items-center gap-1 text-sm font-medium"
         >
           <button
             type="button"
             onClick={() => setActiveSection('portals')}
-            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
               activeSection === 'portals'
-                ? 'bg-[#F52D18] text-white shadow-md font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
+                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
             }`}
           >
-            <Store className="w-3.5 h-3.5" />
-            <span>Portales</span>
+            Panaderías
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('results')}
-            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
               activeSection === 'results'
-                ? 'bg-[#F52D18] text-white shadow-md font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
+                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
             }`}
           >
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Podio & Ranking</span>
+            Posiciones en Vivo
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('tokens')}
-            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
               activeSection === 'tokens'
-                ? 'bg-[#F52D18] text-white shadow-md font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
+                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
             }`}
           >
-            <Ticket className="w-3.5 h-3.5" />
-            <span>Tokens QR</span>
+            Códigos de Mesa
           </button>
           <button
             type="button"
             onClick={() => setActiveSection('audit')}
-            className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
               activeSection === 'audit'
-                ? 'bg-[#F52D18] text-white shadow-md font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-[#C84B31] text-white font-semibold shadow-sm'
+                : 'text-[#6E5D53] dark:text-[#BFAF9F] hover:text-[#2D241E] dark:hover:text-white'
             }`}
           >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Auditoría</span>
+            Transparencia
           </button>
         </nav>
 
-        {/* Zone 3: 1 primary action + Quick Profile Pill */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        {/* Action Controls */}
+        <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={() => setIsAuthModalOpen(true)}
-            className="flex items-center gap-2 min-h-[40px] px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-700/80 text-xs font-semibold text-zinc-200 hover:border-amber-500/60 transition-colors cursor-pointer"
-            title="Cambiar perfil o rol de usuario"
+            className="flex items-center gap-1.5 min-h-[40px] px-3.5 py-1.5 rounded-full bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-xs font-semibold text-[#4A3D34] dark:text-[#E2D6CB] hover:border-[#C84B31] transition-colors cursor-pointer shadow-xs"
+            title="Cambiar perfil o usuario"
           >
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span className="font-mono uppercase text-[11px] text-amber-400 font-bold">{userRole}</span>
+            <ShieldCheck className="w-4 h-4 text-[#C84B31]" />
+            <span className="capitalize">{currentUser?.displayName?.split(' ')[0] || userRole}</span>
           </button>
 
           <button
@@ -671,48 +666,34 @@ export default function App() {
               setModalInitialTokenCode(null);
               setIsQrModalOpen(true);
             }}
-            className="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-md glow-red flex items-center gap-1.5"
+            className="min-h-[40px] px-4 py-2 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-sm flex items-center gap-1.5"
           >
             <QrCode className="w-4 h-4" />
-            <span className="hidden sm:inline">Escanear QR</span>
-            <span className="sm:hidden">Votar</span>
+            <span>Votar</span>
           </button>
         </div>
       </header>
 
-      {/* Main Responsive Container (max-w-7xl on desktop, mobile-first touch layout) */}
+      {/* Main Responsive Container */}
       <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-10">
-        {/* Modern Organic Culinary Hero (No more rigid square boxes) */}
-        <section className="relative rounded-[36px] bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 border border-white/10 overflow-hidden shadow-2xl p-6 sm:p-10 lg:p-12">
-          {/* Ambient Warm Glow */}
-          <div
-            aria-hidden="true"
-            className="absolute -top-32 right-0 w-[500px] h-[400px] bg-gradient-to-b from-amber-500/15 via-[#F52D18]/10 to-transparent blur-3xl pointer-events-none rounded-full"
-          />
-
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+        {/* Authentic, Warm Gastronomy Hero */}
+        <section className="relative rounded-3xl bg-[#F4ECE1] dark:bg-[#231E1B] border border-[#E5DAC6] dark:border-[#38312B] overflow-hidden p-6 sm:p-10 lg:p-12 shadow-sm">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Left Content Column */}
-            <div className="flex-1 space-y-6 text-center lg:text-left">
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>TEMPORADA GASTRONÓMICA 2026</span>
-                </span>
-                <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-zinc-300">
-                  Ciudad Bolívar · Venezuela
-                </span>
+            <div className="flex-1 space-y-5 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EADBCA] dark:bg-[#2F2723] text-[#7A3E20] dark:text-[#E8A57E] text-xs font-semibold">
+                <span>Tradición Navideña Guayanesa · Diciembre 2026</span>
               </div>
 
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.05]">
-                EL CONCURSO DEFINITIVO DEL{' '}
-                <span className="text-gold-shimmer">MEJOR PAN DE JAMÓN</span>
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-[#2D241E] dark:text-[#FAF6F0] leading-tight">
+                El Concurso del Mejor Pan de Jamón en Ciudad Bolívar
               </h1>
 
-              <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                Desde las panaderías del Paseo Orinoco hasta Vista Hermosa. Escanea tu token QR en mesa con la cámara, califica la masa brioche, el relleno ahumado y la receta tradicional en vivo.
+              <p className="text-sm sm:text-base text-[#57493E] dark:text-[#CBBDB2] max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                Un homenaje a los maestros panaderos que llenan nuestras mesas de sabor decembrino. Recorre las panaderías del Paseo Orinoco, Vista Hermosa y el Casco Histórico, prueba cada receta y vota por tu favorita.
               </p>
 
-              {/* Modern Action Buttons with Fluid Pill Silhouettes */}
+              {/* Natural Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <button
                   type="button"
@@ -721,41 +702,37 @@ export default function App() {
                     setModalInitialTokenCode(null);
                     setIsQrModalOpen(true);
                   }}
-                  className="min-h-[48px] px-6 py-2.5 rounded-full bg-gradient-to-r from-[#F52D18] via-rose-600 to-amber-600 hover:opacity-95 text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shadow-xl glow-red active:scale-98 cursor-pointer"
+                  className="min-h-[46px] px-6 py-2.5 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer"
                 >
                   <QrCode className="w-4 h-4" />
-                  <span>Abrir Cámara QR y Votar</span>
+                  <span>Votar con Código de Mesa</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={handleOpenCreateBakeryModal}
-                  data-testid="hero-add-bakery-btn"
-                  className="min-h-[48px] px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/30 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md"
+                  onClick={() => {
+                    const el = document.getElementById('catalogo-panaderias');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="min-h-[46px] px-5 py-2.5 rounded-full bg-white dark:bg-[#2E2723] hover:bg-[#FAF6F0] dark:hover:bg-[#38302B] text-[#3D322B] dark:text-[#EAE0D6] border border-[#D5C7B2] dark:border-[#423831] text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
-                  <Plus className="w-4 h-4" />
-                  <span>Inscribir Panadería (Admin)</span>
+                  <Store className="w-4 h-4 text-[#C84B31]" />
+                  <span>Ver Panaderías</span>
                 </button>
 
                 <PWAInstallButton />
 
-                <button
-                  type="button"
-                  onClick={() => setIsAuthModalOpen(true)}
-                  className={`min-h-[48px] px-5 py-2.5 rounded-full border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md ${
-                    currentUser
-                      ? 'bg-zinc-900/90 hover:bg-zinc-800 text-zinc-100 border-white/10 hover:border-amber-500/40'
-                      : 'bg-[#F52D18] hover:bg-[#d92310] text-white border-transparent shadow-md'
-                  }`}
-                  title="Gestionar perfil, rol o conectar Google"
-                >
-                  <ShieldCheck className="w-4 h-4 text-amber-400" />
-                  <span>
-                    {currentUser
-                      ? `${currentUser.displayName?.split(' ')[0]} (${userRole.toUpperCase()})`
-                      : 'Identidad / Iniciar Sesión'}
-                  </span>
-                </button>
+                {userRole === 'admin' && (
+                  <button
+                    type="button"
+                    onClick={handleOpenCreateBakeryModal}
+                    data-testid="hero-add-bakery-btn"
+                    className="min-h-[46px] px-4 py-2.5 rounded-full bg-white dark:bg-[#2E2723] text-[#7A3E20] dark:text-[#E8A57E] border border-[#D5C7B2] dark:border-[#423831] text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Inscribir Panadería</span>
+                  </button>
+                )}
 
                 <button
                   type="button"
@@ -766,130 +743,118 @@ export default function App() {
                       return next;
                     });
                   }}
-                  className="min-h-[48px] min-w-[48px] px-4 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  className="min-h-[46px] min-w-[46px] px-3.5 py-2 rounded-full bg-white dark:bg-[#2E2723] text-[#4A3D34] dark:text-[#CBBDB2] border border-[#D5C7B2] dark:border-[#423831] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                   aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
                 >
                   {isDark ? (
-                    <Sun className="w-4 h-4 text-amber-400" />
+                    <Sun className="w-4 h-4 text-amber-500" />
                   ) : (
-                    <Moon className="w-4 h-4 text-zinc-300" />
+                    <Moon className="w-4 h-4 text-zinc-600" />
                   )}
                   <span className="hidden sm:inline">{isDark ? 'Día' : 'Noche'}</span>
                 </button>
               </div>
-
-              {authBannerError && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3.5">
-                  <span>{authBannerError}</span>
-                  <button
-                    type="button"
-                    onClick={() => setIsAuthModalOpen(true)}
-                    className="px-3 py-1 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-semibold cursor-pointer shrink-0"
-                  >
-                    Usar Perfil Simulado
-                  </button>
-                </div>
-              )}
             </div>
 
-            {/* Right Visual Emblem */}
+            {/* Right Emblem Card */}
             <div className="shrink-0 flex flex-col items-center">
-              <div className="relative w-48 sm:w-56 aspect-square rounded-full bg-gradient-to-tr from-amber-500/20 via-black to-[#F52D18]/20 p-2 shadow-2xl flex items-center justify-center border-2 border-white/10 animate-pulse-glow">
+              <div className="w-40 sm:w-48 aspect-square rounded-3xl bg-white dark:bg-[#28221E] p-3 shadow-md flex items-center justify-center border border-[#E2D5BF] dark:border-[#3D332C]">
                 <img
                   src={COMPETITION_LOGO_PATH}
-                  alt="Logo Oficial El Fucking Mejor Pan de Jamón"
+                  alt="Sello del Concurso de Pan de Jamón Ciudad Bolívar"
                   referrerPolicy="no-referrer"
-                  className="w-4/5 h-4/5 object-contain"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <span className="mt-3 text-xs font-mono text-zinc-400 tracking-wider">
-                SELLO OFICIAL CIUDAD BOLÍVAR
+              <span className="mt-2 text-xs text-[#7A6B5F] dark:text-[#AFA195] font-medium">
+                Concurso Oficial · Edición 2026
               </span>
             </div>
           </div>
 
-          {/* Fluid Floating KPI Capsules (Replaces old rigid divide-x boxes) */}
-          <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-between gap-3.5 tabular-nums">
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-              <span className="font-mono text-base font-black text-white" data-testid="kpi-total-bakeries">
+          {/* Simple, Human Stats Strip */}
+          <div className="mt-8 pt-6 border-t border-[#E5DAC6] dark:border-[#38312B] flex flex-wrap items-center justify-center lg:justify-between gap-4 text-sm text-[#4E4137] dark:text-[#D5C8BD] tabular-nums">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#C84B31]" />
+              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-total-bakeries">
                 {bakeries.length}
-              </span>
-              <span className="text-xs text-zinc-400">Panaderías Oficiales</span>
+              </strong>{' '}
+              panaderías artesanales
             </div>
 
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F52D18]" />
-              <span className="font-mono text-base font-black text-[#F52D18]" data-testid="kpi-total-votes">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-600" />
+              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-total-votes">
                 {totalVotesCount}
-              </span>
-              <span className="text-xs text-zinc-400">Votos Verificados</span>
+              </strong>{' '}
+              votos de la comunidad
             </div>
 
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              <span className="font-mono text-base font-black text-amber-400">
+            <div className="flex items-center gap-2">
+              <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+              <strong className="text-base text-[#2D241E] dark:text-white">
                 {overallCompetitionAverage} ★
-              </span>
-              <span className="text-xs text-zinc-400">Promedio Global</span>
+              </strong>{' '}
+              calificación promedio
             </div>
 
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 backdrop-blur-md shadow-sm">
-              <Ticket className="w-4 h-4 text-emerald-400" />
-              <span className="font-mono text-base font-black text-emerald-400" data-testid="kpi-active-tokens">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
+              <strong className="text-base text-[#2D241E] dark:text-white" data-testid="kpi-active-tokens">
                 {activeTokensCount}
-              </span>
-              <span className="text-xs text-zinc-400">Mesas Activas</span>
+              </strong>{' '}
+              mesas de degustación
             </div>
           </div>
         </section>
 
         {/* Active View Switcher Content */}
         {activeSection === 'portals' && (
-          <section className="space-y-8" aria-label="Portales de Panaderías de Ciudad Bolívar">
-            {/* Filter, Search & Admin Bakery Registration Bar with Organic Shapes */}
+          <section id="catalogo-panaderias" className="space-y-6" aria-label="Panaderías de Ciudad Bolívar">
+            {/* Filter, Search & Admin Registration Bar */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h2 className="font-display text-3xl sm:text-4xl font-black text-white tracking-wide">
-                  Panaderías en Competencia
+                <h2 className="font-display text-3xl font-extrabold text-[#2D241E] dark:text-[#FAF6F0] tracking-wide">
+                  Panaderías Participantes
                 </h2>
-                <p className="text-xs sm:text-sm text-zinc-400">
-                  Explora las casas panaderas artesanales de Ciudad Bolívar y vota por tu favorita
+                <p className="text-xs sm:text-sm text-[#66564B] dark:text-[#B8A99D]">
+                  Conoce a los maestros panaderos, sus secretos de receta y apóyalos con tu voto
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                {/* Search Input (Pill rounded) */}
+                {/* Clean Search Input */}
                 <div className="relative w-full sm:w-72">
                   <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Buscar panadería, sector..."
+                    placeholder="Buscar panadería o sector..."
                     aria-label="Buscar panadería en Ciudad Bolívar"
-                    className="w-full min-h-[46px] pl-11 pr-4 py-2.5 rounded-full bg-zinc-900/90 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                    className="w-full min-h-[44px] pl-11 pr-4 py-2 rounded-full bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-sm text-[#2D241E] dark:text-[#F7F2EC] placeholder:text-zinc-400 focus:outline-none focus:border-[#C84B31] transition-colors shadow-xs"
                   />
                 </div>
 
-                {/* Admin Button */}
-                <button
-                  type="button"
-                  onClick={handleOpenCreateBakeryModal}
-                  data-testid="open-admin-bakery-modal-btn"
-                  className="min-h-[46px] px-5 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shrink-0"
-                >
-                  <Building2 className="w-4 h-4 text-[#F52D18]" />
-                  <span>+ Agregar Panadería</span>
-                </button>
+                {userRole === 'admin' && (
+                  <button
+                    type="button"
+                    onClick={handleOpenCreateBakeryModal}
+                    data-testid="open-admin-bakery-modal-btn"
+                    className="min-h-[44px] px-4 py-2 rounded-full bg-[#2D241E] dark:bg-white text-white dark:text-[#2D241E] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs shrink-0"
+                  >
+                    <Building2 className="w-4 h-4" />
+                    <span>+ Inscribir Panadería</span>
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* Interactive Sector Filter Capsule Bar (No rigid box) */}
+            {/* Clean Sector Filter Pills */}
             <div
-              className="flex items-center gap-2 p-1 overflow-x-auto no-scrollbar"
+              className="flex items-center gap-2 overflow-x-auto pb-1"
               role="tablist"
-              aria-label="Filtrar panaderías por sector de Ciudad Bolívar"
+              aria-label="Filtrar por sector de Ciudad Bolívar"
             >
               {sectors.map((sec) => {
                 const active = selectedSector === sec;
@@ -900,13 +865,13 @@ export default function App() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setSelectedSector(sec)}
-                    className={`min-h-[40px] px-5 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
+                    className={`min-h-[38px] px-4 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                       active
-                        ? 'bg-gradient-to-r from-[#F52D18] to-amber-600 text-white shadow-md shadow-red-500/20 font-bold'
-                        : 'bg-zinc-900/90 text-zinc-400 hover:text-white border border-white/5'
+                        ? 'bg-[#C84B31] text-white font-semibold shadow-xs'
+                        : 'bg-white dark:bg-[#251F1C] border border-[#DDD0BC] dark:border-[#3D332C] text-[#5A4B40] dark:text-[#C5B8AC] hover:text-[#2D241E]'
                     }`}
                   >
-                    {sec === 'ALL' ? 'Todos los Sectores' : sec}
+                    {sec === 'ALL' ? 'Todas las Zonas' : sec}
                   </button>
                 );
               })}
@@ -1039,38 +1004,38 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Mobile-Only Floating Luxury Dock (UX/UI Pro Max) */}
+      {/* Mobile-Only Warm Artisanal Bottom Dock */}
       <nav
         aria-label="Navegación móvil inferior"
-        className="md:hidden fixed bottom-3 left-3 right-3 z-40 rounded-2xl bg-zinc-950/95 backdrop-blur-2xl border border-zinc-800/90 shadow-2xl px-2 py-1.5 flex items-center justify-between"
+        className="md:hidden fixed bottom-3 left-3 right-3 z-40 rounded-full bg-[#FAF6F0]/95 dark:bg-[#1C1816]/95 backdrop-blur-xl border border-[#DDD2C0] dark:border-[#382F2A] shadow-lg px-2 py-1 flex items-center justify-between"
       >
         <button
           type="button"
           onClick={() => setActiveSection('portals')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
             activeSection === 'portals'
-              ? 'text-white bg-zinc-800/90 font-bold'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'text-[#C84B31] font-bold'
+              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
           }`}
         >
-          <Store className="w-4 h-4 text-amber-400" />
-          <span className="text-[10px] tracking-tight mt-0.5">Portales</span>
+          <Store className="w-4 h-4" />
+          <span className="text-[10px] tracking-tight mt-0.5">Panaderías</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('results')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
             activeSection === 'results'
-              ? 'text-white bg-zinc-800/90 font-bold'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'text-[#C84B31] font-bold'
+              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
           }`}
         >
-          <Trophy className="w-4 h-4 text-yellow-400" />
-          <span className="text-[10px] tracking-tight mt-0.5">Podio</span>
+          <Trophy className="w-4 h-4" />
+          <span className="text-[10px] tracking-tight mt-0.5">Posiciones</span>
         </button>
 
-        {/* Central Floating QR Scan Action Button */}
+        {/* Central Action Button */}
         <div className="flex-1 flex items-center justify-center">
           <button
             type="button"
@@ -1079,37 +1044,37 @@ export default function App() {
               setModalInitialTokenCode(null);
               setIsQrModalOpen(true);
             }}
-            className="w-12 h-12 -mt-7 rounded-2xl bg-gradient-to-tr from-[#F52D18] via-rose-600 to-amber-500 text-white flex items-center justify-center shadow-xl glow-red active:scale-95 transition-transform cursor-pointer border-2 border-zinc-900"
-            aria-label="Escanear QR y Votar"
+            className="w-12 h-12 -mt-6 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white flex items-center justify-center shadow-md active:scale-95 transition-transform cursor-pointer border-2 border-white dark:border-[#1C1816]"
+            aria-label="Votar con código de mesa"
           >
-            <QrCode className="w-6 h-6" />
+            <QrCode className="w-5 h-5" />
           </button>
         </div>
 
         <button
           type="button"
           onClick={() => setActiveSection('tokens')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
             activeSection === 'tokens'
-              ? 'text-white bg-zinc-800/90 font-bold'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'text-[#C84B31] font-bold'
+              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
           }`}
         >
-          <Ticket className="w-4 h-4 text-emerald-400" />
-          <span className="text-[10px] tracking-tight mt-0.5">Tokens</span>
+          <Ticket className="w-4 h-4" />
+          <span className="text-[10px] tracking-tight mt-0.5">Mesas</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveSection('audit')}
-          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-xl transition-all cursor-pointer ${
+          className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
             activeSection === 'audit'
-              ? 'text-white bg-zinc-800/90 font-bold'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'text-[#C84B31] font-bold'
+              : 'text-[#7A6B60] dark:text-[#A7988D] hover:text-[#2D241E]'
           }`}
         >
-          <ShieldCheck className="w-4 h-4 text-blue-400" />
-          <span className="text-[10px] tracking-tight mt-0.5">Auditoría</span>
+          <ShieldCheck className="w-4 h-4" />
+          <span className="text-[10px] tracking-tight mt-0.5">Detalles</span>
         </button>
       </nav>
 

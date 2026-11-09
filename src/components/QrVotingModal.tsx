@@ -471,25 +471,25 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
       aria-modal="true"
       aria-labelledby="qr-voting-modal-title"
     >
-      <div className="w-full max-w-2xl rounded-t-[36px] md:rounded-[36px] bg-zinc-950 border border-white/10 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
+      <div className="w-full max-w-2xl rounded-t-3xl md:rounded-3xl bg-[#FAF6F0] dark:bg-[#1E1917] border border-[#DDD0BC] dark:border-[#382E27] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col text-[#2D241E] dark:text-[#F7F2EC]">
         {/* Modal Header */}
-        <div className="p-6 md:px-8 bg-zinc-950 border-b border-white/10 flex items-center justify-between gap-4 shrink-0">
+        <div className="p-6 md:px-8 bg-white dark:bg-[#251F1C] border-b border-[#E8DEC8] dark:border-[#332A24] flex items-center justify-between gap-4 shrink-0">
           <div className="flex items-center gap-3.5">
             <img
               src={COMPETITION_LOGO_PATH}
-              alt="Logo oficial El Fucking Mejor Pan de Jamón"
+              alt="Logo oficial El Concurso del Pan de Jamón"
               referrerPolicy="no-referrer"
-              className="w-12 h-12 rounded-xl object-contain bg-black border border-[#F52D18]/60 p-1 shrink-0"
+              className="w-12 h-12 rounded-2xl object-contain bg-white dark:bg-[#1A1614] border border-[#DDD0BC] dark:border-[#382E27] p-1 shrink-0"
             />
             <div>
               <h2
                 id="qr-voting-modal-title"
-                className="font-display text-2xl font-extrabold tracking-wide text-white"
+                className="font-display text-2xl font-bold tracking-wide text-[#2D241E] dark:text-[#FAF6F0]"
               >
-                Cabina de Escaneo QR y Voto Atómico
+                Vota por tu Pan de Jamón Favorito
               </h2>
-              <p className="text-xs text-zinc-400">
-                Verificación criptográfica de token + Encuesta de 3 preguntas en Firestore
+              <p className="text-xs text-[#7A6B60] dark:text-[#A7988D]">
+                Ingresa el código de tu mesa o usa la cámara para dejar tu opinión
               </p>
             </div>
           </div>
@@ -497,7 +497,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[44px] min-w-[44px] rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-700 flex items-center justify-center transition-colors cursor-pointer"
+            className="min-h-[40px] min-w-[40px] rounded-full bg-[#FAF6F0] dark:bg-[#1A1614] hover:bg-[#EFE8DC] text-[#5C4F46] hover:text-[#2D241E] border border-[#DDD0BC] dark:border-[#382E27] flex items-center justify-center transition-colors cursor-pointer"
             aria-label="Cerrar cabina de votación"
           >
             <X className="w-5 h-5" />
@@ -505,35 +505,23 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-5 md:p-7 overflow-y-auto space-y-6 flex-1">
+        <div className="p-6 md:p-8 overflow-y-auto space-y-6 flex-1">
           {txReceipt ? (
             <div
-              className="rounded-2xl bg-emerald-950/30 border border-emerald-500/40 p-6 space-y-4 text-center"
+              className="rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 p-6 space-y-4 text-center"
               data-testid="atomic-vote-receipt"
             >
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <div className="space-y-1">
-                <h3 className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white">
-                  ¡Voto Atómico Registrado!
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#2D241E] dark:text-white">
+                  ¡Muchas gracias por tu voto!
                 </h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-300">
-                  Tu calificación de 3 preguntas fue acreditada a{' '}
-                  <strong>{txReceipt.bakeryName}</strong> y el token{' '}
-                  <strong className="font-mono">{txReceipt.tokenCode}</strong> actualizó su contador atómicamente.
+                <p className="text-sm text-[#57493E] dark:text-[#CBBDB2]">
+                  Tu opinión para <strong>{txReceipt.bakeryName}</strong> ha sido registrada con éxito con el código{' '}
+                  <strong className="font-mono">{txReceipt.tokenCode}</strong>. ¡Gracias por celebrar la tradición con nosotros!
                 </p>
-              </div>
-
-              <div className="rounded-xl bg-zinc-950 p-4 text-left font-mono text-xs text-zinc-300 space-y-1.5 border border-zinc-800">
-                <div>ID de Voto: {txReceipt.voteId}</div>
-                <div>Hash de Integridad: {txReceipt.txHash}</div>
-                <div>
-                  Estado Transacción:{' '}
-                  {txReceipt.syncedToCloud
-                    ? 'CONFIRMADO EN FIRESTORE CLOUD + AUDITORÍA'
-                    : 'CONFIRMADO EN MOTOR TRANSACCIONAL + LOG DE AUDITORÍA'}
-                </div>
               </div>
 
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
@@ -543,16 +531,16 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                     setTxReceipt(null);
                     setRawCodeInput('');
                   }}
-                  className="min-h-[44px] px-4 py-2.5 rounded-xl bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-xs font-semibold transition-colors cursor-pointer"
+                  className="min-h-[44px] px-5 py-2.5 rounded-full bg-white dark:bg-[#2A231F] border border-[#D5C7B2] text-[#2D241E] dark:text-white text-xs font-semibold transition-colors cursor-pointer"
                 >
-                  Escanear Otro Token QR
+                  Calificar Otro Pan
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-semibold transition-colors cursor-pointer"
+                  className="min-h-[44px] px-6 py-2.5 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold transition-colors cursor-pointer shadow-xs"
                 >
-                  Ver Resultados en Tiempo Real
+                  Ver Posiciones
                 </button>
               </div>
             </div>

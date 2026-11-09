@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Crown, Flame, Medal, MessageSquare, QrCode, Sparkles, Star, TrendingUp, Trophy } from 'lucide-react';
+import { Award, Heart, MessageSquare, QrCode, Star, TrendingUp, Trophy } from 'lucide-react';
 import {
   Bakery,
   BakeryComputedMetrics,
@@ -28,388 +28,271 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
 
   return (
     <div className="space-y-10" data-testid="live-results-view">
-      {/* SECTION 1: UX PRO MAX GASTRONOMIC PODIUM */}
-      <section className="relative rounded-3xl overflow-hidden border border-zinc-800/90 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 p-6 sm:p-8 lg:p-10 shadow-2xl">
-        {/* Ambient atmospheric glow */}
-        <div
-          aria-hidden="true"
-          className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-b from-amber-500/20 via-[#F52D18]/15 to-transparent blur-3xl pointer-events-none rounded-full"
-        />
-
-        <div className="relative z-10 text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-wider">
-            <Trophy className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
-            <span>Podio Oficial en Tiempo Real · Ciudad Bolívar</span>
+      {/* Human Festival Podium */}
+      <section className="card-warm rounded-3xl p-6 sm:p-10">
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EADBCA] dark:bg-[#2A231E] text-[#7A3E20] dark:text-[#E8A57E] text-xs font-semibold">
+            <Trophy className="w-3.5 h-3.5 text-[#C84B31]" />
+            <span>Votación Popular en Vivo · Ciudad Bolívar</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-wide">
-            El Podio del <span className="text-gold-shimmer">Mejor Pan de Jamón</span>
+          <h2 className="font-display text-3xl sm:text-4xl font-black text-[#2D241E] dark:text-[#FAF6F0]">
+            Las Panaderías Favoritas del Público
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-400">
-            Computado en vivo con ponderación oficial de las 3 preguntas: Masa Brioche, Proporción de Relleno y Tradición.
+          <p className="text-xs sm:text-sm text-[#66564B] dark:text-[#B8A99D]">
+            Posiciones actualizadas al instante con las calificaciones de quienes han probado el pan de jamón en cada mesa.
           </p>
         </div>
 
-        {/* 3-Column Visual Olympic Podium */}
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-5xl mx-auto">
-          {/* 🥈 SECOND PLACE (Plata) */}
+        {/* 3 Top Bakeries Showcase */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-4xl mx-auto">
+          {/* 🥈 Segundo Lugar */}
           {second && (
             <div className="order-2 md:order-1 flex flex-col items-center">
-              <div className="relative w-full rounded-2xl bg-zinc-900/90 border border-zinc-700/80 p-5 shadow-xl transition-all duration-300 hover:border-zinc-500 flex flex-col items-center text-center">
-                {/* Silver Medal Badge */}
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-400 to-slate-100 text-zinc-950 flex items-center justify-center font-display font-black text-xl shadow-lg -mt-10 mb-3 border-2 border-slate-300">
+              <div className="w-full card-warm rounded-2xl p-5 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-800 border border-slate-300 flex items-center justify-center font-display font-black text-lg -mt-10 mb-3 shadow-xs">
                   2°
                 </div>
-                <div className="flex items-center gap-1 text-[11px] font-mono text-slate-300 font-semibold mb-1">
-                  <Medal className="w-3.5 h-3.5 text-slate-300" />
-                  <span>SUBCAMPEÓN</span>
-                </div>
-                <h3 className="font-display text-xl font-bold text-white line-clamp-1">
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
+                  Segundo Lugar
+                </span>
+                <h3 className="font-display text-xl font-bold text-[#2D241E] dark:text-[#F7F2EC] line-clamp-1">
                   {second.name}
                 </h3>
-                <p className="text-xs text-zinc-400 mt-0.5 line-clamp-1">{second.sector}</p>
+                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">{second.sector}</p>
 
-                <div className="mt-4 w-full py-2 px-3 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between text-xs font-mono tabular-nums">
-                  <span className="text-zinc-400">Puntaje:</span>
-                  <span className="font-bold text-slate-200">{second.metrics.compositeAverage.toFixed(2)} ★</span>
+                <div className="mt-3 w-full py-2 px-3 rounded-xl bg-[#FAF6F0] dark:bg-[#1E1917] flex items-center justify-between text-xs tabular-nums">
+                  <span className="text-[#7A6B60] dark:text-[#A7988D]">Promedio:</span>
+                  <span className="font-bold text-amber-600 dark:text-amber-400">{second.metrics.compositeAverage.toFixed(2)} ★</span>
                 </div>
-                <div className="mt-1.5 w-full flex items-center justify-between text-[11px] font-mono text-zinc-400 px-1">
-                  <span>{second.totalVotes} votos</span>
-                  <span>
-                    {totalCompetitionVotes > 0
-                      ? `${Math.round((second.totalVotes / totalCompetitionVotes) * 100)}% cuota`
-                      : '0%'}
-                  </span>
+                <div className="mt-1 w-full text-center text-[11px] text-[#8A796E]">
+                  {second.totalVotes} votos de la comunidad
                 </div>
 
                 <div className="mt-4 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(second.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
                   >
-                    Portal
+                    Ver Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(second.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-slate-200 hover:bg-white text-zinc-950 text-xs font-bold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold cursor-pointer shadow-xs"
                   >
                     Votar
                   </button>
                 </div>
               </div>
-              {/* Podium Base #2 */}
-              <div className="hidden md:flex w-full h-16 bg-gradient-to-b from-zinc-800/80 to-zinc-900 border-x border-b border-zinc-700/60 rounded-b-xl items-center justify-center font-display text-3xl font-black text-slate-500/40">
-                2
-              </div>
             </div>
           )}
 
-          {/* 🥇 FIRST PLACE (Oro - Líder Supremo) */}
+          {/* 🥇 Primer Lugar (Líder) */}
           {first && (
             <div className="order-1 md:order-2 flex flex-col items-center">
-              <div className="relative w-full rounded-2xl bg-gradient-to-b from-amber-950/40 via-zinc-900/90 to-zinc-950 border-2 border-amber-500/80 p-6 shadow-2xl shadow-amber-500/20 transition-all duration-300 hover:border-amber-400 flex flex-col items-center text-center">
-                {/* Crown Icon */}
-                <div className="absolute -top-7 text-amber-400 animate-pulse-glow">
-                  <Crown className="w-8 h-8 fill-amber-400 drop-shadow-[0_0_12px_#F59E0B]" />
-                </div>
-
-                {/* Gold Medal Badge */}
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-300 to-amber-600 text-zinc-950 flex items-center justify-center font-display font-black text-2xl shadow-xl -mt-10 mb-3 border-2 border-yellow-200">
+              <div className="w-full card-warm rounded-2xl p-6 flex flex-col items-center text-center border-2 border-amber-400/80 shadow-md">
+                <div className="w-14 h-14 rounded-full bg-amber-400 text-amber-950 border-2 border-amber-300 flex items-center justify-center font-display font-black text-2xl -mt-12 mb-3 shadow-md">
                   1°
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-mono font-bold mb-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                  <span>LÍDER DEL CONCURSO</span>
-                </div>
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold mb-1">
+                  Favorito del Público
+                </span>
 
-                <h3 className="font-display text-2xl sm:text-3xl font-black text-white mt-1 line-clamp-1">
+                <h3 className="font-display text-2xl font-black text-[#2D241E] dark:text-[#F7F2EC] mt-1 line-clamp-1">
                   {first.name}
                 </h3>
-                <p className="text-xs text-amber-200/80 mt-1 line-clamp-1">
-                  Sector {first.sector} · {first.masterBaker}
+                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">
+                  {first.sector} · {first.masterBaker}
                 </p>
 
-                <div className="mt-5 w-full py-2.5 px-3.5 rounded-xl bg-black/60 border border-amber-500/30 flex items-center justify-between text-sm font-mono tabular-nums">
-                  <span className="text-zinc-400 text-xs">Puntaje Global:</span>
-                  <span className="font-black text-amber-400 text-lg flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <div className="mt-4 w-full py-2 px-3.5 rounded-xl bg-amber-50 dark:bg-[#2A231C] border border-amber-200 dark:border-amber-900/40 flex items-center justify-between text-sm tabular-nums">
+                  <span className="text-[#7A6B60] dark:text-[#A7988D] text-xs">Puntuación:</span>
+                  <span className="font-black text-amber-700 dark:text-amber-400 text-base flex items-center gap-1">
+                    <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
                     {first.metrics.compositeAverage.toFixed(2)} ★
                   </span>
                 </div>
 
-                <div className="mt-2 w-full flex items-center justify-between text-xs font-mono text-zinc-400 px-1">
-                  <span className="text-white font-semibold">{first.totalVotes} votos atómicos</span>
-                  <span className="text-amber-400 font-semibold">
-                    {totalCompetitionVotes > 0
-                      ? `${Math.round((first.totalVotes / totalCompetitionVotes) * 100)}% de los votos`
-                      : '0%'}
-                  </span>
+                <div className="mt-1 text-center text-xs text-[#8A796E]">
+                  <strong>{first.totalVotes} votos</strong> registrados
                 </div>
 
-                <div className="mt-5 flex items-center gap-2.5 w-full">
+                <div className="mt-4 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(first.id)}
-                    className="flex-1 min-h-[44px] px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[42px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
                   >
-                    Ver Portal
+                    Ver Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(first.id)}
-                    className="flex-1 min-h-[44px] px-4 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-bold transition-all shadow-lg glow-red cursor-pointer flex items-center justify-center gap-1.5"
+                    className="flex-1 min-h-[42px] px-4 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-bold cursor-pointer shadow-md flex items-center justify-center gap-1.5"
                   >
                     <QrCode className="w-4 h-4" />
-                    <span>Votar Líder</span>
+                    <span>Votar por este pan</span>
                   </button>
                 </div>
-              </div>
-              {/* Podium Base #1 */}
-              <div className="hidden md:flex w-full h-24 bg-gradient-to-b from-amber-950/60 via-zinc-900 to-zinc-950 border-x border-b border-amber-500/40 rounded-b-xl items-center justify-center font-display text-4xl font-black text-amber-400/40">
-                1
               </div>
             </div>
           )}
 
-          {/* 🥉 THIRD PLACE (Bronce) */}
+          {/* 🥉 Tercer Lugar */}
           {third && (
             <div className="order-3 flex flex-col items-center">
-              <div className="relative w-full rounded-2xl bg-zinc-900/90 border border-amber-900/60 p-5 shadow-xl transition-all duration-300 hover:border-amber-700/80 flex flex-col items-center text-center">
-                {/* Bronze Medal Badge */}
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-800 via-amber-700 to-amber-900 text-amber-100 flex items-center justify-center font-display font-black text-xl shadow-lg -mt-10 mb-3 border-2 border-amber-600/80">
+              <div className="w-full card-warm rounded-2xl p-5 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-900 border border-orange-300 flex items-center justify-center font-display font-black text-lg -mt-10 mb-3 shadow-xs">
                   3°
                 </div>
-                <div className="flex items-center gap-1 text-[11px] font-mono text-amber-500 font-semibold mb-1">
-                  <Medal className="w-3.5 h-3.5 text-amber-600" />
-                  <span>TERCER PUESTO</span>
-                </div>
-                <h3 className="font-display text-xl font-bold text-white line-clamp-1">
+                <span className="text-xs font-semibold text-orange-800 dark:text-orange-300 mb-1">
+                  Tercer Lugar
+                </span>
+                <h3 className="font-display text-xl font-bold text-[#2D241E] dark:text-[#F7F2EC] line-clamp-1">
                   {third.name}
                 </h3>
-                <p className="text-xs text-zinc-400 mt-0.5 line-clamp-1">{third.sector}</p>
+                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">{third.sector}</p>
 
-                <div className="mt-4 w-full py-2 px-3 rounded-xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between text-xs font-mono tabular-nums">
-                  <span className="text-zinc-400">Puntaje:</span>
-                  <span className="font-bold text-amber-500">{third.metrics.compositeAverage.toFixed(2)} ★</span>
+                <div className="mt-3 w-full py-2 px-3 rounded-xl bg-[#FAF6F0] dark:bg-[#1E1917] flex items-center justify-between text-xs tabular-nums">
+                  <span className="text-[#7A6B60] dark:text-[#A7988D]">Promedio:</span>
+                  <span className="font-bold text-amber-600 dark:text-amber-400">{third.metrics.compositeAverage.toFixed(2)} ★</span>
                 </div>
-                <div className="mt-1.5 w-full flex items-center justify-between text-[11px] font-mono text-zinc-400 px-1">
-                  <span>{third.totalVotes} votos</span>
-                  <span>
-                    {totalCompetitionVotes > 0
-                      ? `${Math.round((third.totalVotes / totalCompetitionVotes) * 100)}% cuota`
-                      : '0%'}
-                  </span>
+                <div className="mt-1 w-full text-center text-[11px] text-[#8A796E]">
+                  {third.totalVotes} votos de la comunidad
                 </div>
 
                 <div className="mt-4 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(third.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
                   >
-                    Portal
+                    Ver Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(third.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-bold transition-colors cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold cursor-pointer shadow-xs"
                   >
                     Votar
                   </button>
                 </div>
-              </div>
-              {/* Podium Base #3 */}
-              <div className="hidden md:flex w-full h-12 bg-gradient-to-b from-zinc-800/60 to-zinc-900 border-x border-b border-amber-900/40 rounded-b-xl items-center justify-center font-display text-2xl font-black text-amber-700/40">
-                3
               </div>
             </div>
           )}
         </div>
       </section>
 
-      {/* SECTION 2: COMPARATIVE LEADERBOARD TABLE ACROSS THE 3 QUESTIONS */}
-      <section className="rounded-3xl bg-zinc-900/80 border border-zinc-800/90 p-6 sm:p-8 space-y-6 shadow-xl">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      {/* General Positions Table */}
+      <section className="card-warm rounded-3xl p-6 sm:p-8 space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-wide">
-              Tabla General de Calificaciones · Ciudad Bolívar
+            <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#2D241E] dark:text-[#FAF6F0]">
+              Tabla de Calificaciones · Ciudad Bolívar
             </h3>
-            <p className="text-xs sm:text-sm text-zinc-400">
-              Desglose transparente por Masa Brioche, Proporción de Relleno y Tradición ({totalCompetitionVotes} votos certificados)
+            <p className="text-xs sm:text-sm text-[#7A6B60] dark:text-[#A7988D]">
+              Evaluación detallada de la masa, el relleno y el sabor tradicional ({totalCompetitionVotes} votos en total)
             </p>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-xl tabular-nums">
-            <TrendingUp className="w-4 h-4 text-[#F52D18]" />
-            <span>Sincronización en Vivo</span>
           </div>
         </div>
 
-        <div className="space-y-4">
-          {rankedBakeries.map((b) => {
-            const voteSharePct =
-              totalCompetitionVotes > 0
-                ? Math.round((b.totalVotes / totalCompetitionVotes) * 100)
-                : 0;
-
-            const isTop3 = b.rank <= 3;
-
-            return (
-              <div
-                key={b.id}
-                data-testid={`leaderboard-row-${b.id}`}
-                className={`rounded-2xl transition-all duration-200 border p-5 sm:p-6 space-y-4 ${
-                  b.rank === 1
-                    ? 'bg-gradient-to-r from-amber-950/20 via-zinc-900/90 to-zinc-900/90 border-amber-500/40 shadow-lg'
-                    : isTop3
-                    ? 'bg-zinc-900/90 border-zinc-700/70'
-                    : 'bg-zinc-950/60 border-zinc-800/80'
-                }`}
-              >
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 tabular-nums">
-                      <span
-                        className={`px-2 py-0.5 rounded-lg font-bold text-xs ${
-                          b.rank === 1
-                            ? 'bg-amber-500 text-zinc-950'
-                            : b.rank === 2
-                            ? 'bg-slate-300 text-zinc-950'
-                            : b.rank === 3
-                            ? 'bg-amber-700 text-white'
-                            : 'bg-zinc-800 text-zinc-300'
-                        }`}
-                      >
-                        Puesto #{b.rank}
-                      </span>
-                      <span aria-hidden="true">·</span>
-                      <span>{b.portalCode}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="text-zinc-300 font-medium">{b.sector}</span>
-                    </div>
-                    <h4 className="font-display text-2xl font-bold text-white tracking-wide">
-                      {b.name}
-                    </h4>
-                    <p className="text-xs text-zinc-400">
-                      Maestro Panadero: <strong className="text-zinc-200">{b.masterBaker}</strong> · {b.crustStyle}
-                    </p>
+        <div className="space-y-3.5">
+          {rankedBakeries.map((b) => (
+            <div
+              key={b.id}
+              data-testid={`leaderboard-row-${b.id}`}
+              className="p-5 rounded-2xl bg-[#FAF6F0] dark:bg-[#251F1C] border border-[#E8DEC8] dark:border-[#382E27] space-y-3"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2 text-xs text-[#7A6B60] dark:text-[#A7988D]">
+                    <span className="font-bold text-[#C84B31]">Puesto #{b.rank}</span>
+                    <span>·</span>
+                    <span>{b.sector}</span>
+                    <span>·</span>
+                    <span>{b.masterBaker}</span>
                   </div>
-
-                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 tabular-nums">
-                    <div className="text-left sm:text-right">
-                      <div className="text-[11px] font-mono text-zinc-400 uppercase">Promedio Oficial</div>
-                      <div className="font-mono text-xl sm:text-2xl font-black text-amber-400 flex items-center gap-1.5">
-                        <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-                        <span>{b.metrics.compositeAverage.toFixed(2)}</span>
-                        <span className="text-xs text-zinc-500">/ 5.0</span>
-                      </div>
-                    </div>
-
-                    <div className="text-left sm:text-right">
-                      <div className="text-[11px] font-mono text-zinc-400 uppercase">Votos Verificados</div>
-                      <div className="font-mono text-xl font-bold text-white">
-                        {b.totalVotes} <span className="text-xs text-zinc-400">({voteSharePct}%)</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => onOpenPortal(b.id)}
-                        className="min-h-[42px] px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors cursor-pointer"
-                      >
-                        Portal
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => onQuickVote(b.id)}
-                        className="min-h-[42px] px-4 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-md glow-red"
-                      >
-                        <QrCode className="w-4 h-4" />
-                        <span>Votar</span>
-                      </button>
-                    </div>
-                  </div>
+                  <h4 className="font-display text-xl font-bold text-[#2D241E] dark:text-[#FAF6F0] mt-0.5">
+                    {b.name}
+                  </h4>
                 </div>
 
-                {/* 3-Question Comparative Bars with Rich Warm Gradients */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-3 border-t border-zinc-800/90 tabular-nums">
-                  {SURVEY_QUESTIONS.map((q, idx) => {
-                    const score =
-                      idx === 0
-                        ? b.metrics.avgDough
-                        : idx === 1
-                        ? b.metrics.avgFilling
-                        : b.metrics.avgOverall;
-                    const widthPct = Math.min(100, Math.round((score / 5) * 100));
-                    return (
-                      <div key={q.key} className="space-y-1.5 bg-zinc-950/50 p-2.5 rounded-xl border border-zinc-800/60">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-zinc-400 truncate">
-                            {q.number}. {q.title}
-                          </span>
-                          <span className="font-mono font-bold text-amber-300">
-                            {score.toFixed(2)} ★
-                          </span>
-                        </div>
-                        <div className="w-full h-2 rounded-full bg-zinc-800 overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-amber-500 to-[#F52D18] rounded-full transition-all duration-500"
-                            style={{ width: `${widthPct}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="flex items-center gap-4 shrink-0">
+                  <div className="text-right">
+                    <div className="text-xs text-[#7A6B60] dark:text-[#A7988D]">Promedio</div>
+                    <div className="font-bold text-amber-600 dark:text-amber-400 text-lg flex items-center gap-1 justify-end">
+                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                      <span>{b.metrics.compositeAverage.toFixed(2)}</span>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    <div className="text-xs text-[#7A6B60] dark:text-[#A7988D]">Votos</div>
+                    <div className="font-bold text-[#2D241E] dark:text-white text-base">
+                      {b.totalVotes}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => onQuickVote(b.id)}
+                    className="min-h-[38px] px-4 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold cursor-pointer shadow-xs"
+                  >
+                    Votar
+                  </button>
                 </div>
               </div>
-            );
-          })}
+
+              {/* 3 Questions Breakdown */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-[#E8DEC8] dark:border-[#382E27] text-xs text-[#57493E] dark:text-[#CBBDB2]">
+                <div>Masa Brioche: <strong>{b.metrics.avgDough.toFixed(1)} ★</strong></div>
+                <div>Relleno de Jamón: <strong>{b.metrics.avgFilling.toFixed(1)} ★</strong></div>
+                <div>Sabor Tradicional: <strong>{b.metrics.avgOverall.toFixed(1)} ★</strong></div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* SECTION 3: LIVE STREAM OF VERIFIED SURVEY REVIEWS */}
-      <section className="rounded-3xl bg-zinc-900/80 border border-zinc-800/90 p-6 sm:p-8 space-y-5 shadow-xl">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
-            <MessageSquare className="w-6 h-6 text-[#F52D18]" />
-            <span>Bitácora de Catadores y Críticas ({votes.length})</span>
+      {/* Verified Reviews from Diners */}
+      <section className="card-warm rounded-3xl p-6 sm:p-8 space-y-5">
+        <div>
+          <h3 className="font-display text-2xl font-extrabold text-[#2D241E] dark:text-[#FAF6F0] flex items-center gap-2">
+            <MessageSquare className="w-5 h-5 text-[#C84B31]" />
+            <span>Opiniones de los Comensales ({votes.length})</span>
           </h3>
-          <span className="text-xs font-mono text-zinc-400">Verificadas con Hash Criptográfico</span>
+          <p className="text-xs text-[#7A6B60] dark:text-[#A7988D]">
+            Comentarios reales dejados por quienes han degustado el pan en las mesas participantes
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {votes.map((v) => {
-            const avg = ((v.q1DoughScore + v.q2FillingScore + v.q3OverallScore) / 3).toFixed(2);
+            const avg = ((v.q1DoughScore + v.q2FillingScore + v.q3OverallScore) / 3).toFixed(1);
             return (
               <div
                 key={v.id}
-                className="rounded-2xl bg-zinc-950/80 border border-zinc-800/80 p-5 space-y-3 transition-colors hover:border-zinc-700"
+                className="p-5 rounded-2xl bg-[#FAF6F0] dark:bg-[#251F1C] border border-[#E8DEC8] dark:border-[#382E27] space-y-2.5"
               >
-                <div className="flex items-center justify-between text-xs tabular-nums">
+                <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-[#F52D18]/20 border border-[#F52D18]/40 text-[#F52D18] flex items-center justify-center font-bold text-xs">
+                    <div className="w-7 h-7 rounded-full bg-[#EADBCA] text-[#7A3E20] flex items-center justify-center font-bold text-xs">
                       {v.voterAlias.charAt(0).toUpperCase()}
                     </div>
-                    <span className="font-bold text-white text-sm">{v.voterAlias}</span>
+                    <span className="font-bold text-[#2D241E] dark:text-white">{v.voterAlias}</span>
                   </div>
-                  <span className="font-mono text-amber-400 font-bold text-sm bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20">
+                  <span className="font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded-full text-xs">
                     {avg} ★
                   </span>
                 </div>
-                <div className="text-xs font-mono text-zinc-400 tabular-nums">
-                  <span className="text-zinc-200 font-semibold">{v.bakeryName}</span> · Token {v.tokenCode}
+                <div className="text-xs text-[#7A6B60] dark:text-[#A7988D]">
+                  Degustado en: <strong className="text-[#2D241E] dark:text-[#FAF6F0]">{v.bakeryName}</strong>
                 </div>
-                <p className="text-sm text-zinc-300 leading-relaxed italic">
+                <p className="text-sm text-[#4E4137] dark:text-[#D5C8BD] leading-relaxed italic">
                   “{v.comment}”
                 </p>
-                <div className="pt-2 text-[10px] font-mono text-zinc-500 flex items-center justify-between border-t border-zinc-900">
-                  <span className="truncate max-w-[200px]">Hash: {v.txHash}</span>
-                  {v.evidenceStoragePath && (
-                    <span className="text-emerald-400">Foto Adjunta ✓</span>
-                  )}
-                </div>
               </div>
             );
           })}

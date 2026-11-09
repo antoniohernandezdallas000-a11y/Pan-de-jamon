@@ -39,45 +39,35 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
 
   return (
     <article
-      className="group relative rounded-[32px] bg-zinc-900/80 border border-white/10 overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/15 hover:border-amber-500/30 flex flex-col justify-between backdrop-blur-md"
+      className="card-warm rounded-3xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between"
       data-testid={`bakery-portal-card-${bakery.id}`}
     >
-      {/* Top Visual Imagery Showcase */}
-      <div className="relative h-60 w-full overflow-hidden bg-zinc-950">
+      {/* Bakery Photo Showcase */}
+      <div className="relative h-56 w-full overflow-hidden bg-[#EFE8DC] dark:bg-[#251F1C]">
         <img
           src={bakery.photoUrl || COMPETITION_LOGO_PATH}
-          alt={`Fachada o logo de ${bakery.name}`}
+          alt={`Foto de ${bakery.name}`}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
         />
 
-        {/* Soft Vignette Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
+        {/* Top Badges */}
+        <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 pointer-events-none">
+          <span
+            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-xs ${
+              bakery.rank === 1
+                ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                : bakery.rank === 2
+                ? 'bg-slate-100 text-slate-800 border border-slate-300'
+                : bakery.rank === 3
+                ? 'bg-orange-100 text-orange-900 border border-orange-300'
+                : 'bg-white/90 text-zinc-700 border border-zinc-200'
+            }`}
+          >
+            Puesto #{bakery.rank} · {bakery.sector}
+          </span>
 
-        {/* Floating Capsule Badges */}
-        <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
-          <div className="flex items-center gap-2">
-            <span
-              className={`inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-black shadow-lg backdrop-blur-md ${
-                bakery.rank === 1
-                  ? 'bg-amber-400 text-zinc-950 border border-yellow-200'
-                  : bakery.rank === 2
-                  ? 'bg-slate-200 text-zinc-950 border border-white'
-                  : bakery.rank === 3
-                  ? 'bg-amber-700 text-white border border-amber-500'
-                  : 'bg-black/70 text-zinc-300 border border-white/10'
-              }`}
-            >
-              #{bakery.rank} · {bakery.portalCode}
-            </span>
-
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-medium text-zinc-300 border border-white/10">
-              {bakery.sector}
-            </span>
-          </div>
-
-          {/* Sello Competencia Official */}
-          <div className="w-10 h-10 rounded-full bg-black/80 backdrop-blur-md p-1 border border-white/20 shadow-xl flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-white/90 p-0.5 border border-zinc-200 shadow-xs flex items-center justify-center">
             <img
               src={COMPETITION_LOGO_PATH}
               alt="Sello oficial"
@@ -86,74 +76,66 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
             />
           </div>
         </div>
-
-        {/* Bottom Banner Identity */}
-        <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3">
-          <div className="space-y-0.5">
-            <h3 className="font-display text-2xl sm:text-3xl font-black text-white drop-shadow-md leading-tight group-hover:text-amber-200 transition-colors">
-              {bakery.name}
-            </h3>
-            <p className="text-xs text-amber-200/90 font-medium flex items-center gap-1.5">
-              <Utensils className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span>{bakery.masterBaker} · {bakery.crustStyle}</span>
-            </p>
-          </div>
-
-          <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-black/75 backdrop-blur-md border border-amber-500/30 text-amber-400 font-mono font-bold text-sm shadow-lg shrink-0">
-            <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            <span>{bakery.metrics.compositeAverage.toFixed(2)}</span>
-          </div>
-        </div>
       </div>
 
       {/* Card Content Body */}
-      <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
-        <div className="space-y-4">
-          <p className="text-xs text-zinc-400 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-[#F52D18] shrink-0" />
+      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+        <div className="space-y-3">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <h3 className="font-display text-2xl font-bold text-[#2D241E] dark:text-[#F7F2EC] leading-snug">
+                {bakery.name}
+              </h3>
+              <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] flex items-center gap-1.5 mt-0.5">
+                <Utensils className="w-3.5 h-3.5 text-[#C84B31] shrink-0" />
+                <span>Maestro: {bakery.masterBaker} · {bakery.crustStyle}</span>
+              </p>
+            </div>
+
+            <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#FAF6F0] dark:bg-[#2A231F] border border-[#E5DAC6] dark:border-[#382F2A] text-amber-700 dark:text-amber-400 font-bold text-sm shrink-0">
+              <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+              <span>{bakery.metrics.compositeAverage.toFixed(1)}</span>
+            </div>
+          </div>
+
+          <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-[#C84B31] shrink-0" />
             <span className="truncate">{bakery.address}</span>
           </p>
 
-          <p className="text-sm text-zinc-300 leading-relaxed italic line-clamp-2">
+          <p className="text-sm text-[#4E4137] dark:text-[#D5C8BD] leading-relaxed line-clamp-2">
             “{bakery.signatureRecipe}”
           </p>
 
-          {/* Fluid Modern Score Badges (no rigid boxes) */}
-          <div className="flex flex-wrap items-center gap-2 pt-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
-              <span className="text-zinc-400">Masa:</span>
-              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgDough.toFixed(1)} ★</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
-              <span className="text-zinc-400">Relleno:</span>
-              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgFilling.toFixed(1)} ★</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-white/5 text-xs">
-              <span className="text-zinc-400">Tradición:</span>
-              <span className="font-mono font-bold text-amber-300">{bakery.metrics.avgOverall.toFixed(1)} ★</span>
-            </div>
-            <span className="text-[11px] font-mono text-zinc-500 ml-auto">{bakery.totalVotes} votos</span>
+          {/* Simple Clean Scores */}
+          <div className="flex items-center gap-3 pt-1 text-xs text-[#7A6B60] dark:text-[#A7988D]">
+            <span>Masa: <strong className="text-[#2D241E] dark:text-white">{bakery.metrics.avgDough.toFixed(1)}★</strong></span>
+            <span>·</span>
+            <span>Relleno: <strong className="text-[#2D241E] dark:text-white">{bakery.metrics.avgFilling.toFixed(1)}★</strong></span>
+            <span>·</span>
+            <span>Sabor: <strong className="text-[#2D241E] dark:text-white">{bakery.metrics.avgOverall.toFixed(1)}★</strong></span>
+            <span className="ml-auto text-[11px]">({bakery.totalVotes} opiniones)</span>
           </div>
         </div>
 
-        {/* Footer Actions with Pill Curves */}
-        <div className="pt-2 flex items-center gap-3">
+        {/* Footer Actions */}
+        <div className="pt-2 flex items-center gap-2.5">
           <button
             type="button"
             onClick={() => onOpenPortal(bakery.id)}
-            className="flex-1 min-h-[46px] px-4 rounded-full bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-white/10 hover:border-white/20 active:scale-98"
+            className="flex-1 min-h-[42px] px-3.5 rounded-full bg-white dark:bg-[#2A2420] hover:bg-[#FAF6F0] dark:hover:bg-[#332C27] text-[#3D322B] dark:text-[#EAE0D6] text-xs font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer border border-[#D5C7B2] dark:border-[#423831]"
           >
-            <span>Ver Historia</span>
-            <ChevronRight className="w-4 h-4 text-zinc-400" />
+            <span>Ver Ficha</span>
+            <ChevronRight className="w-3.5 h-3.5 text-[#8A796E]" />
           </button>
 
           <button
             type="button"
             onClick={() => onQuickVoteWithQr(bakery.id)}
-            className="flex-1 min-h-[46px] px-4 rounded-full bg-gradient-to-r from-[#F52D18] via-rose-600 to-amber-600 hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-lg glow-red active:scale-98"
+            className="flex-1 min-h-[42px] px-4 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs"
           >
-            <QrCode className="w-4 h-4 shrink-0" />
-            <span>Votar QR ({activeTokenCount})</span>
+            <QrCode className="w-3.5 h-3.5 shrink-0" />
+            <span>Votar ({activeTokenCount})</span>
           </button>
         </div>
       </div>
