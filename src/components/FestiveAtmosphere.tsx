@@ -71,7 +71,7 @@ export const FestiveAtmosphere: React.FC<FestiveAtmosphereProps> = ({ isDark }) 
       )}
 
       {/* ============================================================ */}
-      {/* 🌙 MODO NOCHE: Cielo Estrellado + Luces de Navidad           */}
+      {/* 🌙 MODO NOCHE: Cielo Estrellado                              */}
       {/* ============================================================ */}
       {isDark && (
         <>
@@ -100,73 +100,66 @@ export const FestiveAtmosphere: React.FC<FestiveAtmosphereProps> = ({ isDark }) 
   );
 };
 
-// Componente individual de bombillo navideño con brillo alternante
-export const ChristmasBulb: React.FC<{
-  cx: number;
-  cy: number;
-  color: 'red' | 'green' | 'gold';
-  delay: number;
-  size?: number;
-}> = ({ cx, cy, color, delay, size = 1 }) => {
-  const isRed = color === 'red';
-  const isGreen = color === 'green';
-  const fillColor = isRed ? '#EB321D' : isGreen ? '#22C55E' : '#EFA632';
-  const glowClass = isRed
-    ? 'xmas-bulb-red'
-    : isGreen
-    ? 'xmas-bulb-green'
-    : 'xmas-bulb-gold';
-
-  return (
-    <g transform={`translate(${cx}, ${cy}) scale(${size})`}>
-      {/* Base metálica / enchufe del bombillo */}
-      <rect x="-2" y="-5" width="4" height="5" fill="#2E2C29" rx="0.5" />
-      {/* Cuerpo del bombillo ovalado con destello */}
-      <ellipse
-        cx="0"
-        cy="4"
-        rx="4.5"
-        ry="6.5"
-        fill={fillColor}
-        className={glowClass}
-        style={{ animationDelay: `${delay}s` }}
-      />
-      {/* Reflejo blanco brillante de cristal */}
-      <ellipse cx="-1.5" cy="2" rx="1.2" ry="2.5" fill="rgba(255,255,255,0.7)" />
-    </g>
-  );
-};
-
-// Tira de luces navideñas colgando para usar encima de tarjetas (cuadros) o banners
+// Tira de luces navideñas colgando para usar encima de tarjetas (cuadros)
+// Dimensiones fijas para que los bombillos NUNCA se deformen ni se estiren
 export const CardChristmasLightsGarland: React.FC<{ className?: string }> = ({
   className = '',
 }) => {
+  const bulbs = [
+    { left: '12%', top: '9px', color: 'red' as const, delay: 0.1 },
+    { left: '25%', top: '2px', color: 'green' as const, delay: 0.7 },
+    { left: '38%', top: '9px', color: 'red' as const, delay: 1.3 },
+    { left: '50%', top: '2px', color: 'gold' as const, delay: 0.4 },
+    { left: '63%', top: '9px', color: 'green' as const, delay: 1.0 },
+    { left: '76%', top: '2px', color: 'red' as const, delay: 0.2 },
+    { left: '89%', top: '9px', color: 'green' as const, delay: 0.8 },
+  ];
+
   return (
     <div
-      className={`absolute top-0 inset-x-0 h-6 overflow-visible pointer-events-none z-10 ${className}`}
+      className={`absolute -top-1.5 inset-x-0 h-6 overflow-visible pointer-events-none z-10 ${className}`}
       aria-hidden="true"
     >
+      {/* Cable ondulado verde oscuro */}
       <svg
-        viewBox="0 0 320 28"
+        viewBox="0 0 100 20"
         preserveAspectRatio="none"
-        className="w-full h-full overflow-visible"
+        className="w-full h-4 overflow-visible filter drop-shadow-[0_2px_3px_rgba(0,0,0,0.6)]"
       >
-        {/* Cable festivo ondulado */}
         <path
-          d="M 0 4 Q 40 18, 80 4 Q 120 18, 160 4 Q 200 18, 240 4 Q 280 18, 320 4"
+          d="M 0 3 Q 12 14, 25 3 Q 37 14, 50 3 Q 62 14, 75 3 Q 87 14, 100 3"
           fill="none"
           stroke="#164E24"
-          strokeWidth="1.6"
+          strokeWidth="1.8"
         />
-        {/* Serie de 8 bombillos alternando verde y rojo */}
-        <ChristmasBulb cx={40} cy={14} color="red" delay={0.1} size={0.9} />
-        <ChristmasBulb cx={80} cy={4} color="green" delay={0.7} size={0.8} />
-        <ChristmasBulb cx={120} cy={14} color="red" delay={1.3} size={0.9} />
-        <ChristmasBulb cx={160} cy={4} color="gold" delay={0.4} size={0.8} />
-        <ChristmasBulb cx={200} cy={14} color="green" delay={1.0} size={0.9} />
-        <ChristmasBulb cx={240} cy={4} color="red" delay={0.2} size={0.8} />
-        <ChristmasBulb cx={280} cy={14} color="green" delay={0.8} size={0.9} />
       </svg>
+
+      {/* Bombillos individuales proporcionados (dimensiones fijas exactas) */}
+      {bulbs.map((b, i) => {
+        const isRed = b.color === 'red';
+        const isGreen = b.color === 'green';
+        const glowClass = isRed ? 'xmas-bulb-red' : isGreen ? 'xmas-bulb-green' : 'xmas-bulb-gold';
+        const bgHex = isRed ? '#EB321D' : isGreen ? '#22C55E' : '#EFA632';
+
+        return (
+          <div
+            key={i}
+            className="absolute -translate-x-1/2 flex flex-col items-center"
+            style={{ left: b.left, top: b.top }}
+          >
+            {/* Casquillo del bombillo */}
+            <div className="w-1.5 h-1.5 bg-[#2E2C29] rounded-xs" />
+            {/* Bombillo ovalado perfectamente redondo y proporcional */}
+            <div
+              className={`w-2.5 h-3.5 rounded-full ${glowClass} relative shadow-xs`}
+              style={{ backgroundColor: bgHex, animationDelay: `${b.delay}s` }}
+            >
+              {/* Reflejo de cristal */}
+              <div className="absolute top-0.5 left-0.5 w-1 h-1.5 bg-white/70 rounded-full" />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

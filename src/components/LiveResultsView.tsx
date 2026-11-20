@@ -32,8 +32,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
     <div className="space-y-10" data-testid="live-results-view">
       {/* Human Festival Podium */}
       <section className="relative bg-white/90 dark:bg-[#141311] border border-amber-200/70 dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl transition-colors overflow-visible">
-        {/* Guirnalda de luces navideñas colgando en modo noche */}
-        <CardChristmasLightsGarland className="hidden dark:block -top-1" />
+
 
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EFA632]/10 border border-[#EFA632]/40 text-[#EFA632] text-xs font-bold">
