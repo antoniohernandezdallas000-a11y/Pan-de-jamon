@@ -94,6 +94,79 @@
   animation: shake 0.3s ease-in-out;
 }
 
+/* Animaciones Festivas de Navidad: Día Soleado con Nieve & Noche con Estrellas y Luces */
+@keyframes snowfallAnim {
+  0% {
+    transform: translateY(-20px) translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--drift-x, 20px)) rotate(180deg);
+  }
+  100% {
+    transform: translateY(105vh) translateX(0) rotate(360deg);
+  }
+}
+
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes fairyGlowRed {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(235, 50, 29, 0.4));
+    opacity: 0.75;
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(235, 50, 29, 1)) drop-shadow(0 0 16px rgba(235, 50, 29, 0.6));
+    opacity: 1;
+  }
+}
+
+@keyframes fairyGlowGreen {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.4));
+    opacity: 0.75;
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 1)) drop-shadow(0 0 16px rgba(34, 197, 94, 0.6));
+    opacity: 1;
+  }
+}
+
+@keyframes fairyGlowGold {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(239, 166, 50, 0.4));
+    opacity: 0.75;
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(239, 166, 50, 1)) drop-shadow(0 0 16px rgba(239, 166, 50, 0.6));
+    opacity: 1;
+  }
+}
+
+.xmas-bulb-red {
+  animation: fairyGlowRed 1.8s ease-in-out infinite alternate;
+}
+
+.xmas-bulb-green {
+  animation: fairyGlowGreen 1.8s ease-in-out infinite alternate;
+}
+
+.xmas-bulb-gold {
+  animation: fairyGlowGold 1.8s ease-in-out infinite alternate;
+}
+
 button, a, input, select, textarea {
   touch-action: manipulation;
 }

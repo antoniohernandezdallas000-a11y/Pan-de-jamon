@@ -18,6 +18,7 @@ import {
   Vote,
 } from '../types/competition';
 import { PanIcon } from './BreadRating';
+import { CardChristmasLightsGarland } from './FestiveAtmosphere';
 
 interface BakeryPortalCardProps {
   bakery: Bakery & { metrics: BakeryComputedMetrics; rank: number };
@@ -41,11 +42,14 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
 
   return (
     <article
-      className="food-card flex flex-col justify-between group"
+      className="food-card flex flex-col justify-between group relative overflow-visible"
       data-testid={`bakery-portal-card-${bakery.id}`}
     >
+      {/* Luces navideñas verdes y rojas colgando en Modo Noche */}
+      <CardChristmasLightsGarland className="hidden dark:block -top-1" />
+
       {/* Top Visual Showcase with Natural Aspect Ratio */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-amber-200 dark:from-zinc-800 dark:to-zinc-900 flex items-center justify-center">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-3xl bg-gradient-to-br from-amber-100 via-orange-50 to-amber-200 dark:from-zinc-800 dark:to-zinc-900 flex items-center justify-center">
         {hasCustomLocalImage ? (
           <img
             src={bakery.photoUrl}

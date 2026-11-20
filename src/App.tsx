@@ -66,6 +66,7 @@ import { OfflineIndicator, PWAInstallButton } from './components/PWAInstallBanne
 import { AuthModal, AppUser } from './components/AuthModal';
 import { ToastContainer, ToastData } from './components/Toast';
 import { PanIcon } from './components/BreadRating';
+import { FestiveAtmosphere, CardChristmasLightsGarland } from './components/FestiveAtmosphere';
 
 type ActiveSection = 'portals' | 'tokens' | 'results' | 'audit';
 
@@ -575,7 +576,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#121110] text-[#1E293B] dark:text-[#F1F5F9] pb-28 md:pb-16 transition-colors">
+    <div className="relative min-h-screen bg-[#FAF8F5] dark:bg-[#121110] text-[#1E293B] dark:text-[#F1F5F9] pb-28 md:pb-16 transition-colors overflow-x-hidden">
+      <FestiveAtmosphere isDark={isDark} />
       <OfflineIndicator />
 
       {/* Navigation Bar Oficial The Fucking Mejor Pan de Jamón */}
@@ -703,6 +705,8 @@ export default function App() {
       <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
         {/* Hero Section The Fucking Mejor Pan de Jamón */}
         <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/10 via-[#EFA632]/15 to-amber-50/90 dark:from-[#EB321D]/20 dark:via-[#EFA632]/10 dark:to-[#141311] border border-amber-200/80 dark:border-white/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl transition-colors">
+          {/* Luces navideñas verdes y rojas colgando en Modo Noche */}
+          {isDark && <CardChristmasLightsGarland className="-top-1" />}
           {/* Ambient Glow */}
           <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EFA632]/20 blur-3xl pointer-events-none" />
 
@@ -770,19 +774,24 @@ export default function App() {
                   onClick={() => {
                     setIsDark((prev) => {
                       const next = !prev;
-                      showToast(next ? 'Modo Noche activado' : 'Modo Día activado', 'info');
+                      showToast(
+                        next
+                          ? '🌙 Noche Estrellada activada: ¡Luces Navideñas encendidas!'
+                          : '☀️ Día Soleado activado: ¡Copos de Nieve cayendo!',
+                        'info'
+                      );
                       return next;
                     });
                   }}
-                  className="btn-secondary min-h-[46px] min-w-[46px] px-3.5 py-2 text-xs font-semibold"
-                  aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+                  className="btn-secondary min-h-[46px] min-w-[46px] px-3.5 py-2 text-xs font-semibold shadow-md hover:scale-105 active:scale-95 transition-all"
+                  aria-label={isDark ? 'Cambiar a Día Soleado con Nieve' : 'Cambiar a Noche Estrellada con Luces'}
                 >
                   {isDark ? (
                     <Sun className="w-4 h-4 text-amber-500" />
                   ) : (
-                    <Moon className="w-4 h-4 text-zinc-600" />
+                    <Moon className="w-4 h-4 text-indigo-500" />
                   )}
-                  <span className="hidden sm:inline">{isDark ? 'Día' : 'Noche'}</span>
+                  <span className="hidden sm:inline font-bold">{isDark ? '☀️ Día y Nieve' : '🌙 Noche y Luces'}</span>
                 </button>
               </div>
             </div>
