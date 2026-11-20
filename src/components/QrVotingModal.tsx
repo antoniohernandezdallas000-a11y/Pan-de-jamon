@@ -522,17 +522,13 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
               className="rounded-3xl bg-black/90 border-2 border-[#EFA632] p-6 sm:p-8 space-y-4 text-center shadow-2xl glow-pan-dorado animate-in fade-in zoom-in-95 duration-200"
               data-testid="atomic-vote-receipt"
             >
-              {/* Mascota Oficial Celebrando con To' los Hierros */}
-              <div className="relative mx-auto w-36 sm:w-44 aspect-square rounded-3xl overflow-hidden border-3 border-[#EFA632] shadow-2xl glow-pan-dorado animate-in zoom-in-95 duration-300 group">
+              {/* Catador Celebrando Sin Fondo */}
+              <div className="relative mx-auto w-44 sm:w-56 flex flex-col items-center">
                 <img
-                  src="/assets/mascota-catador.jpg"
-                  alt="Mascota Catador Celebrando"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  src="/assets/mascota-transparente.png"
+                  alt="Catador Celebrando"
+                  className="w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(239,166,50,0.4)] animate-in zoom-in-95 duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                <span className="absolute bottom-2 inset-x-2 text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#EFA632] bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-[#EFA632]/40">
-                  ¡Catador Celebrando! 🎉
-                </span>
               </div>
 
               <div className="space-y-1.5">

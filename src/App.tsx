@@ -795,32 +795,22 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Showcase: Mascota Oficial Catadora + Sello del Torneo */}
-            <div className="shrink-0 flex flex-col items-center justify-center gap-2">
+            {/* Right Showcase: Catador Sin Fondo + Diálogo Criollo */}
+            <div className="shrink-0 flex flex-col items-center justify-center gap-1">
               <div className="relative group flex flex-col items-center">
-                {/* Cuadro de la Mascota Oficial */}
-                <div className="w-40 sm:w-48 aspect-square rounded-3xl overflow-hidden border-3 border-[#EFA632] shadow-2xl glow-pan-dorado transition-transform group-hover:scale-105 duration-300 relative bg-black">
-                  <img
-                    src="/assets/mascota-catador.jpg"
-                    alt="Mascota Oficial - El Catador del Pan de Jamón"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                  <span className="absolute bottom-2 inset-x-2 text-[10px] font-black uppercase tracking-widest text-[#EFA632] bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-[#EFA632]/40 text-center block truncate">
-                    Mascota Oficial 🥖
-                  </span>
-                </div>
+                <img
+                  src="/assets/mascota-transparente.png"
+                  alt="El Catador del Pan de Jamón"
+                  className="w-44 sm:w-56 h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] dark:drop-shadow-[0_15px_30px_rgba(239,166,50,0.3)] transition-transform group-hover:scale-105 duration-300"
+                />
 
-                {/* Bocadillo de Diálogo Criollo de la Mascota */}
-                <div className="mt-2.5 max-w-[200px] p-2 rounded-xl bg-black/60 dark:bg-white/10 backdrop-blur-md border border-[#EFA632]/40 text-center">
-                  <p className="text-[11px] font-bold text-[#EFA632] leading-tight">
+                {/* Bocadillo de Diálogo Criollo */}
+                <div className="-mt-2 max-w-[220px] p-2.5 rounded-2xl bg-black/80 dark:bg-black/70 backdrop-blur-md border border-[#EFA632]/50 text-center shadow-xl">
+                  <p className="text-[11px] sm:text-xs font-bold text-[#EFA632] leading-tight">
                     “¡Epa mi pana! Aquí se vota sin filtro. Dale sus pancitos.”
                   </p>
                 </div>
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-widest text-zinc-500 dark:text-neutral-400">
-                ★ Gran Torneo 2026 ★
-              </span>
             </div>
           </div>
 
