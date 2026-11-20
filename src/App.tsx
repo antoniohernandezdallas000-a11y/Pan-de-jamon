@@ -594,7 +594,7 @@ export default function App() {
               <img
                 src="/assets/logo-04-hd.png"
                 alt="Logo The Fucking Mejor Pan de Jamón"
-                className="h-10 sm:h-14 md:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(235,50,29,0.35)] shrink-0"
+                className="h-10 sm:h-14 md:h-16 w-auto object-contain shrink-0"
               />
               <div className="min-w-0">
                 <span className="font-display text-xl sm:text-2xl md:text-3xl text-white tracking-wider leading-none block truncate">
@@ -702,25 +702,25 @@ export default function App() {
       {/* Main Container */}
       <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
         {/* Hero Section The Fucking Mejor Pan de Jamón */}
-        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/20 via-[#EFA632]/10 to-[#141311] border border-white/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl">
+        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/10 via-[#EFA632]/15 to-amber-50/90 dark:from-[#EB321D]/20 dark:via-[#EFA632]/10 dark:to-[#141311] border border-amber-200/80 dark:border-white/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl transition-colors">
           {/* Ambient Glow */}
           <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EFA632]/20 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Left Content Column */}
             <div className="flex-1 space-y-4 text-center lg:text-left">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFA632]/20 text-[#EFA632] text-xs font-black uppercase tracking-widest shadow-xs">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EB321D]/15 dark:bg-[#EFA632]/20 text-[#EB321D] dark:text-[#EFA632] text-xs font-black uppercase tracking-widest shadow-xs">
                 <span>🎄 EDICIÓN DICIEMBRE 2026 · AUDITORÍA EN TIEMPO REAL</span>
               </span>
 
-              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl text-white tracking-wide leading-[1.05]">
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl text-zinc-900 dark:text-white tracking-wide leading-[1.05]">
                 THE <span className="text-[#EB321D]">FUCKING</span> MEJOR <br className="hidden sm:inline" />
                 <span className="text-[#EFA632]">
                   PAN DE JAMÓN 2026
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base font-medium text-neutral-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base font-medium text-zinc-700 dark:text-neutral-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
                 Los maestros panaderos se baten en duelo en sus mostradores. Degusta en tu mesa, escanea el código QR, evalúa con la escala de pancitos dorados y suelta tu veredicto sin filtro.
               </p>
 
@@ -745,7 +745,7 @@ export default function App() {
                     const el = document.getElementById('catalogo-panaderias');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="bg-white/10 hover:bg-white/15 text-white font-display text-xl px-5 py-2.5 rounded-xl border border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
+                  className="bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-white/10 dark:hover:bg-white/15 text-zinc-900 dark:text-white font-display text-xl px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
                 >
                   <Store className="w-5 h-5 text-[#EFA632]" />
                   <span>VER PANADERÍAS</span>
@@ -787,44 +787,44 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Emblem Card */}
-            <div className="shrink-0 flex flex-col items-center">
-              <div className="w-40 sm:w-48 aspect-square rounded-3xl bg-white dark:bg-zinc-800 p-4 shadow-xl border border-zinc-100 dark:border-zinc-700 flex items-center justify-center">
+            {/* Right Emblem - Floating Clean Logo with No Ugly Frame */}
+            <div className="shrink-0 flex flex-col items-center justify-center">
+              <div className="w-44 sm:w-56 md:w-64 max-w-full flex items-center justify-center transition-transform hover:scale-105 duration-300">
                 <img
                   src={COMPETITION_LOGO_PATH}
-                  alt="Sello del Concurso de Pan de Jamón Ciudad Bolívar"
+                  alt="Sello del Concurso The Fucking Mejor Pan de Jamón Ciudad Bolívar"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain"
+                  className="w-full h-auto max-h-52 sm:max-h-64 object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
                 />
               </div>
-              <span className="mt-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-                Edición Oficial 2026
+              <span className="mt-2 text-xs font-bold uppercase tracking-widest text-[#EFA632]">
+                ★ Edición Oficial 2026 ★
               </span>
             </div>
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
-              <span className="text-xs font-semibold text-neutral-400 block">
+          <div className="mt-8 pt-6 border-t border-amber-200/60 dark:border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
+              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
                 Panaderías
               </span>
-              <strong className="text-2xl sm:text-3xl font-display text-white tracking-wider" data-testid="kpi-total-bakeries">
+              <strong className="text-2xl sm:text-3xl font-display text-zinc-900 dark:text-white tracking-wider" data-testid="kpi-total-bakeries">
                 {bakeries.length}
               </strong>
             </div>
 
-            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
-              <span className="text-xs font-semibold text-neutral-400 block">
+            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
+              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
                 Votos Totales Auditados
               </span>
-              <strong className="text-2xl sm:text-3xl font-display text-white tracking-wider" data-testid="kpi-total-votes">
+              <strong className="text-2xl sm:text-3xl font-display text-zinc-900 dark:text-white tracking-wider" data-testid="kpi-total-votes">
                 {totalVotesCount}
               </strong>
             </div>
 
-            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
-              <span className="text-xs font-semibold text-neutral-400 block">
+            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
+              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
                 Nota Promedio de Ciudad
               </span>
               <div className="text-2xl sm:text-3xl font-display text-[#EFA632] flex items-center justify-center gap-1.5 tracking-wider">
@@ -833,8 +833,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
-              <span className="text-xs font-semibold text-neutral-400 block">
+            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
+              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
                 Mesas QR Activas
               </span>
               <strong className="text-2xl sm:text-3xl font-display text-[#64C236] tracking-wider" data-testid="kpi-active-tokens">

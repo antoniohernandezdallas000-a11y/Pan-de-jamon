@@ -45,16 +45,35 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
       data-testid={`bakery-portal-card-${bakery.id}`}
     >
       {/* Top Visual Showcase with Natural Aspect Ratio */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-amber-50/50 dark:bg-zinc-800/50">
-        <img
-          src={bakery.photoUrl || COMPETITION_LOGO_PATH}
-          alt={`Foto de ${bakery.name}`}
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-        />
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-amber-100 via-orange-50 to-amber-200 dark:from-zinc-800 dark:to-zinc-900 flex items-center justify-center">
+        {hasCustomLocalImage ? (
+          <img
+            src={bakery.photoUrl}
+            alt={`Foto de ${bakery.name}`}
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <div className="relative w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-[#1C1917] via-[#2A1810] to-[#141311] overflow-hidden group-hover:scale-105 transition-transform duration-500 ease-out">
+            {/* Warm radial background glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(239,166,50,0.25)_0%,transparent_70%)]" />
+
+            {/* Artisanal Golden Pan Badge */}
+            <div className="relative z-10 flex flex-col items-center gap-1.5">
+              <img
+                src="/assets/panes/pan-5.png"
+                alt="Pan de Jamón Dorado"
+                className="w-24 sm:w-28 h-auto object-contain glow-pan-dorado drop-shadow-[0_8px_16px_rgba(239,166,50,0.4)]"
+              />
+              <span className="text-[11px] font-display text-[#EFA632] tracking-wider uppercase bg-black/60 px-2.5 py-0.5 rounded-full border border-[#EFA632]/40">
+                Pan de Jamón Artesanal
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Soft gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
 
         {/* Top Floating Badges */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none">
@@ -70,7 +89,7 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
         </div>
 
         {/* Bottom Baker Tag on Image */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white pointer-events-none">
           <div className="flex items-center gap-1.5 text-xs font-medium drop-shadow-sm truncate">
             <Utensils className="w-3.5 h-3.5 text-[#EFA632] shrink-0" />
             <span className="truncate">{bakery.masterBaker}</span>
@@ -82,39 +101,39 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
       </div>
 
       {/* Card Content Body */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-4 bg-[#141311]">
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4 bg-white dark:bg-[#141311] transition-colors">
         <div className="space-y-2.5">
           <div>
-            <h3 className="font-display text-2xl font-bold text-white tracking-wide leading-tight group-hover:text-[#EFA632] transition-colors">
+            <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white tracking-wide leading-tight group-hover:text-[#EB321D] transition-colors">
               {bakery.name}
             </h3>
-            <p className="text-xs text-neutral-400 flex items-center gap-1 mt-1 truncate">
+            <p className="text-xs text-zinc-500 dark:text-neutral-400 flex items-center gap-1 mt-1 truncate">
               <MapPin className="w-3.5 h-3.5 text-[#EB321D] shrink-0" />
               <span className="truncate">{bakery.address}</span>
             </p>
           </div>
 
-          <p className="text-xs text-neutral-300 leading-relaxed line-clamp-2 bg-white/5 p-2.5 rounded-xl border border-white/10">
+          <p className="text-xs text-zinc-700 dark:text-neutral-300 leading-relaxed line-clamp-2 bg-amber-50/70 dark:bg-white/5 p-2.5 rounded-xl border border-amber-200/50 dark:border-white/10">
             “{bakery.signatureRecipe}”
           </p>
 
           {/* Quick Metrics Pills */}
           <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
-              <span className="text-[10px] text-neutral-400 block font-medium">Dorado</span>
-              <strong className="text-xs font-display text-white text-base">
+            <div className="bg-amber-50/60 dark:bg-black/60 p-2 rounded-xl border border-amber-200/40 dark:border-white/5">
+              <span className="text-[10px] text-zinc-500 dark:text-neutral-400 block font-medium">Dorado</span>
+              <strong className="text-xs font-display text-zinc-900 dark:text-white text-base">
                 {bakery.metrics.avgDough.toFixed(1)}
               </strong>
             </div>
-            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
-              <span className="text-[10px] text-neutral-400 block font-medium">Relleno</span>
-              <strong className="text-xs font-display text-white text-base">
+            <div className="bg-amber-50/60 dark:bg-black/60 p-2 rounded-xl border border-amber-200/40 dark:border-white/5">
+              <span className="text-[10px] text-zinc-500 dark:text-neutral-400 block font-medium">Relleno</span>
+              <strong className="text-xs font-display text-zinc-900 dark:text-white text-base">
                 {bakery.metrics.avgFilling.toFixed(1)}
               </strong>
             </div>
-            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
-              <span className="text-[10px] text-neutral-400 block font-medium">Estilo</span>
-              <strong className="text-[11px] font-bold text-neutral-200 truncate block">
+            <div className="bg-amber-50/60 dark:bg-black/60 p-2 rounded-xl border border-amber-200/40 dark:border-white/5">
+              <span className="text-[10px] text-zinc-500 dark:text-neutral-400 block font-medium">Estilo</span>
+              <strong className="text-[11px] font-bold text-zinc-800 dark:text-neutral-200 truncate block">
                 {bakery.crustStyle}
               </strong>
             </div>
@@ -126,10 +145,10 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
           <button
             type="button"
             onClick={() => onOpenPortal(bakery.id)}
-            className="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-1 cursor-pointer transition-colors"
+            className="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-white/5 dark:hover:bg-white/10 border border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-white text-xs font-bold flex items-center justify-center gap-1 cursor-pointer transition-colors"
           >
             <span>Ver Ficha</span>
-            <ChevronRight className="w-3.5 h-3.5 text-neutral-400" />
+            <ChevronRight className="w-3.5 h-3.5 text-zinc-400 dark:text-neutral-400" />
           </button>
 
           <button

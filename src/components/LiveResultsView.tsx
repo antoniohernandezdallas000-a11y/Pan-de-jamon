@@ -30,16 +30,16 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
   return (
     <div className="space-y-10" data-testid="live-results-view">
       {/* Human Festival Podium */}
-      <section className="bg-[#141311] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
+      <section className="bg-white/90 dark:bg-[#141311] border border-amber-200/70 dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl transition-colors">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EFA632]/10 border border-[#EFA632]/40 text-[#EFA632] text-xs font-bold">
             <Trophy className="w-3.5 h-3.5 text-[#EFA632]" />
             <span>CLASIFICACIÓN GENERAL AUDITADA EN TIEMPO REAL</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-6xl text-white tracking-wide">
+          <h2 className="font-display text-4xl sm:text-6xl text-zinc-900 dark:text-white tracking-wide">
             EL PODIO DE LA CIUDAD
           </h2>
-          <p className="text-xs sm:text-sm text-neutral-400">
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-neutral-400">
             Las panaderías que están mandando la parada con los votos de la gente en el mostrador.
           </p>
         </div>
@@ -49,23 +49,23 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
           {/* 🥈 Segundo Lugar */}
           {second && (
             <div className="order-2 md:order-1 flex flex-col items-center">
-              <div className="w-full bg-[#141311] border border-neutral-700 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl">
+              <div className="w-full bg-zinc-50 dark:bg-[#141311] border border-zinc-200 dark:border-neutral-700 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl transition-colors">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-neutral-300 text-black font-display text-xl flex items-center justify-center font-bold border-2 border-white shadow-lg">
                   2
                 </div>
-                <span className="text-[10px] font-black uppercase text-neutral-400 tracking-wider mb-1">
+                <span className="text-[10px] font-black uppercase text-zinc-500 dark:text-neutral-400 tracking-wider mb-1">
                   Pisa los talones
                 </span>
-                <h3 className="font-display text-2xl font-bold text-white line-clamp-1">
+                <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white line-clamp-1">
                   {second.name}
                 </h3>
-                <p className="text-xs text-neutral-400 mt-0.5 line-clamp-1">{second.sector}</p>
+                <p className="text-xs text-zinc-500 dark:text-neutral-400 mt-0.5 line-clamp-1">{second.sector}</p>
 
                 <div className="mt-3 flex items-center justify-center gap-2 text-[#EFA632] font-display text-4xl">
                   <PanIcon active={true} size={28} />
                   <span>{second.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
-                <div className="mt-1 w-full text-center text-xs text-neutral-500">
+                <div className="mt-1 w-full text-center text-xs text-zinc-500 dark:text-neutral-500">
                   {second.totalVotes} votos registrados
                 </div>
 
@@ -73,7 +73,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenPortal(second.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold cursor-pointer transition-colors"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 border border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
                     Ficha
                   </button>
@@ -93,7 +93,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
           {/* 🥇 Primer Lugar (Líder) */}
           {first && (
             <div className="order-1 md:order-2 flex flex-col items-center">
-              <div className="w-full bg-gradient-to-b from-[#EFA632]/25 to-[#141311] border-2 border-[#EFA632] rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center relative pt-10 -mt-2 sm:-mt-4 shadow-2xl glow-pan-dorado">
+              <div className="w-full bg-gradient-to-b from-[#EFA632]/20 via-amber-50 to-white dark:from-[#EFA632]/25 dark:to-[#141311] border-2 border-[#EFA632] rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center relative pt-10 -mt-2 sm:-mt-4 shadow-2xl glow-pan-dorado transition-colors">
                 <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-[#EFA632] text-black font-display text-3xl flex items-center justify-center font-black border-3 border-white shadow-2xl">
                   👑
                 </div>
@@ -102,10 +102,10 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
                   EL PAPÁ DE LOS HELADOS • PUESTO #1
                 </span>
 
-                <h3 className="font-display text-3xl sm:text-4xl font-black text-white mt-1 line-clamp-1">
+                <h3 className="font-display text-3xl sm:text-4xl font-black text-zinc-950 dark:text-white mt-1 line-clamp-1">
                   {first.name}
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 mt-0.5 line-clamp-1">
+                <p className="text-xs sm:text-sm text-zinc-700 dark:text-neutral-300 mt-0.5 line-clamp-1">
                   {first.sector} · {first.masterBaker}
                 </p>
 
@@ -114,7 +114,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
                   <span>{first.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
 
-                <div className="mt-1 text-center text-xs text-neutral-300 font-bold">
+                <div className="mt-1 text-center text-xs text-zinc-700 dark:text-neutral-300 font-bold">
                   <strong>{first.totalVotes} votos</strong> registrados en mostrador
                 </div>
 
@@ -122,7 +122,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenPortal(first.id)}
-                    className="flex-1 min-h-[42px] px-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-xs font-semibold cursor-pointer transition-colors"
+                    className="flex-1 min-h-[42px] px-3 rounded-xl bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/15 border border-amber-300 dark:border-white/20 text-zinc-900 dark:text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
                     Ver Ficha
                   </button>
@@ -142,23 +142,23 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
           {/* 🥉 Tercer Lugar */}
           {third && (
             <div className="order-3 flex flex-col items-center">
-              <div className="w-full bg-[#141311] border border-neutral-800 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl">
+              <div className="w-full bg-zinc-50 dark:bg-[#141311] border border-zinc-200 dark:border-neutral-800 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl transition-colors">
                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#B87333] text-white font-display text-xl flex items-center justify-center font-bold border-2 border-white shadow-lg">
                   3
                 </div>
                 <span className="text-[10px] font-black uppercase text-[#B87333] tracking-wider mb-1">
                   En la pelea
                 </span>
-                <h3 className="font-display text-2xl font-bold text-white line-clamp-1">
+                <h3 className="font-display text-2xl font-bold text-zinc-900 dark:text-white line-clamp-1">
                   {third.name}
                 </h3>
-                <p className="text-xs text-neutral-400 mt-0.5 line-clamp-1">{third.sector}</p>
+                <p className="text-xs text-zinc-500 dark:text-neutral-400 mt-0.5 line-clamp-1">{third.sector}</p>
 
                 <div className="mt-3 flex items-center justify-center gap-2 text-[#EFA632] font-display text-4xl">
                   <PanIcon active={true} size={28} />
                   <span>{third.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
-                <div className="mt-1 w-full text-center text-xs text-neutral-500">
+                <div className="mt-1 w-full text-center text-xs text-zinc-500 dark:text-neutral-500">
                   {third.totalVotes} votos registrados
                 </div>
 
@@ -166,7 +166,7 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
                   <button
                     type="button"
                     onClick={() => onOpenPortal(third.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold cursor-pointer transition-colors"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white dark:bg-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 border border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
                     Ficha
                   </button>
