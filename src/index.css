@@ -37,7 +37,7 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #FAF8F5;
+    background-color: #FFF5EC;
     color: #1E293B;
     margin: 0;
     padding: 0;
@@ -46,6 +46,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   html.dark body, .dark body, body.dark {

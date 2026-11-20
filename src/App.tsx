@@ -576,7 +576,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FAF8F5] dark:bg-[#121110] text-[#1E293B] dark:text-[#F1F5F9] pb-28 md:pb-16 transition-colors overflow-x-hidden">
+    <div className="relative min-h-screen bg-gradient-to-b from-[#FFF2E6] via-[#FFF8F2] to-[#FAF2EA] dark:from-[#121110] dark:via-[#121110] dark:to-[#0C0B0A] text-[#1E293B] dark:text-[#F1F5F9] pb-28 md:pb-16 transition-colors overflow-x-hidden">
       <FestiveAtmosphere isDark={isDark} />
       <OfflineIndicator />
 
@@ -704,7 +704,7 @@ export default function App() {
       {/* Main Container */}
       <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
         {/* Hero Section The Fucking Mejor Pan de Jamón */}
-        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/10 via-[#EFA632]/15 to-amber-50/90 dark:from-[#EB321D]/20 dark:via-[#EFA632]/10 dark:to-[#141311] border border-amber-200/80 dark:border-white/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl transition-colors">
+        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/15 via-[#F97316]/20 to-[#EFA632]/25 dark:from-[#EB321D]/20 dark:via-[#EFA632]/10 dark:to-[#141311] border border-orange-300/70 dark:border-white/10 shadow-2xl shadow-orange-500/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl transition-colors">
 
           {/* Ambient Glow */}
           <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EFA632]/20 blur-3xl pointer-events-none" />
@@ -776,21 +776,21 @@ export default function App() {
                       showToast(
                         next
                           ? '🌙 Noche Estrellada activada: ¡Luces Navideñas encendidas!'
-                          : '☀️ Día Soleado activado: ¡Copos de Nieve cayendo!',
+                          : '🌅 Atardecer Cálido activado: ¡Cielo en tonos coral y nieve suave cayendo!',
                         'info'
                       );
                       return next;
                     });
                   }}
                   className="btn-secondary min-h-[46px] min-w-[46px] px-3.5 py-2 text-xs font-semibold shadow-md hover:scale-105 active:scale-95 transition-all"
-                  aria-label={isDark ? 'Cambiar a Día Soleado con Nieve' : 'Cambiar a Noche Estrellada con Luces'}
+                  aria-label={isDark ? 'Cambiar a Atardecer Cálido con Nieve' : 'Cambiar a Noche Estrellada con Luces'}
                 >
                   {isDark ? (
-                    <Sun className="w-4 h-4 text-amber-500" />
+                    <Sun className="w-4 h-4 text-amber-500 animate-spin-slow" />
                   ) : (
-                    <Moon className="w-4 h-4 text-indigo-500" />
+                    <Moon className="w-4 h-4 text-indigo-400" />
                   )}
-                  <span className="hidden sm:inline font-bold">{isDark ? '☀️ Día y Nieve' : '🌙 Noche y Luces'}</span>
+                  <span className="hidden sm:inline font-bold">{isDark ? '🌅 Atardecer' : '🌙 Noche'}</span>
                 </button>
               </div>
             </div>

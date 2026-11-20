@@ -11,15 +11,15 @@ function pseudoRandom(seed: number) {
 }
 
 export const FestiveAtmosphere: React.FC<FestiveAtmosphereProps> = ({ isDark }) => {
-  // Pre-generar copos de nieve para modo Día (28 copos con sutil deriva)
+  // Pre-generar copos de nieve para modo Día / Atardecer (28 copos con sutil deriva)
   const snowflakes = useMemo(() => {
     return Array.from({ length: 28 }, (_, i) => {
       const left = pseudoRandom(i * 17 + 1) * 100;
-      const size = 10 + pseudoRandom(i * 23 + 2) * 16; // 10px a 26px
+      const size = 11 + pseudoRandom(i * 23 + 2) * 18; // 11px a 29px
       const duration = 6 + pseudoRandom(i * 31 + 3) * 7; // 6s a 13s
       const delay = pseudoRandom(i * 43 + 4) * 8; // 0s a 8s
-      const drift = -30 + pseudoRandom(i * 59 + 5) * 60; // deriva horizontal
-      const opacity = 0.4 + pseudoRandom(i * 71 + 6) * 0.5;
+      const drift = -35 + pseudoRandom(i * 59 + 5) * 70; // deriva horizontal
+      const opacity = 0.5 + pseudoRandom(i * 71 + 6) * 0.45;
       const char = ['❄', '❅', '✻', '•'][Math.floor(pseudoRandom(i * 83 + 7) * 4)];
       return { id: i, left, size, duration, delay, drift, opacity, char };
     });
@@ -41,19 +41,24 @@ export const FestiveAtmosphere: React.FC<FestiveAtmosphereProps> = ({ isDark }) 
   return (
     <div className="pointer-events-none fixed inset-0 z-20 overflow-hidden" aria-hidden="true">
       {/* ============================================================ */}
-      {/* ☀️ MODO DÍA: Ambiente Soleado Radiante + Copos de Nieve       */}
+      {/* 🌅 MODO ATARDECER: Cielo Dorado/Coral Cálido + Nieve           */}
       {/* ============================================================ */}
       {!isDark && (
         <>
-          {/* Resplandor del Sol Dorado en la esquina superior derecha */}
-          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-amber-300/35 via-orange-300/20 to-transparent blur-3xl pointer-events-none animate-pulse duration-[8000ms]" />
-          <div className="absolute top-0 right-1/4 w-[500px] h-[350px] bg-[radial-gradient(ellipse_at_top,rgba(251,191,36,0.18)_0%,transparent_75%)] blur-2xl pointer-events-none" />
+          {/* Capa de Cielo de Atardecer Gradual (Naranja Coral, Rosado y Ámbar Papelón) */}
+          <div className="absolute top-0 inset-x-0 h-[480px] bg-gradient-to-b from-[#FF7A59]/25 via-[#FFA07A]/18 via-[#FDBA74]/15 to-transparent pointer-events-none" />
 
-          {/* Copos de Nieve cayendo suavemente */}
+          {/* Sol del Atardecer Dorado Radiante (Orbe de luz en horizonte superior derecho) */}
+          <div className="absolute -top-20 right-8 sm:right-24 w-80 h-80 sm:w-96 sm:h-96 rounded-full bg-gradient-to-br from-[#FFA238]/45 via-[#FF6B4A]/30 to-[#F43F5E]/15 blur-3xl pointer-events-none animate-pulse duration-[7000ms]" />
+
+          {/* Haz de resplandor crepuscular horizontal */}
+          <div className="absolute top-12 left-0 right-0 h-44 bg-[radial-gradient(ellipse_at_center,rgba(251,146,60,0.20)_0%,transparent_75%)] blur-2xl pointer-events-none" />
+
+          {/* Copos de Nieve con reflejo cálido dorado del atardecer */}
           {snowflakes.map((flake) => (
             <span
               key={`flake-${flake.id}`}
-              className="absolute text-sky-700/60 dark:text-white select-none drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
+              className="absolute text-orange-950/45 select-none drop-shadow-[0_2px_6px_rgba(251,146,60,0.55)]"
               style={{
                 top: '-5%',
                 left: `${flake.left}%`,
