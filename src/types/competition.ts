@@ -116,25 +116,28 @@ export const BLUEPRINT_CONSTRAINTS = {
   STORAGE_ALLOWED_MIMES: ['image/jpeg', 'image/png', 'image/webp'],
 } as const;
 
-export const COMPETITION_LOGO_PATH = '/assets/aistudio/photo_2025-11-05_15-29-37_5d211805.jpg';
+export const COMPETITION_LOGO_PATH = '/assets/logo-04-hd.png';
 
 export const SURVEY_QUESTIONS = [
   {
     key: 'q1DoughScore' as const,
     number: '01',
-    title: 'Equilibrio de Masa y Dorado',
-    subtitle: 'Suavidad de la miga, punto de mantequilla, horneado uniforme y brillo del melado.',
+    title: 'EL DORADO & LA CORTEZA',
+    subtitle: 'Color caramelo parejo con barniz de papelón y huevo. Crujiente, brillante y sin quemao.',
+    tip: 'Debe crujir sabroso al morder, sin sabor a quemao y con los cortes tradicionales bien marcados.'
   },
   {
     key: 'q2FillingScore' as const,
     number: '02',
-    title: 'Proporción y Calidad del Relleno',
-    subtitle: 'Generosidad del jamón ahumado, tocineta crujiente, aceitunas y dulzor de las pasas.',
+    title: 'EL RELLENO (¡SIN PICHIRRERÍA!)',
+    subtitle: 'Generosidad de jamón ahumado, tocineta crujiente que chille, aceitunas y pasitas jugosas.',
+    tip: 'Que no te toque una rebanada con puro aire. Debe traer su buen bojote de jamón ahumado y aceitunas sin pepa.'
   },
   {
     key: 'q3OverallScore' as const,
     number: '03',
-    title: 'Experiencia Global y Tradición Guayanesa',
-    subtitle: 'Armonía de sabores en boca, aroma recién horneado e identidad de Ciudad Bolívar.',
+    title: 'LA MASA & EL HORNO',
+    subtitle: 'Miga suavecita, esponjosa y con aroma a mantequilla. Cocción uniforme hasta el corazón.',
+    tip: 'El pan debe sentirse tierno y suave, bien horneado hasta el centro del rollo, con ese toque dulce-salado que enamora.'
   },
 ] as const;

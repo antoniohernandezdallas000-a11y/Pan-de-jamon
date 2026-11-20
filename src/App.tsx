@@ -65,6 +65,7 @@ import { AuditAndSecurityView } from './components/AuditAndSecurityView';
 import { OfflineIndicator, PWAInstallButton } from './components/PWAInstallBanner';
 import { AuthModal, AppUser } from './components/AuthModal';
 import { ToastContainer, ToastData } from './components/Toast';
+import { PanIcon } from './components/BreadRating';
 
 type ActiveSection = 'portals' | 'tokens' | 'results' | 'audit';
 
@@ -577,126 +578,150 @@ export default function App() {
     <div className="min-h-screen bg-[#FAF8F5] dark:bg-[#121110] text-[#1E293B] dark:text-[#F1F5F9] pb-28 md:pb-16 transition-colors">
       <OfflineIndicator />
 
-      {/* Modern Translucent Navigation Bar */}
-      <header className="sticky top-0 z-30 h-16 flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 lg:px-8 glass-panel border-b border-zinc-200/80 dark:border-zinc-800/80">
-        {/* Brand & Badge */}
-        <div className="flex items-center gap-3 min-w-0">
-          <a
-            href="#top"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveSection('portals');
-            }}
-            className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-white tracking-tight whitespace-nowrap truncate min-w-0 flex items-center gap-2 hover:opacity-90 transition-opacity"
-          >
-            <span>🥖 Pan de Jamón</span>
-          </a>
-          <span className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 text-xs font-semibold shrink-0">
-            Ciudad Bolívar
-          </span>
-        </div>
+      {/* Navigation Bar Oficial The Fucking Mejor Pan de Jamón */}
+      <header className="sticky top-0 z-30 pt-[max(0.5rem,env(safe-area-inset-top))] bg-[#0C0B0A]/95 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4">
+          {/* Fila Superior: Marca + Botón QR */}
+          <div className="flex items-center justify-between gap-2 sm:gap-3 w-full md:w-auto">
+            <a
+              href="#top"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveSection('portals');
+              }}
+              className="flex items-center gap-2 sm:gap-3 hover:opacity-95 transition-transform active:scale-95"
+            >
+              <img
+                src="/assets/logo-04-hd.png"
+                alt="Logo The Fucking Mejor Pan de Jamón"
+                className="h-10 sm:h-14 md:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(235,50,29,0.35)] shrink-0"
+              />
+              <div className="min-w-0">
+                <span className="font-display text-xl sm:text-2xl md:text-3xl text-white tracking-wider leading-none block truncate">
+                  THE <span className="text-[#EB321D]">FUCKING</span> MEJOR
+                </span>
+                <span className="text-[9px] sm:text-xs text-[#EFA632] font-black uppercase tracking-[0.16em] block mt-0.5 truncate">
+                  PAN DE JAMÓN • 2026
+                </span>
+              </div>
+            </a>
 
-        {/* Modern Pill Navigation */}
-        <nav
-          aria-label="Navegación principal"
-          className="hidden md:flex items-center gap-1 bg-zinc-100/80 dark:bg-zinc-800/60 p-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 text-xs font-semibold"
-        >
-          <button
-            type="button"
-            onClick={() => setActiveSection('portals')}
-            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'portals'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-sm font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-            }`}
-          >
-            Panaderías
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveSection('results')}
-            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'results'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-sm font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-            }`}
-          >
-            Posiciones en Vivo
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveSection('tokens')}
-            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'tokens'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-sm font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-            }`}
-          >
-            Mesas QR
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveSection('audit')}
-            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'audit'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white shadow-sm font-bold'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-            }`}
-          >
-            Transparencia
-          </button>
-        </nav>
+            {/* Botón QR en Header para Móvil y Desktop */}
+            <button
+              type="button"
+              onClick={() => {
+                const firstActive = tokens.find(
+                  (t) => t.status === 'active' && t.usedCount < t.maxUses
+                );
+                if (firstActive) {
+                  setModalInitialBakeryId(firstActive.bakeryId);
+                  setModalInitialTokenCode(firstActive.code);
+                } else {
+                  setModalInitialBakeryId(null);
+                  setModalInitialTokenCode(null);
+                }
+                setIsQrModalOpen(true);
+              }}
+              className="bg-[#64C236] hover:bg-[#53ab2b] text-black font-display text-xs sm:text-base md:text-lg py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl shadow-md transition-all active:scale-90 flex items-center gap-1.5 cursor-pointer font-black shrink-0 min-h-[40px] sm:min-h-[44px]"
+              title="Simular escaneo de QR"
+            >
+              <QrCode className="w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0" />
+              <span className="whitespace-nowrap">QR ESCANEADO</span>
+            </button>
+          </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => setIsAuthModalOpen(true)}
-            className="btn-secondary min-h-[38px] px-3.5 py-1 text-xs font-semibold"
-            title="Cambiar perfil o usuario"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-rose-500" />
-            <span className="capitalize">{currentUser?.displayName?.split(' ')[0] || userRole}</span>
-          </button>
+          {/* Fila Inferior en Móvil / Derecha en Desktop: Tabs de Navegación */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 w-full md:w-auto">
+            <button
+              type="button"
+              onClick={() => setActiveSection('portals')}
+              className={`flex-1 md:flex-initial min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                activeSection === 'portals'
+                  ? 'bg-[#EB321D] text-white shadow-md shadow-[#EB321D]/30'
+                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
+              }`}
+            >
+              <PanIcon active={activeSection === 'portals'} size={18} />
+              <span>PANADERÍAS</span>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              setModalInitialBakeryId(null);
-              setModalInitialTokenCode(null);
-              setIsQrModalOpen(true);
-            }}
-            className="btn-primary min-h-[38px] px-4 py-1 text-xs font-semibold whitespace-nowrap shrink-0"
-          >
-            <QrCode className="w-3.5 h-3.5" />
-            <span>Votar</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setActiveSection('results')}
+              className={`flex-1 md:flex-initial min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                activeSection === 'results'
+                  ? 'bg-[#EFA632] text-black font-black shadow-md shadow-[#EFA632]/30'
+                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
+              }`}
+            >
+              <Trophy className="w-4 h-4" />
+              <span>EL PODIO</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('tokens')}
+              className={`hidden sm:flex min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                activeSection === 'tokens'
+                  ? 'bg-white text-black font-black shadow-md'
+                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
+              }`}
+            >
+              <Ticket className="w-4 h-4" />
+              <span>MESAS QR</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('audit')}
+              className={`min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
+                activeSection === 'audit'
+                  ? 'bg-white text-black font-black shadow-md'
+                  : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10 border border-white/10'
+              }`}
+              title="Panel de Auditoría"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span className="hidden sm:inline">AUDITORÍA</span>
+            </button>
+
+            {/* Perfil / Auth */}
+            <button
+              type="button"
+              onClick={() => setIsAuthModalOpen(true)}
+              className="min-h-[42px] px-2.5 sm:px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-neutral-300 flex items-center gap-1.5 cursor-pointer active:scale-95"
+              title="Perfil de Usuario o Jurado"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-[#EFA632]" />
+              <span className="hidden lg:inline capitalize">{currentUser?.displayName?.split(' ')[0] || userRole}</span>
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Main Container */}
       <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
-        {/* Modern Warm Hero Section */}
-        <section className="relative rounded-3xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent dark:from-amber-950/20 dark:via-zinc-900 dark:to-zinc-900 border border-amber-200/60 dark:border-zinc-800 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-sm">
+        {/* Hero Section The Fucking Mejor Pan de Jamón */}
+        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/20 via-[#EFA632]/10 to-[#141311] border border-white/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl">
           {/* Ambient Glow */}
-          <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-amber-400/20 dark:bg-amber-500/10 blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EFA632]/20 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Left Content Column */}
             <div className="flex-1 space-y-4 text-center lg:text-left">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 text-xs font-semibold shadow-xs">
-                <span>🎄 Diciembre 2026 · Tradición Navideña Guayanesa</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EFA632]/20 text-[#EFA632] text-xs font-black uppercase tracking-widest shadow-xs">
+                <span>🎄 EDICIÓN DICIEMBRE 2026 · AUDITORÍA EN TIEMPO REAL</span>
               </span>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-zinc-900 dark:text-white tracking-tight leading-[1.1]">
-                El Gran Concurso del <br className="hidden sm:inline" />
-                <span className="bg-gradient-to-r from-amber-600 via-rose-600 to-amber-700 bg-clip-text text-transparent">
-                  Mejor Pan de Jamón
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl text-white tracking-wide leading-[1.05]">
+                THE <span className="text-[#EB321D]">FUCKING</span> MEJOR <br className="hidden sm:inline" />
+                <span className="text-[#EFA632]">
+                  PAN DE JAMÓN 2026
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-base font-medium text-zinc-600 dark:text-zinc-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                Los maestros panaderos del Paseo Orinoco, Vista Hermosa y el Casco Histórico compiten por la receta de oro. Degusta, califica y apoya a tu panadería favorita con tu voto real en mesa.
+              <p className="text-sm sm:text-base font-medium text-neutral-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                Los maestros panaderos se baten en duelo en sus mostradores. Degusta en tu mesa, escanea el código QR, evalúa con la escala de pancitos dorados y suelta tu veredicto sin filtro.
               </p>
 
               {/* Action Buttons */}
@@ -708,10 +733,10 @@ export default function App() {
                     setModalInitialTokenCode(null);
                     setIsQrModalOpen(true);
                   }}
-                  className="btn-primary min-h-[46px] px-6 py-2.5 text-xs sm:text-sm font-semibold shadow-md"
+                  className="bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-xl sm:text-2xl px-6 py-2.5 rounded-xl shadow-xl shadow-[#EB321D]/30 border-2 border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
                 >
-                  <QrCode className="w-4 h-4" />
-                  <span>Votar con Código de Mesa</span>
+                  <PanIcon active={true} size={24} />
+                  <span>CATAR & VOTAR CON QR</span>
                 </button>
 
                 <button
@@ -720,10 +745,10 @@ export default function App() {
                     const el = document.getElementById('catalogo-panaderias');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="btn-secondary min-h-[46px] px-5 py-2.5 text-xs sm:text-sm font-semibold"
+                  className="bg-white/10 hover:bg-white/15 text-white font-display text-xl px-5 py-2.5 rounded-xl border border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
                 >
-                  <Store className="w-4 h-4 text-rose-500" />
-                  <span>Ver Panaderías</span>
+                  <Store className="w-5 h-5 text-[#EFA632]" />
+                  <span>VER PANADERÍAS</span>
                 </button>
 
                 <PWAInstallButton />
@@ -779,39 +804,40 @@ export default function App() {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-8 pt-6 border-t border-amber-200/50 dark:border-zinc-800 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <div className="bg-white/70 dark:bg-zinc-800/60 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 block">
+          <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
+              <span className="text-xs font-semibold text-neutral-400 block">
                 Panaderías
               </span>
-              <strong className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white" data-testid="kpi-total-bakeries">
+              <strong className="text-2xl sm:text-3xl font-display text-white tracking-wider" data-testid="kpi-total-bakeries">
                 {bakeries.length}
               </strong>
             </div>
 
-            <div className="bg-white/70 dark:bg-zinc-800/60 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 block">
-                Votos de la Comunidad
+            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
+              <span className="text-xs font-semibold text-neutral-400 block">
+                Votos Totales Auditados
               </span>
-              <strong className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white" data-testid="kpi-total-votes">
+              <strong className="text-2xl sm:text-3xl font-display text-white tracking-wider" data-testid="kpi-total-votes">
                 {totalVotesCount}
               </strong>
             </div>
 
-            <div className="bg-white/70 dark:bg-zinc-800/60 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 block">
-                Promedio General
+            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
+              <span className="text-xs font-semibold text-neutral-400 block">
+                Nota Promedio de Ciudad
               </span>
-              <strong className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white">
-                {overallCompetitionAverage} ★
-              </strong>
+              <div className="text-2xl sm:text-3xl font-display text-[#EFA632] flex items-center justify-center gap-1.5 tracking-wider">
+                <PanIcon active={true} size={22} />
+                <span>{overallCompetitionAverage}</span>
+              </div>
             </div>
 
-            <div className="bg-white/70 dark:bg-zinc-800/60 p-4 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-center">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 block">
-                Mesas Activas
+            <div className="bg-[#141311] p-4 rounded-2xl border border-white/10 text-center">
+              <span className="text-xs font-semibold text-neutral-400 block">
+                Mesas QR Activas
               </span>
-              <strong className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white" data-testid="kpi-active-tokens">
+              <strong className="text-2xl sm:text-3xl font-display text-[#64C236] tracking-wider" data-testid="kpi-active-tokens">
                 {activeTokensCount}
               </strong>
             </div>

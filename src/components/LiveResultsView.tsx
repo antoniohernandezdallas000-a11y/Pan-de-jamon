@@ -7,6 +7,7 @@ import {
   SURVEY_QUESTIONS,
   Vote,
 } from '../types/competition';
+import { PanIcon } from './BreadRating';
 
 interface LiveResultsViewProps {
   rankedBakeries: Array<Bakery & { metrics: BakeryComputedMetrics; rank: number }>;
@@ -29,59 +30,60 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
   return (
     <div className="space-y-10" data-testid="live-results-view">
       {/* Human Festival Podium */}
-      <section className="card-warm rounded-3xl p-6 sm:p-10">
+      <section className="bg-[#141311] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EADBCA] dark:bg-[#2A231E] text-[#7A3E20] dark:text-[#E8A57E] text-xs font-semibold">
-            <Trophy className="w-3.5 h-3.5 text-[#C84B31]" />
-            <span>Votación Popular en Vivo · Ciudad Bolívar</span>
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EFA632]/10 border border-[#EFA632]/40 text-[#EFA632] text-xs font-bold">
+            <Trophy className="w-3.5 h-3.5 text-[#EFA632]" />
+            <span>CLASIFICACIÓN GENERAL AUDITADA EN TIEMPO REAL</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-black text-[#2D241E] dark:text-[#FAF6F0]">
-            Las Panaderías Favoritas del Público
+          <h2 className="font-display text-4xl sm:text-6xl text-white tracking-wide">
+            EL PODIO DE LA CIUDAD
           </h2>
-          <p className="text-xs sm:text-sm text-[#66564B] dark:text-[#B8A99D]">
-            Posiciones actualizadas al instante con las calificaciones de quienes han probado el pan de jamón en cada mesa.
+          <p className="text-xs sm:text-sm text-neutral-400">
+            Las panaderías que están mandando la parada con los votos de la gente en el mostrador.
           </p>
         </div>
 
         {/* 3 Top Bakeries Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end max-w-5xl mx-auto">
           {/* 🥈 Segundo Lugar */}
           {second && (
             <div className="order-2 md:order-1 flex flex-col items-center">
-              <div className="w-full card-warm rounded-2xl p-5 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-800 border border-slate-300 flex items-center justify-center font-display font-black text-lg -mt-10 mb-3 shadow-xs">
-                  2°
+              <div className="w-full bg-[#141311] border border-neutral-700 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-neutral-300 text-black font-display text-xl flex items-center justify-center font-bold border-2 border-white shadow-lg">
+                  2
                 </div>
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
-                  Segundo Lugar
+                <span className="text-[10px] font-black uppercase text-neutral-400 tracking-wider mb-1">
+                  Pisa los talones
                 </span>
-                <h3 className="font-display text-xl font-bold text-[#2D241E] dark:text-[#F7F2EC] line-clamp-1">
+                <h3 className="font-display text-2xl font-bold text-white line-clamp-1">
                   {second.name}
                 </h3>
-                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">{second.sector}</p>
+                <p className="text-xs text-neutral-400 mt-0.5 line-clamp-1">{second.sector}</p>
 
-                <div className="mt-3 w-full py-2 px-3 rounded-xl bg-[#FAF6F0] dark:bg-[#1E1917] flex items-center justify-between text-xs tabular-nums">
-                  <span className="text-[#7A6B60] dark:text-[#A7988D]">Promedio:</span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">{second.metrics.compositeAverage.toFixed(2)} ★</span>
+                <div className="mt-3 flex items-center justify-center gap-2 text-[#EFA632] font-display text-4xl">
+                  <PanIcon active={true} size={28} />
+                  <span>{second.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
-                <div className="mt-1 w-full text-center text-[11px] text-[#8A796E]">
-                  {second.totalVotes} votos de la comunidad
+                <div className="mt-1 w-full text-center text-xs text-neutral-500">
+                  {second.totalVotes} votos registrados
                 </div>
 
                 <div className="mt-4 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(second.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
-                    Ver Ficha
+                    Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(second.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold cursor-pointer shadow-xs"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-lg tracking-wider cursor-pointer shadow-md transition-all active:scale-95 flex items-center justify-center gap-1"
                   >
-                    Votar
+                    <PanIcon active={true} size={18} />
+                    <span>VOTAR</span>
                   </button>
                 </div>
               </div>
@@ -91,49 +93,46 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
           {/* 🥇 Primer Lugar (Líder) */}
           {first && (
             <div className="order-1 md:order-2 flex flex-col items-center">
-              <div className="w-full card-warm rounded-2xl p-6 flex flex-col items-center text-center border-2 border-amber-400/80 shadow-md">
-                <div className="w-14 h-14 rounded-full bg-amber-400 text-amber-950 border-2 border-amber-300 flex items-center justify-center font-display font-black text-2xl -mt-12 mb-3 shadow-md">
-                  1°
+              <div className="w-full bg-gradient-to-b from-[#EFA632]/25 to-[#141311] border-2 border-[#EFA632] rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center relative pt-10 -mt-2 sm:-mt-4 shadow-2xl glow-pan-dorado">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-[#EFA632] text-black font-display text-3xl flex items-center justify-center font-black border-3 border-white shadow-2xl">
+                  👑
                 </div>
 
-                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold mb-1">
-                  Favorito del Público
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EFA632]/20 text-[#EFA632] text-[10px] font-black uppercase tracking-widest mb-1">
+                  EL PAPÁ DE LOS HELADOS • PUESTO #1
                 </span>
 
-                <h3 className="font-display text-2xl font-black text-[#2D241E] dark:text-[#F7F2EC] mt-1 line-clamp-1">
+                <h3 className="font-display text-3xl sm:text-4xl font-black text-white mt-1 line-clamp-1">
                   {first.name}
                 </h3>
-                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">
+                <p className="text-xs sm:text-sm text-neutral-300 mt-0.5 line-clamp-1">
                   {first.sector} · {first.masterBaker}
                 </p>
 
-                <div className="mt-4 w-full py-2 px-3.5 rounded-xl bg-amber-50 dark:bg-[#2A231C] border border-amber-200 dark:border-amber-900/40 flex items-center justify-between text-sm tabular-nums">
-                  <span className="text-[#7A6B60] dark:text-[#A7988D] text-xs">Puntuación:</span>
-                  <span className="font-black text-amber-700 dark:text-amber-400 text-base flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                    {first.metrics.compositeAverage.toFixed(2)} ★
-                  </span>
+                <div className="mt-3 flex items-center justify-center gap-2 text-[#EFA632] font-display text-5xl sm:text-6xl font-black">
+                  <PanIcon active={true} size={40} />
+                  <span>{first.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
 
-                <div className="mt-1 text-center text-xs text-[#8A796E]">
-                  <strong>{first.totalVotes} votos</strong> registrados
+                <div className="mt-1 text-center text-xs text-neutral-300 font-bold">
+                  <strong>{first.totalVotes} votos</strong> registrados en mostrador
                 </div>
 
-                <div className="mt-4 flex items-center gap-2 w-full">
+                <div className="mt-5 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(first.id)}
-                    className="flex-1 min-h-[42px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
+                    className="flex-1 min-h-[42px] px-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
                     Ver Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(first.id)}
-                    className="flex-1 min-h-[42px] px-4 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-bold cursor-pointer shadow-md flex items-center justify-center gap-1.5"
+                    className="flex-1 min-h-[42px] px-4 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-xl tracking-wider cursor-pointer shadow-lg active:scale-95 flex items-center justify-center gap-1.5 border border-white/20"
                   >
-                    <QrCode className="w-4 h-4" />
-                    <span>Votar por este pan</span>
+                    <PanIcon active={true} size={22} />
+                    <span>CATAR & VOTAR</span>
                   </button>
                 </div>
               </div>
@@ -143,40 +142,41 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
           {/* 🥉 Tercer Lugar */}
           {third && (
             <div className="order-3 flex flex-col items-center">
-              <div className="w-full card-warm rounded-2xl p-5 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-orange-100 text-orange-900 border border-orange-300 flex items-center justify-center font-display font-black text-lg -mt-10 mb-3 shadow-xs">
-                  3°
+              <div className="w-full bg-[#141311] border border-neutral-800 rounded-3xl p-5 flex flex-col items-center text-center relative pt-8 shadow-xl">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-[#B87333] text-white font-display text-xl flex items-center justify-center font-bold border-2 border-white shadow-lg">
+                  3
                 </div>
-                <span className="text-xs font-semibold text-orange-800 dark:text-orange-300 mb-1">
-                  Tercer Lugar
+                <span className="text-[10px] font-black uppercase text-[#B87333] tracking-wider mb-1">
+                  En la pelea
                 </span>
-                <h3 className="font-display text-xl font-bold text-[#2D241E] dark:text-[#F7F2EC] line-clamp-1">
+                <h3 className="font-display text-2xl font-bold text-white line-clamp-1">
                   {third.name}
                 </h3>
-                <p className="text-xs text-[#7A6B60] dark:text-[#A7988D] mt-0.5 line-clamp-1">{third.sector}</p>
+                <p className="text-xs text-neutral-400 mt-0.5 line-clamp-1">{third.sector}</p>
 
-                <div className="mt-3 w-full py-2 px-3 rounded-xl bg-[#FAF6F0] dark:bg-[#1E1917] flex items-center justify-between text-xs tabular-nums">
-                  <span className="text-[#7A6B60] dark:text-[#A7988D]">Promedio:</span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">{third.metrics.compositeAverage.toFixed(2)} ★</span>
+                <div className="mt-3 flex items-center justify-center gap-2 text-[#EFA632] font-display text-4xl">
+                  <PanIcon active={true} size={28} />
+                  <span>{third.metrics.compositeAverage.toFixed(1)}</span>
                 </div>
-                <div className="mt-1 w-full text-center text-[11px] text-[#8A796E]">
-                  {third.totalVotes} votos de la comunidad
+                <div className="mt-1 w-full text-center text-xs text-neutral-500">
+                  {third.totalVotes} votos registrados
                 </div>
 
                 <div className="mt-4 flex items-center gap-2 w-full">
                   <button
                     type="button"
                     onClick={() => onOpenPortal(third.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-full bg-white dark:bg-[#2F2925] border border-[#D5C7B2] dark:border-[#423831] text-[#2D241E] dark:text-[#F5EFEB] text-xs font-semibold cursor-pointer"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold cursor-pointer transition-colors"
                   >
-                    Ver Ficha
+                    Ficha
                   </button>
                   <button
                     type="button"
                     onClick={() => onQuickVote(third.id)}
-                    className="flex-1 min-h-[38px] px-3 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold cursor-pointer shadow-xs"
+                    className="flex-1 min-h-[38px] px-3 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-lg tracking-wider cursor-pointer shadow-md transition-all active:scale-95 flex items-center justify-center gap-1"
                   >
-                    Votar
+                    <PanIcon active={true} size={18} />
+                    <span>VOTAR</span>
                   </button>
                 </div>
               </div>

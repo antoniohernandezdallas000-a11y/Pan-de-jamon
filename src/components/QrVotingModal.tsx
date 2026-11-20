@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
+import confetti from 'canvas-confetti';
+import BreadRating, { PanIcon } from './BreadRating';
 import {
   AlertCircle,
   Camera,
@@ -10,7 +12,6 @@ import {
   RefreshCw,
   ShieldCheck,
   Sparkles,
-  Star,
   Upload,
   X,
 } from 'lucide-react';
@@ -455,6 +456,14 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
         tokenCode: validationOutcome.token.code,
         syncedToCloud: receipt.syncedToCloud,
       });
+
+      confetti({
+        particleCount: 90,
+        spread: 75,
+        origin: { y: 0.5 },
+        colors: ['#EB321D', '#EFA632', '#64C236', '#FFFFFF']
+      });
+
       setComment('');
       setEvidenceFile(null);
     } catch (err) {
@@ -466,30 +475,30 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/80 backdrop-blur-sm p-0 md:p-4 overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/85 backdrop-blur-md p-0 md:p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="qr-voting-modal-title"
     >
-      <div className="w-full max-w-2xl rounded-t-3xl md:rounded-3xl bg-[#FAF6F0] dark:bg-[#1E1917] border border-[#DDD0BC] dark:border-[#382E27] shadow-2xl overflow-hidden max-h-[94vh] flex flex-col text-[#2D241E] dark:text-[#F7F2EC]">
+      <div className="w-full max-w-2xl rounded-t-3xl md:rounded-3xl bg-[#141311] border border-white/10 shadow-2xl overflow-hidden max-h-[94vh] flex flex-col text-white">
         {/* Modal Header */}
-        <div className="p-6 md:px-8 bg-white dark:bg-[#251F1C] border-b border-[#E8DEC8] dark:border-[#332A24] flex items-center justify-between gap-4 shrink-0">
-          <div className="flex items-center gap-3.5">
+        <div className="p-4 sm:p-6 md:px-8 bg-[#0C0B0A] border-b border-white/10 flex items-center justify-between gap-4 shrink-0">
+          <div className="flex items-center gap-3">
             <img
               src={COMPETITION_LOGO_PATH}
-              alt="Logo oficial El Concurso del Pan de Jamón"
+              alt="Logo oficial The Fucking Mejor Pan de Jamón"
               referrerPolicy="no-referrer"
-              className="w-12 h-12 rounded-2xl object-contain bg-white dark:bg-[#1A1614] border border-[#DDD0BC] dark:border-[#382E27] p-1 shrink-0"
+              className="h-10 sm:h-12 w-auto object-contain shrink-0 drop-shadow-[0_4px_12px_rgba(235,50,29,0.3)]"
             />
             <div>
               <h2
                 id="qr-voting-modal-title"
-                className="font-display text-2xl font-bold tracking-wide text-[#2D241E] dark:text-[#FAF6F0]"
+                className="font-display text-xl sm:text-2xl font-bold tracking-wide text-white leading-tight"
               >
-                Vota por tu Pan de Jamón Favorito
+                THE <span className="text-[#EB321D]">FUCKING</span> MEJOR PAN DE JAMÓN
               </h2>
-              <p className="text-xs text-[#7A6B60] dark:text-[#A7988D]">
-                Ingresa el código de tu mesa o usa la cámara para dejar tu opinión
+              <p className="text-[10px] sm:text-xs text-[#EFA632] font-black uppercase tracking-wider">
+                Cabina Oficial de Votación · Escala de Pancitos
               </p>
             </div>
           </div>
@@ -497,7 +506,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[40px] min-w-[40px] rounded-full bg-[#FAF6F0] dark:bg-[#1A1614] hover:bg-[#EFE8DC] text-[#5C4F46] hover:text-[#2D241E] border border-[#DDD0BC] dark:border-[#382E27] flex items-center justify-center transition-colors cursor-pointer"
+            className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/10 flex items-center justify-center transition-colors cursor-pointer active:scale-90"
             aria-label="Cerrar cabina de votación"
           >
             <X className="w-5 h-5" />
@@ -505,23 +514,44 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 md:p-8 overflow-y-auto space-y-6 flex-1">
+        <div className="p-4 sm:p-6 md:p-8 overflow-y-auto space-y-6 flex-1 bg-[#141311]">
           {txReceipt ? (
             <div
-              className="rounded-2xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 p-6 space-y-4 text-center"
+              className="rounded-3xl bg-black/90 border-2 border-[#EFA632] p-6 sm:p-8 space-y-4 text-center shadow-2xl glow-pan-dorado animate-in fade-in zoom-in-95 duration-200"
               data-testid="atomic-vote-receipt"
             >
-              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-8 h-8" />
+              <div className="w-16 h-16 rounded-full bg-[#64C236]/20 border-2 border-[#64C236] text-[#64C236] flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-9 h-9" />
               </div>
-              <div className="space-y-1">
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#2D241E] dark:text-white">
-                  ¡Muchas gracias por tu voto!
+              <div className="space-y-1.5">
+                <span className="text-[10px] uppercase font-black tracking-widest text-[#64C236] bg-[#64C236]/15 px-3 py-1 rounded-full border border-[#64C236]/40 inline-block">
+                  Voto Atómico Certificado en Firestore
+                </span>
+                <h3 className="font-display text-3xl sm:text-5xl text-white tracking-wide">
+                  ¡LISTO EL POLLO! VEREDICTO ASENTAO
                 </h3>
-                <p className="text-sm text-[#57493E] dark:text-[#CBBDB2]">
-                  Tu opinión para <strong>{txReceipt.bakeryName}</strong> ha sido registrada con éxito con el código{' '}
-                  <strong className="font-mono">{txReceipt.tokenCode}</strong>. ¡Gracias por celebrar la tradición con nosotros!
+                <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto">
+                  Tus pancitos para <strong className="text-white">{txReceipt.bakeryName}</strong> ya están sumando con el token <strong className="font-mono text-[#EFA632]">{txReceipt.tokenCode}</strong>.
                 </p>
+              </div>
+
+              {/* Resumen del puntaje con pancito dorado */}
+              <div className="my-4 bg-[#141311] border border-[#EFA632]/40 rounded-2xl p-4 max-w-md mx-auto">
+                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400 block mb-1">
+                  Puntuación Asignada
+                </span>
+                <div className="flex items-center justify-center gap-2 text-[#EFA632]">
+                  <PanIcon active={true} size={38} />
+                  <span className="font-display text-5xl">
+                    {((q1DoughScore + q2FillingScore + q3OverallScore) / 3).toFixed(1)}
+                  </span>
+                  <span className="text-sm text-neutral-400 font-bold self-end mb-1">/ 5.0</span>
+                </div>
+                <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-white/10 text-xs text-neutral-300">
+                  <div className="bg-black/60 p-2 rounded-xl">Dorado: <strong className="text-white font-display text-lg block">{q1DoughScore}</strong></div>
+                  <div className="bg-black/60 p-2 rounded-xl">Relleno: <strong className="text-white font-display text-lg block">{q2FillingScore}</strong></div>
+                  <div className="bg-black/60 p-2 rounded-xl">Masa: <strong className="text-white font-display text-lg block">{q3OverallScore}</strong></div>
+                </div>
               </div>
 
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
@@ -531,16 +561,16 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                     setTxReceipt(null);
                     setRawCodeInput('');
                   }}
-                  className="min-h-[44px] px-5 py-2.5 rounded-full bg-white dark:bg-[#2A231F] border border-[#D5C7B2] text-[#2D241E] dark:text-white text-xs font-semibold transition-colors cursor-pointer"
+                  className="min-h-[44px] px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer active:scale-95"
                 >
-                  Calificar Otro Pan
+                  Calificar Otra Panadería
                 </button>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="min-h-[44px] px-6 py-2.5 rounded-full bg-[#C84B31] hover:bg-[#B33E26] text-white text-xs font-semibold transition-colors cursor-pointer shadow-xs"
+                  className="min-h-[44px] px-6 py-2.5 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-xl transition-all cursor-pointer shadow-lg active:scale-95"
                 >
-                  Ver Posiciones
+                  VER EL PODIO DE LA CIUDAD 🏆
                 </button>
               </div>
             </div>
@@ -785,67 +815,49 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                 </div>
               </div>
 
-              {/* Step 2: 3-Question Post-Tasting Star Survey */}
-              <div className="space-y-4 pt-2 border-t border-zinc-200 dark:border-zinc-800">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                    Paso 02 · Encuesta Oficial de 3 Preguntas (Escala 1 a 5 Estrellas)
-                  </h3>
-                  <span className="text-xs font-mono text-amber-500 tabular-nums">
-                    Promedio actual: {((q1DoughScore + q2FillingScore + q3OverallScore) / 3).toFixed(2)} ★
+              {/* Step 2: Escala de Pancitos Dorados Criollos (3 Criterios Oficiales) */}
+              <div className="space-y-4 pt-4 border-t border-white/10">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#EFA632] block">
+                      Paso 02 · Ficha de Evaluación Oficial
+                    </span>
+                    <h3 className="font-display text-2xl text-white">
+                      DALE SUS PANCITOS A CADA CRITERIO
+                    </h3>
+                  </div>
+                  <span className="text-xs font-mono text-[#EFA632] bg-[#EFA632]/10 px-3 py-1 rounded-full border border-[#EFA632]/30 tabular-nums font-bold self-start sm:self-auto">
+                    Promedio: {((q1DoughScore + q2FillingScore + q3OverallScore) / 3).toFixed(1)} / 5.0
                   </span>
                 </div>
 
-                <div className="space-y-3">
-                  {SURVEY_QUESTIONS.map((q, idx) => {
-                    const currentVal =
-                      idx === 0 ? q1DoughScore : idx === 1 ? q2FillingScore : q3OverallScore;
-                    const setVal =
-                      idx === 0 ? setQ1DoughScore : idx === 1 ? setQ2FillingScore : setQ3OverallScore;
+                <div className="space-y-4">
+                  <BreadRating
+                    number="1"
+                    title="EL DORADO & LA CORTEZA"
+                    question="¿Tiene su buen color caramelo con barniz de papelón y huevo, o salió pálido y arrebatao?"
+                    criolloTip="Debe crujir sabroso al morder, sin sabor a quemao y con los cortes tradicionales bien marcados."
+                    value={q1DoughScore}
+                    onChange={setQ1DoughScore}
+                  />
 
-                    return (
-                      <div
-                        key={q.key}
-                        className="rounded-2xl bg-zinc-50 dark:bg-zinc-950/90 border border-zinc-200 dark:border-zinc-800 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                      >
-                        <div className="space-y-0.5">
-                          <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
-                            {q.number}. {q.title}
-                          </div>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400">{q.subtitle}</p>
-                        </div>
+                  <BreadRating
+                    number="2"
+                    title="EL RELLENO (¡SIN PICHIRRERÍA!)"
+                    question="¿Viene bien cargao de jamón, tocineta, pasas y aceitunas en cada rebanada?"
+                    criolloTip="Que no te toque una rebanada con puro aire. Debe traer su buen bojote de jamón ahumado, tocineta que chille y aceitunas sin pepa."
+                    value={q2FillingScore}
+                    onChange={setQ2FillingScore}
+                  />
 
-                        <div
-                          className="flex items-center gap-1.5 shrink-0"
-                          role="group"
-                          aria-label={q.title}
-                        >
-                          {[1, 2, 3, 4, 5].map((starValue) => {
-                            const active = starValue <= currentVal;
-                            return (
-                              <button
-                                key={starValue}
-                                type="button"
-                                onClick={() => setVal(starValue)}
-                                aria-label={`Calificar pregunta ${q.number} con ${starValue} estrellas`}
-                                className={`min-h-[44px] min-w-[44px] rounded-xl border flex items-center justify-center transition-transform active:scale-95 cursor-pointer ${
-                                  active
-                                    ? 'bg-amber-500/15 border-amber-500/50 text-amber-400'
-                                    : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-400'
-                                }`}
-                              >
-                                <Star
-                                  className={`w-5 h-5 ${
-                                    active ? 'fill-amber-400 text-amber-400' : 'text-zinc-500'
-                                  }`}
-                                />
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <BreadRating
+                    number="3"
+                    title="LA MASA & EL HORNO"
+                    question="¿La miga es suavecita, esponjosa y con sabor a mantequilla, o un masacote crudo en el centro?"
+                    criolloTip="El pan debe sentirse tierno y suave, bien horneado hasta el corazón del rollo, con ese toque dulce-salado que enamora."
+                    value={q3OverallScore}
+                    onChange={setQ3OverallScore}
+                  />
                 </div>
               </div>
 
@@ -935,31 +947,31 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
               {submitError && (
                 <div
                   role="alert"
-                  className="rounded-xl bg-rose-500/10 border border-rose-500/30 p-3.5 text-xs font-semibold text-rose-600 dark:text-rose-400 flex items-center gap-2"
+                  className="rounded-xl bg-[#EB321D]/20 border border-[#EB321D] p-3.5 text-xs font-semibold text-white flex items-center gap-2 animate-shake"
                 >
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <AlertCircle className="w-4 h-4 shrink-0 text-[#EB321D]" />
                   <span>{submitError}</span>
                 </div>
               )}
 
-              <div className="pt-2 flex items-center justify-end gap-3">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="min-h-[44px] px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-semibold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
+                  className="min-h-[44px] px-5 py-2.5 rounded-xl bg-white/5 text-neutral-300 text-xs font-bold hover:bg-white/10 transition-colors cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="min-h-[48px] px-6 py-3 rounded-xl bg-[#F52D18] hover:bg-[#d92310] disabled:opacity-50 text-white text-sm font-bold flex items-center gap-2 shadow-lg transition-colors cursor-pointer"
+                  className="min-h-[52px] px-8 py-3 rounded-xl bg-[#EB321D] hover:bg-[#d62815] disabled:opacity-50 text-white font-display text-2xl tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#EB321D]/30 border-2 border-white/20 transition-all cursor-pointer active:scale-95"
                 >
-                  <QrCode className="w-4 h-4" />
+                  <PanIcon active={true} size={28} />
                   <span>
                     {isSubmitting
-                      ? 'Ejecutando Transacción Atómica...'
-                      : 'Confirmar Voto Atómico en Firestore'}
+                      ? 'REGISTRANDO EN EL HORNO...'
+                      : "SOLTAR MI VOTO CON TO' LOS HIERROS 💥"}
                   </span>
                 </button>
               </div>

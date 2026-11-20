@@ -17,6 +17,7 @@ import {
   SURVEY_QUESTIONS,
   Vote,
 } from '../types/competition';
+import { PanIcon } from './BreadRating';
 
 interface BakeryPortalCardProps {
   bakery: Bakery & { metrics: BakeryComputedMetrics; rank: number };
@@ -57,12 +58,12 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
 
         {/* Top Floating Badges */}
         <div className="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/95 dark:bg-zinc-900/90 text-zinc-800 dark:text-zinc-200 backdrop-blur-md shadow-sm border border-black/5 dark:border-white/10">
+          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-black/80 text-white backdrop-blur-md shadow-sm border border-white/10">
             📍 {bakery.sector}
           </span>
 
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white shadow-sm flex items-center gap-1">
-            <Star className="w-3.5 h-3.5 fill-white text-white" />
+          <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#EFA632] text-black shadow-sm flex items-center gap-1">
+            <PanIcon active={true} size={18} />
             <span>{bakery.metrics.compositeAverage.toFixed(1)}</span>
             <span className="text-[10px] opacity-80">({bakery.totalVotes})</span>
           </span>
@@ -71,49 +72,49 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
         {/* Bottom Baker Tag on Image */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
           <div className="flex items-center gap-1.5 text-xs font-medium drop-shadow-sm truncate">
-            <Utensils className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+            <Utensils className="w-3.5 h-3.5 text-[#EFA632] shrink-0" />
             <span className="truncate">{bakery.masterBaker}</span>
           </div>
-          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-black/40 backdrop-blur-md text-amber-200 shrink-0 border border-white/10">
+          <span className="text-[11px] font-black px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[#EFA632] shrink-0 border border-white/10">
             #{bakery.rank} Lugar
           </span>
         </div>
       </div>
 
       {/* Card Content Body */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4 bg-[#141311]">
         <div className="space-y-2.5">
           <div>
-            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-tight group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            <h3 className="font-display text-2xl font-bold text-white tracking-wide leading-tight group-hover:text-[#EFA632] transition-colors">
               {bakery.name}
             </h3>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1 mt-1 truncate">
-              <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+            <p className="text-xs text-neutral-400 flex items-center gap-1 mt-1 truncate">
+              <MapPin className="w-3.5 h-3.5 text-[#EB321D] shrink-0" />
               <span className="truncate">{bakery.address}</span>
             </p>
           </div>
 
-          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed line-clamp-2 bg-amber-50/50 dark:bg-zinc-800/40 p-2.5 rounded-xl border border-amber-100/70 dark:border-zinc-800">
+          <p className="text-xs text-neutral-300 leading-relaxed line-clamp-2 bg-white/5 p-2.5 rounded-xl border border-white/10">
             “{bakery.signatureRecipe}”
           </p>
 
           {/* Quick Metrics Pills */}
           <div className="grid grid-cols-3 gap-2 pt-1 text-center">
-            <div className="bg-zinc-50 dark:bg-zinc-800/60 p-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
-              <span className="text-[10px] text-zinc-400 block font-medium">Masa</span>
-              <strong className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
-                {bakery.metrics.avgDough.toFixed(1)} ★
+            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
+              <span className="text-[10px] text-neutral-400 block font-medium">Dorado</span>
+              <strong className="text-xs font-display text-white text-base">
+                {bakery.metrics.avgDough.toFixed(1)}
               </strong>
             </div>
-            <div className="bg-zinc-50 dark:bg-zinc-800/60 p-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
-              <span className="text-[10px] text-zinc-400 block font-medium">Relleno</span>
-              <strong className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
-                {bakery.metrics.avgFilling.toFixed(1)} ★
+            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
+              <span className="text-[10px] text-neutral-400 block font-medium">Relleno</span>
+              <strong className="text-xs font-display text-white text-base">
+                {bakery.metrics.avgFilling.toFixed(1)}
               </strong>
             </div>
-            <div className="bg-zinc-50 dark:bg-zinc-800/60 p-2 rounded-xl border border-zinc-100 dark:border-zinc-800">
-              <span className="text-[10px] text-zinc-400 block font-medium">Estilo</span>
-              <strong className="text-[11px] font-bold text-zinc-800 dark:text-zinc-200 truncate block">
+            <div className="bg-black/60 p-2 rounded-xl border border-white/5">
+              <span className="text-[10px] text-neutral-400 block font-medium">Estilo</span>
+              <strong className="text-[11px] font-bold text-neutral-200 truncate block">
                 {bakery.crustStyle}
               </strong>
             </div>
@@ -125,19 +126,19 @@ export const BakeryPortalCard: React.FC<BakeryPortalCardProps> = ({
           <button
             type="button"
             onClick={() => onOpenPortal(bakery.id)}
-            className="btn-secondary flex-1 py-2.5 px-3 text-xs font-semibold"
+            className="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-1 cursor-pointer transition-colors"
           >
             <span>Ver Ficha</span>
-            <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+            <ChevronRight className="w-3.5 h-3.5 text-neutral-400" />
           </button>
 
           <button
             type="button"
             onClick={() => onQuickVoteWithQr(bakery.id)}
-            className="btn-primary flex-1 py-2.5 px-3 text-xs font-semibold"
+            className="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-lg tracking-wider flex items-center justify-center gap-1.5 shadow-md shadow-[#EB321D]/30 border border-white/20 transition-all active:scale-95 cursor-pointer"
           >
-            <QrCode className="w-3.5 h-3.5 shrink-0" />
-            <span>Votar ({activeTokenCount})</span>
+            <PanIcon active={true} size={18} />
+            <span>VOTAR ({activeTokenCount})</span>
           </button>
         </div>
       </div>
