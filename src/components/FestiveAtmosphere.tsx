@@ -94,43 +94,6 @@ export const FestiveAtmosphere: React.FC<FestiveAtmosphereProps> = ({ isDark }) 
               }}
             />
           ))}
-
-          {/* Guirnalda de Luces Navideñas Colgando en las Esquinas Superiores */}
-          {/* Esquina Superior Izquierda */}
-          <div className="absolute top-0 left-0 w-48 sm:w-64 h-24 overflow-visible pointer-events-none">
-            <svg viewBox="0 0 240 80" className="w-full h-full filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
-              {/* Cable verde oscuro curvado */}
-              <path
-                d="M -10 10 Q 50 45, 110 20 Q 170 50, 240 10"
-                fill="none"
-                stroke="#1B4D20"
-                strokeWidth="2"
-              />
-              {/* Bombillos Navideños Rojos y Verdes Colgando */}
-              <ChristmasBulb cx={35} cy={34} color="red" delay={0} />
-              <ChristmasBulb cx={75} cy={33} color="green" delay={0.6} />
-              <ChristmasBulb cx={110} cy={20} color="red" delay={1.2} />
-              <ChristmasBulb cx={145} cy={36} color="green" delay={1.8} />
-              <ChristmasBulb cx={190} cy={35} color="red" delay={0.4} />
-            </svg>
-          </div>
-
-          {/* Esquina Superior Derecha */}
-          <div className="absolute top-0 right-0 w-48 sm:w-64 h-24 overflow-visible pointer-events-none transform -scale-x-100">
-            <svg viewBox="0 0 240 80" className="w-full h-full filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">
-              <path
-                d="M -10 10 Q 50 45, 110 20 Q 170 50, 240 10"
-                fill="none"
-                stroke="#1B4D20"
-                strokeWidth="2"
-              />
-              <ChristmasBulb cx={35} cy={34} color="green" delay={0.3} />
-              <ChristmasBulb cx={75} cy={33} color="red" delay={0.9} />
-              <ChristmasBulb cx={110} cy={20} color="gold" delay={1.5} />
-              <ChristmasBulb cx={145} cy={36} color="green" delay={0.2} />
-              <ChristmasBulb cx={190} cy={35} color="red" delay={1.1} />
-            </svg>
-          </div>
         </>
       )}
     </div>
