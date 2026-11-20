@@ -10,14 +10,14 @@ export interface PanImgProps {
  * Componente que renderiza el pan recortado sin fondo con tamaño fluido y adaptable
  */
 export const PanImg: React.FC<PanImgProps> = ({ index, active, hovered }) => {
-  const isSelected = active || hovered;
+  const isLit = active || hovered;
 
   return (
     <div
-      className={`relative w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center transition-transform duration-200 select-none ${
-        isSelected
-          ? 'scale-110 drop-shadow-[0_8px_16px_rgba(239,166,50,0.65)] z-10'
-          : 'opacity-30 grayscale contrast-75 hover:opacity-75 hover:scale-105'
+      className={`relative w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-22 lg:h-22 flex items-center justify-center transition-all duration-200 select-none ${
+        isLit
+          ? 'scale-115 sm:scale-120 -translate-y-1.5 drop-shadow-[0_0_16px_rgba(239,166,50,0.95)] drop-shadow-[0_0_32px_rgba(239,166,50,0.5)] z-20'
+          : 'opacity-35 grayscale contrast-125 brightness-50 drop-shadow-[0_4px_8px_rgba(0,0,0,0.85)] group-hover:opacity-60 group-hover:brightness-75 transition-all'
       }`}
       aria-hidden="true"
     >
@@ -26,11 +26,15 @@ export const PanImg: React.FC<PanImgProps> = ({ index, active, hovered }) => {
         alt=""
         loading="eager"
         decoding="async"
-        className="w-full h-full object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.7)] pointer-events-none"
+        className={`w-full h-full object-contain pointer-events-none transition-all duration-200 ${
+          isLit
+            ? 'filter brightness-115 saturate-130'
+            : 'filter brightness-50 saturate-40'
+        }`}
       />
-      {isSelected && index === 5 && (
+      {isLit && index === 5 && (
         <span
-          className="absolute -top-2 -right-1 xs:-top-2.5 xs:-right-1.5 text-xs xs:text-sm sm:text-base md:text-xl animate-bounce"
+          className="absolute -top-3 -right-1 xs:-top-3.5 xs:-right-1.5 text-xs xs:text-sm sm:text-base md:text-xl animate-bounce filter drop-shadow-[0_0_8px_#EFA632]"
           aria-hidden="true"
         >
           👑
@@ -181,14 +185,16 @@ export default function BreadRating({
         </div>
       </div>
 
-      {/* Escala Adaptable a Cualquier Pantalla */}
+      {/* Escala Adaptable a Cualquier Pantalla con Iluminación Progresiva */}
       <div
         role="radiogroup"
         aria-label={`${title}: Calificación de 1 a 5 pancitos`}
-        className="flex items-center justify-between py-2 sm:py-4 px-1 xs:px-2 sm:px-4 md:px-6 bg-black/80 rounded-xl sm:rounded-2xl border border-white/10"
+        onMouseLeave={() => setHovered(0)}
+        className="flex items-center justify-between py-2 sm:py-4 px-1 xs:px-2 sm:px-4 md:px-6 bg-black/85 rounded-xl sm:rounded-2xl border border-white/10 gap-1 sm:gap-2 shadow-inner"
       >
         {[1, 2, 3, 4, 5].map((idx) => {
           const isCurrentChoice = value === idx;
+          const isLit = idx <= (hovered || value);
 
           return (
             <button
@@ -201,8 +207,10 @@ export default function BreadRating({
               onClick={() => handleSelect(idx)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
               onMouseEnter={() => setHovered(idx)}
-              onMouseLeave={() => setHovered(0)}
-              className="flex-1 min-w-0 flex flex-col items-center gap-1 sm:gap-2 cursor-pointer p-0.5 xs:p-1 transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EFA632] rounded-xl touch-manipulation"
+              onTouchStart={() => setHovered(idx)}
+              className={`group flex-1 min-w-0 flex flex-col items-center gap-1 sm:gap-2 cursor-pointer py-1.5 sm:py-2.5 px-0.5 xs:px-1 rounded-xl sm:rounded-2xl transition-all duration-200 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EFA632] touch-manipulation ${
+                isLit ? 'bg-[#EFA632]/12 sm:bg-[#EFA632]/15 shadow-sm' : 'hover:bg-white/5'
+              }`}
             >
               <PanImg
                 index={idx}
@@ -210,8 +218,8 @@ export default function BreadRating({
                 hovered={idx <= hovered}
               />
               <span
-                className={`font-display text-[10px] xs:text-xs sm:text-sm md:text-base tracking-wider truncate ${
-                  idx <= (hovered || value) ? 'text-[#EFA632] font-black' : 'text-neutral-500'
+                className={`font-display text-[10px] xs:text-xs sm:text-sm md:text-base tracking-wider truncate transition-colors duration-150 ${
+                  isLit ? 'text-[#EFA632] font-black drop-shadow-[0_0_8px_rgba(239,166,50,0.6)]' : 'text-neutral-500'
                 }`}
               >
                 {idx} <span className="hidden sm:inline">{idx === 1 ? 'PAN' : 'PANES'}</span>

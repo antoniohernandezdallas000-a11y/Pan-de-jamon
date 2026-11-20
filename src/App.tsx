@@ -660,7 +660,7 @@ export default function App() {
               }`}
             >
               <BarChart3 className="w-4 h-4 text-[#EFA632]" />
-              <span>Resultados</span>
+              <span>El Podio</span>
             </button>
 
             <button
@@ -783,7 +783,7 @@ export default function App() {
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5 text-[#EFA632]" />
-            Resultados
+            El Podio
           </button>
 
           <button

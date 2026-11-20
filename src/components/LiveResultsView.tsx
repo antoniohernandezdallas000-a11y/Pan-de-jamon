@@ -39,8 +39,8 @@ export const LiveResultsView: React.FC<LiveResultsViewProps> = ({
             <Trophy className="w-3.5 h-3.5 text-[#EFA632]" />
             <span>CLASIFICACIÓN GENERAL AUDITADA EN TIEMPO REAL</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-6xl text-zinc-900 dark:text-white tracking-wide">
-            EL PODIO DE LA CIUDAD
+          <h2 className="font-display text-4xl sm:text-6xl text-zinc-900 dark:text-white tracking-wide uppercase">
+            EL <span className="text-[#EB321D]">FUCKING</span> MEJOR PODIO
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-neutral-400">
             Las panaderías que están mandando la parada con los votos de la gente en el mostrador.

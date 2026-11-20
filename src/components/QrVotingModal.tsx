@@ -587,7 +587,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                   onClick={onClose}
                   className="min-h-[44px] px-6 py-2.5 rounded-xl bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-xl transition-all cursor-pointer shadow-lg active:scale-95"
                 >
-                  VER EL PODIO DE LA CIUDAD 🏆
+                  VER EL FUCKING MEJOR PODIO 🏆
                 </button>
               </div>
             </div>
