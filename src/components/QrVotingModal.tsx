@@ -522,13 +522,16 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
               className="rounded-3xl bg-black/90 border-2 border-[#EFA632] p-6 sm:p-8 space-y-4 text-center shadow-2xl glow-pan-dorado animate-in fade-in zoom-in-95 duration-200"
               data-testid="atomic-vote-receipt"
             >
-              {/* Catador Celebrando Sin Fondo */}
-              <div className="relative mx-auto w-44 sm:w-56 flex flex-col items-center">
-                <img
-                  src="/assets/mascota-transparente.png"
-                  alt="Catador Celebrando"
-                  className="w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(239,166,50,0.4)] animate-in zoom-in-95 duration-500"
-                />
+              {/* Catador Hablando Animado Sin Fondo */}
+              <div className="relative mx-auto w-48 sm:w-60 flex flex-col items-center">
+                <picture>
+                  <source srcSet="/assets/catador-hablando.webp" type="image/webp" />
+                  <img
+                    src="/assets/catador-hablando.gif"
+                    alt="Catador Celebrando y Hablando"
+                    className="w-full h-auto object-contain drop-shadow-[0_15px_35px_rgba(239,166,50,0.4)] animate-in zoom-in-95 duration-500"
+                  />
+                </picture>
               </div>
 
               <div className="space-y-1.5">

@@ -795,17 +795,20 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Showcase: Catador Sin Fondo + Diálogo Criollo */}
+            {/* Right Showcase: Catador Hablando Animado Sin Fondo + Diálogo Criollo */}
             <div className="shrink-0 flex flex-col items-center justify-center gap-1">
               <div className="relative group flex flex-col items-center">
-                <img
-                  src="/assets/mascota-transparente.png"
-                  alt="El Catador del Pan de Jamón"
-                  className="w-44 sm:w-56 h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] dark:drop-shadow-[0_15px_30px_rgba(239,166,50,0.3)] transition-transform group-hover:scale-105 duration-300"
-                />
+                <picture>
+                  <source srcSet="/assets/catador-hablando.webp" type="image/webp" />
+                  <img
+                    src="/assets/catador-hablando.gif"
+                    alt="El Catador del Pan de Jamón Hablando"
+                    className="w-48 sm:w-60 h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] dark:drop-shadow-[0_15px_30px_rgba(239,166,50,0.35)] transition-transform group-hover:scale-105 duration-300"
+                  />
+                </picture>
 
                 {/* Bocadillo de Diálogo Criollo */}
-                <div className="-mt-2 max-w-[220px] p-2.5 rounded-2xl bg-black/80 dark:bg-black/70 backdrop-blur-md border border-[#EFA632]/50 text-center shadow-xl">
+                <div className="-mt-3 max-w-[220px] p-2.5 rounded-2xl bg-black/80 dark:bg-black/70 backdrop-blur-md border border-[#EFA632]/50 text-center shadow-xl">
                   <p className="text-[11px] sm:text-xs font-bold text-[#EFA632] leading-tight">
                     “¡Epa mi pana! Aquí se vota sin filtro. Dale sus pancitos.”
                   </p>

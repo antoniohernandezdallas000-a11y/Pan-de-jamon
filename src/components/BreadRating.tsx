@@ -162,14 +162,17 @@ export default function BreadRating({
         </div>
       </div>
 
-      {/* Tip Criollo Didáctico Sin Fondo ni Etiquetas Rígidas */}
+      {/* Tip Criollo Didáctico con Catador Hablando Animado */}
       <div className="flex items-center gap-3 my-3 sm:my-4 p-2.5 sm:p-3 rounded-2xl bg-amber-500/10 border border-[#EFA632]/30 shadow-md">
         <div className="relative shrink-0">
-          <img
-            src="/assets/mascota-avatar-transparente.png"
-            alt="Catador"
-            className="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-[0_4px_10px_rgba(239,166,50,0.3)]"
-          />
+          <picture>
+            <source srcSet="/assets/catador-avatar-hablando.webp" type="image/webp" />
+            <img
+              src="/assets/catador-avatar-hablando.gif"
+              alt="Catador Hablando"
+              className="w-13 h-13 sm:w-16 sm:h-16 object-contain drop-shadow-[0_4px_12px_rgba(239,166,50,0.35)]"
+            />
+          </picture>
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed italic">
