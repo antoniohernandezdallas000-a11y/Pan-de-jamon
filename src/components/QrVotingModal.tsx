@@ -71,6 +71,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
   const [q1DoughScore, setQ1DoughScore] = useState<number>(5);
   const [q2FillingScore, setQ2FillingScore] = useState<number>(5);
   const [q3OverallScore, setQ3OverallScore] = useState<number>(5);
+  const [currentQuestionStep, setCurrentQuestionStep] = useState<1 | 2 | 3>(1);
   const [comment, setComment] = useState('');
 
   const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
@@ -136,6 +137,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
       stopCameraStream();
       setSubmitError(null);
       setTxReceipt(null);
+      setCurrentQuestionStep(1);
     }
     return () => stopCameraStream();
   }, [isOpen, stopCameraStream]);
@@ -560,6 +562,7 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                   onClick={() => {
                     setTxReceipt(null);
                     setRawCodeInput('');
+                    setCurrentQuestionStep(1);
                   }}
                   className="min-h-[44px] px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white text-xs font-bold transition-all cursor-pointer active:scale-95"
                 >
@@ -815,49 +818,156 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
                 </div>
               </div>
 
-              {/* Step 2: Escala de Pancitos Dorados Criollos (3 Criterios Oficiales) */}
+              {/* Step 2: Escala de Pancitos Dorados Criollos (Paso a Paso Interactivo) */}
               <div className="space-y-4 pt-4 border-t border-white/10">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-[#EFA632] block">
-                      Paso 02 · Ficha de Evaluación Oficial
+                      Paso 02 · Ficha de Evaluación Oficial (Criterio {currentQuestionStep} de 3)
                     </span>
                     <h3 className="font-display text-2xl text-white">
-                      DALE SUS PANCITOS A CADA CRITERIO
+                      EVALÚA CADA CRITERIO DEL PAN
                     </h3>
                   </div>
                   <span className="text-xs font-mono text-[#EFA632] bg-[#EFA632]/10 px-3 py-1 rounded-full border border-[#EFA632]/30 tabular-nums font-bold self-start sm:self-auto">
-                    Promedio: {((q1DoughScore + q2FillingScore + q3OverallScore) / 3).toFixed(1)} / 5.0
+                    Promedio actual: {((q1DoughScore + q2FillingScore + q3OverallScore) / 3).toFixed(1)} / 5.0
                   </span>
                 </div>
 
-                <div className="space-y-4">
-                  <BreadRating
-                    number="1"
-                    title="EL DORADO & LA CORTEZA"
-                    question="¿Tiene su buen color caramelo con barniz de papelón y huevo, o salió pálido y arrebatao?"
-                    criolloTip="Debe crujir sabroso al morder, sin sabor a quemao y con los cortes tradicionales bien marcados."
-                    value={q1DoughScore}
-                    onChange={setQ1DoughScore}
-                  />
+                {/* Barra de Pasos / Tabs de Criterios interactivos */}
+                <div className="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-black/40 border border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentQuestionStep(1)}
+                    className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
+                      currentQuestionStep === 1
+                        ? 'bg-[#EFA632] text-black shadow-md shadow-[#EFA632]/30 font-black'
+                        : 'bg-white/5 text-neutral-300 hover:bg-white/10'
+                    }`}
+                  >
+                    <span>1. Dorado</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${currentQuestionStep === 1 ? 'bg-black/20 text-black' : 'bg-black/40 text-[#EFA632]'}`}>
+                      {q1DoughScore} ★
+                    </span>
+                  </button>
 
-                  <BreadRating
-                    number="2"
-                    title="EL RELLENO (¡SIN PICHIRRERÍA!)"
-                    question="¿Viene bien cargao de jamón, tocineta, pasas y aceitunas en cada rebanada?"
-                    criolloTip="Que no te toque una rebanada con puro aire. Debe traer su buen bojote de jamón ahumado, tocineta que chille y aceitunas sin pepa."
-                    value={q2FillingScore}
-                    onChange={setQ2FillingScore}
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setCurrentQuestionStep(2)}
+                    className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
+                      currentQuestionStep === 2
+                        ? 'bg-[#EFA632] text-black shadow-md shadow-[#EFA632]/30 font-black'
+                        : 'bg-white/5 text-neutral-300 hover:bg-white/10'
+                    }`}
+                  >
+                    <span>2. Relleno</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${currentQuestionStep === 2 ? 'bg-black/20 text-black' : 'bg-black/40 text-[#EFA632]'}`}>
+                      {q2FillingScore} ★
+                    </span>
+                  </button>
 
-                  <BreadRating
-                    number="3"
-                    title="LA MASA & EL HORNO"
-                    question="¿La miga es suavecita, esponjosa y con sabor a mantequilla, o un masacote crudo en el centro?"
-                    criolloTip="El pan debe sentirse tierno y suave, bien horneado hasta el corazón del rollo, con ese toque dulce-salado que enamora."
-                    value={q3OverallScore}
-                    onChange={setQ3OverallScore}
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setCurrentQuestionStep(3)}
+                    className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-1 cursor-pointer ${
+                      currentQuestionStep === 3
+                        ? 'bg-[#EFA632] text-black shadow-md shadow-[#EFA632]/30 font-black'
+                        : 'bg-white/5 text-neutral-300 hover:bg-white/10'
+                    }`}
+                  >
+                    <span>3. Masa</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${currentQuestionStep === 3 ? 'bg-black/20 text-black' : 'bg-black/40 text-[#EFA632]'}`}>
+                      {q3OverallScore} ★
+                    </span>
+                  </button>
+                </div>
+
+                {/* Pregunta Activa (Una a la vez con transición fluida) */}
+                <div className="min-h-[220px]">
+                  {currentQuestionStep === 1 && (
+                    <div className="animate-in fade-in zoom-in-95 duration-200">
+                      <BreadRating
+                        number="1"
+                        title="EL DORADO & LA CORTEZA"
+                        question="¿Tiene su buen color caramelo con barniz de papelón y huevo, o salió pálido y arrebatao?"
+                        criolloTip="Debe crujir sabroso al morder, sin sabor a quemao y con los cortes tradicionales bien marcados."
+                        value={q1DoughScore}
+                        onChange={setQ1DoughScore}
+                      />
+                    </div>
+                  )}
+
+                  {currentQuestionStep === 2 && (
+                    <div className="animate-in fade-in zoom-in-95 duration-200">
+                      <BreadRating
+                        number="2"
+                        title="EL RELLENO (¡SIN PICHIRRERÍA!)"
+                        question="¿Viene bien cargao de jamón, tocineta, pasas y aceitunas en cada rebanada?"
+                        criolloTip="Que no te toque una rebanada con puro aire. Debe traer su buen bojote de jamón ahumado, tocineta que chille y aceitunas sin pepa."
+                        value={q2FillingScore}
+                        onChange={setQ2FillingScore}
+                      />
+                    </div>
+                  )}
+
+                  {currentQuestionStep === 3 && (
+                    <div className="animate-in fade-in zoom-in-95 duration-200">
+                      <BreadRating
+                        number="3"
+                        title="LA MASA & EL HORNO"
+                        question="¿La miga es suavecita, esponjosa y con sabor a mantequilla, o un masacote crudo en el centro?"
+                        criolloTip="El pan debe sentirse tierno y suave, bien horneado hasta el corazón del rollo, con ese toque dulce-salado que enamora."
+                        value={q3OverallScore}
+                        onChange={setQ3OverallScore}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Botones de Navegación del Paso a Paso */}
+                <div className="flex items-center justify-between gap-3 pt-1">
+                  {currentQuestionStep > 1 ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCurrentQuestionStep((prev) =>
+                          prev > 1 ? ((prev - 1) as 1 | 2 | 3) : prev
+                        )
+                      }
+                      className="min-h-[44px] px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                    >
+                      <span>← Criterio Anterior</span>
+                    </button>
+                  ) : (
+                    <span className="text-[11px] text-neutral-400 font-medium italic">
+                      Criterio 1 de 3: El Dorado
+                    </span>
+                  )}
+
+                  {currentQuestionStep < 3 ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setCurrentQuestionStep((prev) =>
+                          prev < 3 ? ((prev + 1) as 1 | 2 | 3) : prev
+                        )
+                      }
+                      className="min-h-[44px] px-6 py-2.5 rounded-xl bg-[#EFA632] hover:bg-[#d89325] text-black font-display text-lg tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-[#EFA632]/25 active:scale-95 font-black"
+                    >
+                      <span>SIGUIENTE CRITERIO ({currentQuestionStep}/3) →</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById('tasting-comment-input');
+                        if (el) el.focus();
+                      }}
+                      className="min-h-[44px] px-6 py-2.5 rounded-xl bg-[#64C236] hover:bg-[#52a62b] text-black font-display text-lg tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-md shadow-[#64C236]/25 active:scale-95 font-black"
+                    >
+                      <span>✓ ¡LISTO! COMPLETAR VEREDICTO</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
