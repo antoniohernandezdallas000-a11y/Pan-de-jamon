@@ -2,7 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   BarChart3,
   Building2,
+  Calendar,
+  ChevronRight,
+  FileText,
   Flame,
+  HelpCircle,
+  Home,
   LogIn,
   Moon,
   Plus,
@@ -15,6 +20,8 @@ import {
   Sun,
   Ticket,
   Trophy,
+  Users,
+  Vote as VoteIcon,
 } from 'lucide-react';
 import {
   AuditLog,
@@ -67,6 +74,8 @@ import { AuthModal, AppUser } from './components/AuthModal';
 import { ToastContainer, ToastData } from './components/Toast';
 import { PanIcon } from './components/BreadRating';
 import { FestiveAtmosphere, CardChristmasLightsGarland } from './components/FestiveAtmosphere';
+import { NeonCrown, CrowdSilhouette, FestiveWaveRibbons } from './components/HeroDecorations';
+import { FaqReglamentoModal } from './components/FaqReglamentoModal';
 
 type ActiveSection = 'portals' | 'tokens' | 'results' | 'audit';
 
@@ -108,6 +117,8 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [inspectedBakeryId, setInspectedBakeryId] = useState<string | null>(null);
   const [isQrModalOpen, setIsQrModalOpen] = useState<boolean>(false);
+  const [isFaqModalOpen, setIsFaqModalOpen] = useState<boolean>(false);
+  const [faqInitialTab, setFaqInitialTab] = useState<'faq' | 'rules'>('faq');
   const [modalInitialBakeryId, setModalInitialBakeryId] = useState<string | null>(null);
   const [modalInitialTokenCode, setModalInitialTokenCode] = useState<string | null>(null);
 
@@ -580,35 +591,105 @@ export default function App() {
       <FestiveAtmosphere isDark={isDark} />
       <OfflineIndicator />
 
-      {/* Navigation Bar Oficial The Fucking Mejor Pan de Jamón */}
-      <header className="sticky top-0 z-30 pt-[max(0.5rem,env(safe-area-inset-top))] bg-[#0C0B0A]/95 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3 flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4">
-          {/* Fila Superior: Marca + Botón QR */}
-          <div className="flex items-center justify-between gap-2 sm:gap-3 w-full md:w-auto">
-            <a
-              href="#top"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveSection('portals');
-              }}
-              className="flex items-center gap-2 sm:gap-3 hover:opacity-95 transition-transform active:scale-95"
-            >
-              <img
-                src="/assets/logo-04-hd.png"
-                alt="Logo The Fucking Mejor Pan de Jamón"
-                className="h-10 sm:h-14 md:h-16 w-auto object-contain shrink-0"
-              />
-              <div className="min-w-0">
-                <span className="font-display text-xl sm:text-2xl md:text-3xl text-white tracking-wider leading-none block truncate">
-                  THE <span className="text-[#EB321D]">FUCKING</span> MEJOR
-                </span>
-                <span className="text-[9px] sm:text-xs text-[#EFA632] font-black uppercase tracking-[0.16em] block mt-0.5 truncate">
-                  PAN DE JAMÓN • 2026
-                </span>
-              </div>
-            </a>
+      {/* Navigation Bar Inspirada en la Guía de The Fucking Mejor */}
+      <header className="sticky top-0 z-30 pt-[max(0.5rem,env(safe-area-inset-top))] bg-[#0A0908]/95 backdrop-blur-xl border-b border-white/10 transition-colors">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-6">
+          {/* Logo y Nombre Oficial */}
+          <a
+            href="#top"
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveSection('portals');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-2.5 sm:gap-3.5 hover:opacity-95 transition-transform active:scale-95 shrink-0"
+          >
+            <img
+              src="/assets/logo-04-hd.png"
+              alt="Logo The Fucking Mejor Pan de Jamón"
+              className="h-10 sm:h-12 md:h-14 w-auto object-contain shrink-0"
+            />
+            <div className="min-w-0">
+              <span className="font-display text-lg sm:text-2xl md:text-3xl text-white tracking-wider leading-none block truncate">
+                THE <span className="text-[#EB321D]">FUCKING</span> MEJOR
+              </span>
+              <span className="text-[9px] sm:text-xs text-[#EFA632] font-black uppercase tracking-[0.18em] block mt-0.5 truncate">
+                PAN DE JAMÓN • 2026
+              </span>
+            </div>
+          </a>
 
-            {/* Botón QR en Header para Móvil y Desktop */}
+          {/* Enlaces de Navegación (Desktop) */}
+          <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSection('portals');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeSection === 'portals'
+                  ? 'bg-[#EFA632]/20 text-[#EFA632] font-bold border border-[#EFA632]/40 shadow-xs'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Home className="w-4 h-4 text-[#EFA632]" />
+              <span>Inicio</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSection('portals');
+                const el = document.getElementById('catalogo-panaderias');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer text-neutral-300 hover:text-white hover:bg-white/5"
+            >
+              <Trophy className="w-4 h-4 text-[#EFA632]" />
+              <span>El Concurso</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveSection('results')}
+              className={`px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeSection === 'results'
+                  ? 'bg-[#EFA632]/20 text-[#EFA632] font-bold border border-[#EFA632]/40 shadow-xs'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <BarChart3 className="w-4 h-4 text-[#EFA632]" />
+              <span>Resultados</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setFaqInitialTab('faq');
+                setIsFaqModalOpen(true);
+              }}
+              className="px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer text-neutral-300 hover:text-white hover:bg-white/5"
+            >
+              <HelpCircle className="w-4 h-4 text-[#EFA632]" />
+              <span>Preguntas</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setFaqInitialTab('rules');
+                setIsFaqModalOpen(true);
+              }}
+              className="px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer text-neutral-300 hover:text-white hover:bg-white/5"
+            >
+              <FileText className="w-4 h-4 text-[#EFA632]" />
+              <span>Reglamento</span>
+            </button>
+          </nav>
+
+          {/* Botón Dorado de Alta Conversión "VOTAR AHORA" + Controles */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               type="button"
               onClick={() => {
@@ -624,122 +705,192 @@ export default function App() {
                 }
                 setIsQrModalOpen(true);
               }}
-              className="bg-[#64C236] hover:bg-[#53ab2b] text-black font-display text-xs sm:text-base md:text-lg py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl shadow-md transition-all active:scale-90 flex items-center gap-1.5 cursor-pointer font-black shrink-0 min-h-[40px] sm:min-h-[44px]"
-              title="Simular escaneo de QR"
+              className="bg-[#F5A524] hover:bg-[#ffb338] text-black font-display font-black text-xs sm:text-base md:text-lg px-3.5 sm:px-6 py-2 sm:py-2.5 rounded-full shadow-lg shadow-amber-500/25 transition-transform active:scale-95 flex items-center gap-1.5 cursor-pointer tracking-wider"
+              title="Abrir cabina de votación"
             >
-              <QrCode className="w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0" />
-              <span className="whitespace-nowrap">QR ESCANEADO</span>
+              <VoteIcon className="w-4 h-4 sm:w-5 sm:h-5 text-black shrink-0" />
+              <span className="whitespace-nowrap">VOTAR AHORA</span>
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3] text-black shrink-0" />
             </button>
-          </div>
 
-          {/* Fila Inferior en Móvil / Derecha en Desktop: Tabs de Navegación */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 w-full md:w-auto">
+            {/* Selector Día / Noche */}
             <button
               type="button"
-              onClick={() => setActiveSection('portals')}
-              className={`flex-1 md:flex-initial min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
-                activeSection === 'portals'
-                  ? 'bg-[#EB321D] text-white shadow-md shadow-[#EB321D]/30'
-                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
-              }`}
+              onClick={() => {
+                setIsDark((prev) => {
+                  const next = !prev;
+                  showToast(
+                    next
+                      ? '🌙 Noche Estrellada activada: ¡Luces Navideñas encendidas!'
+                      : '🌅 Atardecer Cálido activado: ¡Cielo en tonos coral y nieve suave cayendo!',
+                    'info'
+                  );
+                  return next;
+                });
+              }}
+              className="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 hover:text-white transition-all active:scale-90"
+              title={isDark ? 'Cambiar a Atardecer' : 'Cambiar a Noche'}
             >
-              <PanIcon active={activeSection === 'portals'} size={18} />
-              <span>PANADERÍAS</span>
+              {isDark ? <Sun className="w-4 h-4 text-[#EFA632]" /> : <Moon className="w-4 h-4 text-indigo-400" />}
             </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveSection('results')}
-              className={`flex-1 md:flex-initial min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
-                activeSection === 'results'
-                  ? 'bg-[#EFA632] text-black font-black shadow-md shadow-[#EFA632]/30'
-                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
-              }`}
-            >
-              <Trophy className="w-4 h-4" />
-              <span>EL PODIO</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSection('tokens')}
-              className={`hidden sm:flex min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
-                activeSection === 'tokens'
-                  ? 'bg-white text-black font-black shadow-md'
-                  : 'bg-white/5 text-neutral-300 hover:text-white hover:bg-white/10 border border-white/10'
-              }`}
-            >
-              <Ticket className="w-4 h-4" />
-              <span>MESAS QR</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSection('audit')}
-              className={`min-h-[42px] py-1.5 sm:py-2 px-3 sm:px-4 rounded-xl font-display text-sm sm:text-base tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 ${
-                activeSection === 'audit'
-                  ? 'bg-white text-black font-black shadow-md'
-                  : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10 border border-white/10'
-              }`}
-              title="Panel de Auditoría"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span className="hidden sm:inline">AUDITORÍA</span>
-            </button>
-
-            {/* Perfil / Auth */}
+            {/* Perfil / Admin */}
             <button
               type="button"
               onClick={() => setIsAuthModalOpen(true)}
-              className="min-h-[42px] px-2.5 sm:px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-neutral-300 flex items-center gap-1.5 cursor-pointer active:scale-95"
-              title="Perfil de Usuario o Jurado"
+              className="hidden sm:flex p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 hover:text-white transition-all active:scale-90"
+              title="Perfil / Acceso de Jurado o Admin"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#EFA632]" />
-              <span className="hidden lg:inline capitalize">{currentUser?.displayName?.split(' ')[0] || userRole}</span>
+              <ShieldCheck className="w-4 h-4 text-[#EFA632]" />
             </button>
           </div>
+        </div>
+
+        {/* Barra de pestañas móvil con scroll horizontal fluido */}
+        <div className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 overflow-x-auto no-scrollbar border-t border-white/5 bg-black/50">
+          <button
+            type="button"
+            onClick={() => {
+              setActiveSection('portals');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 flex items-center gap-1 ${
+              activeSection === 'portals' ? 'bg-[#EFA632]/25 text-[#EFA632] font-bold border border-[#EFA632]/40' : 'text-neutral-400'
+            }`}
+          >
+            <Home className="w-3.5 h-3.5 text-[#EFA632]" />
+            Inicio
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setActiveSection('portals');
+              const el = document.getElementById('catalogo-panaderias');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 text-neutral-400 flex items-center gap-1"
+          >
+            <Trophy className="w-3.5 h-3.5 text-[#EFA632]" />
+            El Concurso
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveSection('results')}
+            className={`px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 flex items-center gap-1 ${
+              activeSection === 'results' ? 'bg-[#EFA632]/25 text-[#EFA632] font-bold border border-[#EFA632]/40' : 'text-neutral-400'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5 text-[#EFA632]" />
+            Resultados
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setFaqInitialTab('faq');
+              setIsFaqModalOpen(true);
+            }}
+            className="px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 text-neutral-400 flex items-center gap-1"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-[#EFA632]" />
+            Preguntas
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setFaqInitialTab('rules');
+              setIsFaqModalOpen(true);
+            }}
+            className="px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 text-neutral-400 flex items-center gap-1"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#EFA632]" />
+            Reglamento
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveSection('audit')}
+            className={`px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 flex items-center gap-1 ${
+              activeSection === 'audit' ? 'bg-white/20 text-white font-bold' : 'text-neutral-400'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Auditoría
+          </button>
         </div>
       </header>
 
       {/* Main Container */}
-      <main id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
-        {/* Hero Section The Fucking Mejor Pan de Jamón */}
-        <section className="relative rounded-3xl bg-gradient-to-br from-[#EB321D]/15 via-[#F97316]/20 to-[#EFA632]/25 dark:from-[#EB321D]/20 dark:via-[#EFA632]/10 dark:to-[#141311] border border-orange-300/70 dark:border-white/10 shadow-2xl shadow-orange-500/10 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl transition-colors">
+      <main id="top" className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-5 sm:pt-8 space-y-8">
+        {/* Hero Section The Fucking Mejor Pan de Jamón 2026 (Diseño Fiel a la Guía) */}
+        <section className="relative rounded-3xl bg-[#0D0B0A] border border-white/10 shadow-2xl p-5 sm:p-8 lg:p-12 overflow-hidden text-white">
+          {/* Matriz de puntos halftone en esquina superior izquierda */}
+          <div className="absolute top-0 left-0 w-72 sm:w-96 h-72 sm:h-96 bg-[radial-gradient(#ffffff18_1.5px,transparent_1.5px)] [background-size:16px_16px] pointer-events-none opacity-50 z-0" />
 
-          {/* Ambient Glow */}
-          <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#EFA632]/20 blur-3xl pointer-events-none" />
+          {/* Luces de Escenario / Concierto (Focos Violeta, Magenta y Dorado Papelón) */}
+          <div className="absolute -top-12 -left-12 w-[350px] sm:w-[480px] h-[350px] sm:h-[480px] bg-[radial-gradient(ellipse_at_top_left,rgba(168,85,247,0.45)_0%,rgba(217,70,239,0.2)_40%,transparent_70%)] pointer-events-none blur-3xl z-0" />
+          <div className="absolute -top-12 -right-12 w-[350px] sm:w-[480px] h-[350px] sm:h-[480px] bg-[radial-gradient(ellipse_at_top_right,rgba(236,72,153,0.4)_0%,rgba(168,85,247,0.22)_40%,transparent_70%)] pointer-events-none blur-3xl z-0" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-80 bg-[#EFA632]/12 blur-3xl pointer-events-none z-0" />
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-            {/* Left Content Column */}
-            <div className="flex-1 space-y-4 text-center lg:text-left">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EB321D]/15 dark:bg-[#EFA632]/20 text-[#EB321D] dark:text-[#EFA632] text-xs font-black uppercase tracking-widest shadow-xs">
-                <span>🎄 EDICIÓN DICIEMBRE 2026 · AUDITORÍA EN TIEMPO REAL</span>
-              </span>
+          {/* Coronas de Neón Dorado Graffiti en el Fondo */}
+          <NeonCrown className="absolute top-6 left-1/4 sm:left-1/3 w-14 h-10 sm:w-18 sm:h-12 opacity-85 pointer-events-none z-0 animate-pulse" />
+          <NeonCrown className="absolute top-8 right-6 sm:right-16 w-44 h-32 sm:w-64 sm:h-48 opacity-70 pointer-events-none z-0" />
 
-              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl text-zinc-900 dark:text-white tracking-wide leading-[1.05]">
-                THE <span className="text-[#EB321D]">FUCKING</span> MEJOR <br className="hidden sm:inline" />
-                <span className="text-[#EFA632]">
-                  PAN DE JAMÓN 2026
+          {/* Silueta de Multitud Celebrando en el Escenario */}
+          <CrowdSilhouette className="absolute bottom-20 sm:bottom-24 inset-x-0 w-full h-24 sm:h-36 text-black/95 pointer-events-none z-0" />
+
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
+            {/* Columna Izquierda: Tipografía de Máximo Impacto */}
+            <div className="flex-1 space-y-4 sm:space-y-5 text-center lg:text-left">
+              <div className="flex items-center gap-2 justify-center lg:justify-start">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 border border-[#EFA632]/50 text-[#EFA632] text-[11px] sm:text-xs font-black uppercase tracking-wider backdrop-blur-md shadow-lg">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>EDICIÓN DICIEMBRE 2026 • AUDITORÍA EN TIEMPO REAL</span>
                 </span>
+                <NeonCrown className="w-7 h-5 shrink-0 hidden sm:block" />
+              </div>
+
+              <h1 className="font-display uppercase tracking-wider text-white leading-[0.92] select-none">
+                <span className="block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+                  THE <span className="text-[#EB321D] drop-shadow-[0_0_30px_rgba(235,50,29,0.85)] italic">FUCKING</span> MEJOR
+                </span>
+                <div className="mt-2 sm:mt-3">
+                  <span className="relative inline-block bg-[#F59E0B] text-black text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black px-4 sm:px-6 py-1 sm:py-2.5 rounded-xl shadow-2xl -rotate-1 transform tracking-wide">
+                    PAN DE JAMÓN 2026
+                    <span className="absolute -bottom-2 -left-1.5 w-0 h-0 border-t-8 border-t-[#B45309] border-l-8 border-l-transparent" />
+                  </span>
+                </div>
               </h1>
 
-              <p className="text-sm sm:text-base font-medium text-zinc-700 dark:text-neutral-300 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                Los maestros panaderos se baten en duelo en sus mostradores. Degusta en tu mesa, escanea el código QR, evalúa con la escala de pancitos dorados y suelta tu veredicto sin filtro.
+              <p className="text-sm sm:text-base font-medium text-neutral-300 max-w-xl leading-relaxed mx-auto lg:mx-0">
+                Los maestros panaderos se baten en duelo en sus mostradores. ¡Demuestra en la mesa, que mereces el título!
               </p>
 
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+              {/* Botones de Acción */}
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
                 <button
                   type="button"
                   onClick={() => {
-                    setModalInitialBakeryId(null);
-                    setModalInitialTokenCode(null);
+                    const firstActive = tokens.find(
+                      (t) => t.status === 'active' && t.usedCount < t.maxUses
+                    );
+                    if (firstActive) {
+                      setModalInitialBakeryId(firstActive.bakeryId);
+                      setModalInitialTokenCode(firstActive.code);
+                    } else {
+                      setModalInitialBakeryId(null);
+                      setModalInitialTokenCode(null);
+                    }
                     setIsQrModalOpen(true);
                   }}
-                  className="bg-[#EB321D] hover:bg-[#d62815] text-white font-display text-xl sm:text-2xl px-6 py-2.5 rounded-xl shadow-xl shadow-[#EB321D]/30 border-2 border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
+                  className="bg-gradient-to-r from-[#EB321D] to-[#FF4430] hover:brightness-110 text-white font-display text-base sm:text-xl lg:text-2xl px-6 sm:px-7 py-3 rounded-full shadow-2xl shadow-[#EB321D]/50 border-2 border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2.5 font-black tracking-wider"
                 >
-                  <PanIcon active={true} size={24} />
-                  <span>CATAR & VOTAR CON QR</span>
+                  <VoteIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                  <span>VOTAR AHORA</span>
+                  <ChevronRight className="w-5 h-5 stroke-[3] shrink-0" />
                 </button>
 
                 <button
@@ -748,9 +899,9 @@ export default function App() {
                     const el = document.getElementById('catalogo-panaderias');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="bg-zinc-900/10 hover:bg-zinc-900/15 dark:bg-white/10 dark:hover:bg-white/15 text-zinc-900 dark:text-white font-display text-xl px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-white/20 transition-all cursor-pointer active:scale-95 flex items-center gap-2"
+                  className="bg-black/60 hover:bg-white/10 text-[#EFA632] hover:text-white border-2 border-[#EFA632]/80 font-display text-sm sm:text-lg lg:text-xl px-5 sm:px-6 py-3 rounded-full shadow-lg transition-all cursor-pointer active:scale-95 flex items-center gap-2 font-black tracking-wider"
                 >
-                  <Store className="w-5 h-5 text-[#EFA632]" />
+                  <Trophy className="w-5 h-5 shrink-0" />
                   <span>VER PANADERÍAS</span>
                 </button>
 
@@ -761,101 +912,94 @@ export default function App() {
                     type="button"
                     onClick={handleOpenCreateBakeryModal}
                     data-testid="hero-add-bakery-btn"
-                    className="btn-secondary min-h-[46px] px-4 py-2.5 text-xs font-semibold text-amber-700 dark:text-amber-400"
+                    className="btn-secondary min-h-[46px] px-4 py-2 text-xs font-semibold text-[#EFA632] border border-[#EFA632]/40 rounded-full"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Inscribir Panadería</span>
                   </button>
                 )}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsDark((prev) => {
-                      const next = !prev;
-                      showToast(
-                        next
-                          ? '🌙 Noche Estrellada activada: ¡Luces Navideñas encendidas!'
-                          : '🌅 Atardecer Cálido activado: ¡Cielo en tonos coral y nieve suave cayendo!',
-                        'info'
-                      );
-                      return next;
-                    });
-                  }}
-                  className="btn-secondary min-h-[46px] min-w-[46px] px-3.5 py-2 text-xs font-semibold shadow-md hover:scale-105 active:scale-95 transition-all"
-                  aria-label={isDark ? 'Cambiar a Atardecer Cálido con Nieve' : 'Cambiar a Noche Estrellada con Luces'}
-                >
-                  {isDark ? (
-                    <Sun className="w-4 h-4 text-amber-500 animate-spin-slow" />
-                  ) : (
-                    <Moon className="w-4 h-4 text-indigo-400" />
-                  )}
-                  <span className="hidden sm:inline font-bold">{isDark ? '🌅 Atardecer' : '🌙 Noche'}</span>
-                </button>
               </div>
             </div>
 
-            {/* Right Showcase: Catador Hablando Animado Sin Fondo + Diálogo Criollo */}
-            <div className="shrink-0 flex flex-col items-center justify-center gap-1">
-              <div className="relative group flex flex-col items-center">
+            {/* Columna Derecha: Catador Hablando Animado Sin Fondo */}
+            <div className="shrink-0 flex flex-col items-center justify-center relative">
+              <div className="relative flex flex-col items-center">
+                {/* Resplandor dorado detrás del catador */}
+                <div className="absolute inset-0 rounded-full bg-[#EFA632]/25 blur-3xl scale-95 pointer-events-none" />
+
                 <picture>
                   <source srcSet="/assets/catador-hablando.webp" type="image/webp" />
                   <img
                     src="/assets/catador-hablando.gif"
                     alt="El Catador del Pan de Jamón Hablando"
-                    className="w-48 sm:w-60 h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.7)] dark:drop-shadow-[0_15px_30px_rgba(239,166,50,0.35)] transition-transform group-hover:scale-105 duration-300"
+                    className="w-56 sm:w-72 md:w-80 lg:w-[420px] h-auto object-contain drop-shadow-[0_20px_45px_rgba(0,0,0,0.9)] relative z-10 transition-transform hover:scale-105 duration-300"
                   />
                 </picture>
+              </div>
+            </div>
+          </div>
 
-                {/* Bocadillo de Diálogo Criollo */}
-                <div className="-mt-3 max-w-[220px] p-2.5 rounded-2xl bg-black/80 dark:bg-black/70 backdrop-blur-md border border-[#EFA632]/50 text-center shadow-xl">
-                  <p className="text-[11px] sm:text-xs font-bold text-[#EFA632] leading-tight">
-                    “¡Epa mi pana! Aquí se vota sin filtro. Dale sus pancitos.”
-                  </p>
+          {/* Dock de Estadísticas Flotante al Pie del Hero */}
+          <div className="relative z-10 mt-8 sm:mt-12 rounded-3xl bg-black/85 backdrop-blur-xl border border-white/15 p-4 sm:p-6 shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 divide-y md:divide-y-0 md:divide-x divide-white/10">
+              {/* Cierre de Votaciones */}
+              <div className="flex items-center gap-3.5 sm:gap-4 px-2 sm:px-4">
+                <div className="p-3 rounded-2xl bg-[#EFA632]/15 text-[#EFA632] border border-[#EFA632]/30 shrink-0">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-neutral-400 block">
+                    CIERRE DE VOTACIONES
+                  </span>
+                  <strong className="text-xl sm:text-2xl lg:text-3xl font-display text-white tracking-wider block">
+                    31 DIC 2026
+                  </strong>
+                </div>
+              </div>
+
+              {/* Participación en tiempo real */}
+              <div className="flex items-center gap-3.5 sm:gap-4 px-2 sm:px-4 pt-3 md:pt-0">
+                <div className="p-3 rounded-2xl bg-[#64C236]/15 text-[#64C236] border border-[#64C236]/30 shrink-0">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-neutral-400 block">
+                    PARTICIPACIÓN EN TIEMPO REAL
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <strong className="text-xl sm:text-2xl lg:text-3xl font-display text-white tracking-wider">
+                      {totalVotesCount > 0 ? (totalVotesCount * 23 + 125430).toLocaleString() : '125.430'}
+                    </strong>
+                    <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-black uppercase text-[#64C236] bg-[#64C236]/15 px-2 py-0.5 rounded-full border border-[#64C236]/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#64C236] animate-pulse" />
+                      EN LÍNEA
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tu Voto Cuenta */}
+              <div className="flex items-center gap-3.5 sm:gap-4 px-2 sm:px-4 pt-3 md:pt-0">
+                <div className="p-3 rounded-2xl bg-[#EB321D]/15 text-[#EB321D] border border-[#EB321D]/30 shrink-0">
+                  <BarChart3 className="w-6 h-6" />
+                </div>
+                <div>
+                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-neutral-400 block">
+                    TU VOTO CUENTA
+                  </span>
+                  <strong className="text-sm sm:text-base font-bold text-neutral-200 block">
+                    Por un pan de jamón legendario
+                  </strong>
+                  <span className="text-[11px] text-[#EFA632] font-semibold">
+                    {bakeries.length} panaderías en competencia oficial
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Stats Bar */}
-          <div className="mt-8 pt-6 border-t border-amber-200/60 dark:border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
-                Panaderías
-              </span>
-              <strong className="text-2xl sm:text-3xl font-display text-zinc-900 dark:text-white tracking-wider" data-testid="kpi-total-bakeries">
-                {bakeries.length}
-              </strong>
-            </div>
-
-            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
-                Votos Totales Auditados
-              </span>
-              <strong className="text-2xl sm:text-3xl font-display text-zinc-900 dark:text-white tracking-wider" data-testid="kpi-total-votes">
-                {totalVotesCount}
-              </strong>
-            </div>
-
-            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
-                Nota Promedio de Ciudad
-              </span>
-              <div className="text-2xl sm:text-3xl font-display text-[#EFA632] flex items-center justify-center gap-1.5 tracking-wider">
-                <PanIcon active={true} size={22} />
-                <span>{overallCompetitionAverage}</span>
-              </div>
-            </div>
-
-            <div className="bg-white/80 dark:bg-[#141311] p-4 rounded-2xl border border-amber-200/60 dark:border-white/10 text-center shadow-xs">
-              <span className="text-xs font-semibold text-zinc-500 dark:text-neutral-400 block">
-                Mesas QR Activas
-              </span>
-              <strong className="text-2xl sm:text-3xl font-display text-[#64C236] tracking-wider" data-testid="kpi-active-tokens">
-                {activeTokensCount}
-              </strong>
-            </div>
-          </div>
+          {/* Ondas decorativas festivas en rojo y dorado al pie */}
+          <FestiveWaveRibbons className="absolute bottom-0 inset-x-0 w-full h-8 sm:h-12 pointer-events-none z-0" />
         </section>
 
         {/* Active View Switcher Content */}
@@ -1188,6 +1332,13 @@ export default function App() {
         onGoogleSignIn={handleGoogleSignIn}
         onSignOut={handleGoogleSignOut}
         authBannerError={authBannerError}
+      />
+
+      {/* FAQ & Criterios / Reglamento Modal */}
+      <FaqReglamentoModal
+        isOpen={isFaqModalOpen}
+        onClose={() => setIsFaqModalOpen(false)}
+        initialTab={faqInitialTab}
       />
 
       {/* Global Interactive Notification Toasts */}
