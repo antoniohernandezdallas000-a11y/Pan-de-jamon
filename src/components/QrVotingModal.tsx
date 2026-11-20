@@ -522,18 +522,33 @@ export const QrVotingModal: React.FC<QrVotingModalProps> = ({
               className="rounded-3xl bg-black/90 border-2 border-[#EFA632] p-6 sm:p-8 space-y-4 text-center shadow-2xl glow-pan-dorado animate-in fade-in zoom-in-95 duration-200"
               data-testid="atomic-vote-receipt"
             >
-              <div className="w-16 h-16 rounded-full bg-[#64C236]/20 border-2 border-[#64C236] text-[#64C236] flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-9 h-9" />
+              {/* Mascota Oficial Celebrando con To' los Hierros */}
+              <div className="relative mx-auto w-36 sm:w-44 aspect-square rounded-3xl overflow-hidden border-3 border-[#EFA632] shadow-2xl glow-pan-dorado animate-in zoom-in-95 duration-300 group">
+                <img
+                  src="/assets/mascota-catador.jpg"
+                  alt="Mascota Catador Celebrando"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                <span className="absolute bottom-2 inset-x-2 text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#EFA632] bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-[#EFA632]/40">
+                  ¡Catador Celebrando! 🎉
+                </span>
               </div>
+
               <div className="space-y-1.5">
                 <span className="text-[10px] uppercase font-black tracking-widest text-[#64C236] bg-[#64C236]/15 px-3 py-1 rounded-full border border-[#64C236]/40 inline-block">
-                  Voto Atómico Certificado en Firestore
+                  Voto Certificado en Firestore
                 </span>
                 <h3 className="font-display text-3xl sm:text-5xl text-white tracking-wide">
                   ¡LISTO EL POLLO! VEREDICTO ASENTAO
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 max-w-md mx-auto">
-                  Tus pancitos para <strong className="text-white">{txReceipt.bakeryName}</strong> ya están sumando con el token <strong className="font-mono text-[#EFA632]">{txReceipt.tokenCode}</strong>.
+                <div className="p-3 rounded-2xl bg-[#EFA632]/10 border border-[#EFA632]/30 max-w-md mx-auto">
+                  <p className="text-xs sm:text-sm text-[#EFA632] font-bold italic">
+                    “¡Ese es mi pana! ¡Tremenda catada te lanzaste! Tus pancitos para <span className="text-white underline">{txReceipt.bakeryName}</span> ya están sumando al podio.”
+                  </p>
+                </div>
+                <p className="text-xs text-neutral-400">
+                  Token certificado: <strong className="font-mono text-[#EFA632]">{txReceipt.tokenCode}</strong>
                 </p>
               </div>
 

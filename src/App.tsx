@@ -795,18 +795,31 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Emblem - Floating Clean Logo with No Ugly Frame */}
-            <div className="shrink-0 flex flex-col items-center justify-center">
-              <div className="w-44 sm:w-56 md:w-64 max-w-full flex items-center justify-center transition-transform hover:scale-105 duration-300">
-                <img
-                  src={COMPETITION_LOGO_PATH}
-                  alt="Sello del Concurso The Fucking Mejor Pan de Jamón Ciudad Bolívar"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-auto max-h-52 sm:max-h-64 object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_10px_25px_rgba(0,0,0,0.6)]"
-                />
+            {/* Right Showcase: Mascota Oficial Catadora + Sello del Torneo */}
+            <div className="shrink-0 flex flex-col items-center justify-center gap-2">
+              <div className="relative group flex flex-col items-center">
+                {/* Cuadro de la Mascota Oficial */}
+                <div className="w-40 sm:w-48 aspect-square rounded-3xl overflow-hidden border-3 border-[#EFA632] shadow-2xl glow-pan-dorado transition-transform group-hover:scale-105 duration-300 relative bg-black">
+                  <img
+                    src="/assets/mascota-catador.jpg"
+                    alt="Mascota Oficial - El Catador del Pan de Jamón"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                  <span className="absolute bottom-2 inset-x-2 text-[10px] font-black uppercase tracking-widest text-[#EFA632] bg-black/85 backdrop-blur-md px-2 py-0.5 rounded-full border border-[#EFA632]/40 text-center block truncate">
+                    Mascota Oficial 🥖
+                  </span>
+                </div>
+
+                {/* Bocadillo de Diálogo Criollo de la Mascota */}
+                <div className="mt-2.5 max-w-[200px] p-2 rounded-xl bg-black/60 dark:bg-white/10 backdrop-blur-md border border-[#EFA632]/40 text-center">
+                  <p className="text-[11px] font-bold text-[#EFA632] leading-tight">
+                    “¡Epa mi pana! Aquí se vota sin filtro. Dale sus pancitos.”
+                  </p>
+                </div>
               </div>
-              <span className="mt-2 text-xs font-bold uppercase tracking-widest text-[#EFA632]">
-                ★ Edición Oficial 2026 ★
+              <span className="text-[11px] font-bold uppercase tracking-widest text-zinc-500 dark:text-neutral-400">
+                ★ Gran Torneo 2026 ★
               </span>
             </div>
           </div>

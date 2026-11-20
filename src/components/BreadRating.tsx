@@ -162,9 +162,28 @@ export default function BreadRating({
         </div>
       </div>
 
-      {/* Tip Criollo Didáctico */}
-      <div className="bg-white/[0.03] border-l-3 border-[#EFA632] px-2.5 xs:px-3 sm:px-4 py-2 sm:py-2.5 rounded-r-lg my-2.5 sm:my-4 text-[11px] xs:text-xs sm:text-sm text-neutral-300">
-        <strong className="text-white font-bold">Punto clave:</strong> {criolloTip}
+      {/* Tip Criollo Didáctico con la Mascota Oficial de la Web */}
+      <div className="flex items-start gap-2.5 sm:gap-3.5 my-3 sm:my-4 p-2.5 sm:p-3 rounded-2xl bg-amber-500/10 border border-[#EFA632]/30 shadow-md">
+        <div className="relative shrink-0">
+          <img
+            src="/assets/mascota-badge.png"
+            alt="Mascota Catador Oficial"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-[#EFA632] shadow-lg shadow-[#EFA632]/20"
+          />
+          <span className="absolute -bottom-1 -right-1 text-[11px] bg-black/85 px-1 rounded-full border border-[#EFA632]">
+            🥖
+          </span>
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#EFA632]">
+              Consejo de la Mascota Catadora:
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed italic">
+            “{criolloTip}”
+          </p>
+        </div>
       </div>
 
       {/* Escala Adaptable a Cualquier Pantalla */}
