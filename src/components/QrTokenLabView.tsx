@@ -338,10 +338,10 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsPrintModalOpen(true)}
-                  className="w-full min-h-[46px] px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-[#EFA632] to-amber-600 hover:brightness-110 text-black font-display font-black text-sm tracking-wide shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
+                  className="w-full min-h-[48px] px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-[#EFA632] to-amber-600 hover:brightness-110 text-black font-display font-black text-sm sm:text-base tracking-wide shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
                 >
-                  <Printer className="w-4 h-4 text-black shrink-0" />
-                  <span>DESCARGAR CARTEL / HABLADOR DE MOSTRADOR</span>
+                  <Printer className="w-5 h-5 text-black shrink-0" />
+                  <span>DESCARGAR CARTEL PDF / IMPRIMIBLE</span>
                 </button>
 
                 <div className="w-full flex items-center gap-2.5">
