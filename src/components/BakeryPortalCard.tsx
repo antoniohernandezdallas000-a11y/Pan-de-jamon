@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChevronRight,
   MapPin,
   Pencil,
+  Printer,
   QrCode,
   Sparkles,
   Star,
@@ -19,6 +20,7 @@ import {
 } from '../types/competition';
 import { PanIcon } from './BreadRating';
 import { CardChristmasLightsGarland } from './FestiveAtmosphere';
+import { PrintableQrStandModal } from './PrintableQrStandModal';
 
 interface BakeryPortalCardProps {
   bakery: Bakery & { metrics: BakeryComputedMetrics; rank: number };
@@ -190,6 +192,7 @@ export const BakeryPortalModal: React.FC<BakeryPortalModalProps> = ({
   onOpenQrScannerForBakery,
   onEditBakeryByAdmin,
 }) => {
+  const [selectedPrintToken, setSelectedPrintToken] = useState<QrToken | null>(null);
   if (!bakery) return null;
 
   const bakeryTokens = tokens.filter((t) => t.bakeryId === bakery.id);
@@ -339,17 +342,28 @@ export const BakeryPortalModal: React.FC<BakeryPortalModalProps> = ({
                       </span>
                     </div>
 
-                    {isAvailable ? (
+                    <div className="flex items-center gap-1.5 shrink-0">
                       <button
                         type="button"
-                        onClick={() => onSelectTokenToVote(t.code, bakery.id)}
-                        className="btn-primary text-xs px-3 py-1.5"
+                        onClick={() => setSelectedPrintToken(t)}
+                        className="p-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-[#EFA632] border border-[#EFA632]/30 transition-colors"
+                        title="Imprimir / Descargar Cartel de Mostrador para esta mesa"
                       >
-                        Votar
+                        <Printer className="w-3.5 h-3.5" />
                       </button>
-                    ) : (
-                      <span className="text-xs text-zinc-400">Agotado</span>
-                    )}
+
+                      {isAvailable ? (
+                        <button
+                          type="button"
+                          onClick={() => onSelectTokenToVote(t.code, bakery.id)}
+                          className="btn-primary text-xs px-3 py-1.5"
+                        >
+                          Votar
+                        </button>
+                      ) : (
+                        <span className="text-xs text-zinc-400">Agotado</span>
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -406,6 +420,13 @@ export const BakeryPortalModal: React.FC<BakeryPortalModalProps> = ({
           </button>
         </div>
       </div>
+
+      <PrintableQrStandModal
+        isOpen={Boolean(selectedPrintToken)}
+        onClose={() => setSelectedPrintToken(null)}
+        bakery={bakery}
+        token={selectedPrintToken}
+      />
     </div>
   );
 };

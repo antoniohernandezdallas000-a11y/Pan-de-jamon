@@ -6,6 +6,7 @@ import {
   PauseCircle,
   PlayCircle,
   Plus,
+  Printer,
   QrCode,
   ShieldAlert,
   Sliders,
@@ -18,6 +19,7 @@ import {
   UserRole,
 } from '../types/competition';
 import { encodeQrTokenPayload } from '../utils/competitionLogic';
+import { PrintableQrStandModal } from './PrintableQrStandModal';
 
 interface QrTokenLabViewProps {
   bakeries: Bakery[];
@@ -45,6 +47,7 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
   onTriggerVoteWithToken,
 }) => {
   const [selectedTokenId, setSelectedTokenId] = useState<string>(tokens[0]?.id || '');
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
   const [newBakeryId, setNewBakeryId] = useState<string>(bakeries[0]?.id || '');
   const [newCodeSuffix, setNewCodeSuffix] = useState<string>('707');
   const [newBatchLabel, setNewBatchLabel] = useState<string>('Mesa Degustación #07 · Turno Tarde');
@@ -324,26 +327,37 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
                 </div>
               </div>
 
-              <div className="w-full flex items-center gap-2.5 pt-1">
+              <div className="w-full space-y-2 pt-1">
                 <button
                   type="button"
-                  onClick={handleDownloadQrPng}
-                  className="min-h-[44px] flex-1 px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  onClick={() => setIsPrintModalOpen(true)}
+                  className="w-full min-h-[46px] px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-[#EFA632] to-amber-600 hover:brightness-110 text-black font-display font-black text-sm tracking-wide shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
                 >
-                  <Download className="w-4 h-4 text-amber-400" />
-                  <span>Descargar PNG</span>
+                  <Printer className="w-4 h-4 text-black shrink-0" />
+                  <span>DESCARGAR CARTEL / HABLADOR DE MOSTRADOR</span>
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    onTriggerVoteWithToken(selectedToken.code, selectedToken.bakeryId)
-                  }
-                  className="min-h-[44px] flex-1 px-3 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  <QrCode className="w-4 h-4" />
-                  <span>Votar con este QR</span>
-                </button>
+                <div className="w-full flex items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleDownloadQrPng}
+                    className="min-h-[42px] flex-1 px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download className="w-4 h-4 text-amber-400" />
+                    <span>Solo QR (PNG)</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onTriggerVoteWithToken(selectedToken.code, selectedToken.bakeryId)
+                    }
+                    className="min-h-[42px] flex-1 px-3 py-2 rounded-xl bg-[#F52D18] hover:bg-[#d92310] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <QrCode className="w-4 h-4" />
+                    <span>Votar con este QR</span>
+                  </button>
+                </div>
               </div>
             </>
           ) : null}
@@ -404,6 +418,19 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
                     className="min-h-[40px] px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold cursor-pointer"
                   >
                     Ver QR
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedTokenId(t.id);
+                      setIsPrintModalOpen(true);
+                    }}
+                    className="min-h-[40px] px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-[#EFA632] border border-[#EFA632]/30 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
+                    title="Imprimir / Descargar Cartel de Mostrador para esta panadería"
+                  >
+                    <Printer className="w-3.5 h-3.5 text-[#EFA632]" />
+                    <span className="hidden sm:inline">Cartel QR</span>
                   </button>
 
                   {t.status !== 'consumed' && (
@@ -484,6 +511,13 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
           })}
         </div>
       </section>
+
+      <PrintableQrStandModal
+        isOpen={isPrintModalOpen}
+        onClose={() => setIsPrintModalOpen(false)}
+        bakery={bakeries.find((b) => b.id === selectedToken?.bakeryId) || null}
+        token={selectedToken || null}
+      />
     </div>
   );
 };
