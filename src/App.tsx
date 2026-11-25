@@ -660,7 +660,23 @@ export default function App() {
               }`}
             >
               <BarChart3 className="w-4 h-4 text-[#EFA632]" />
-              <span>El Podio</span>
+              <span>Resultados</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSection('tokens');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeSection === 'tokens'
+                  ? 'bg-[#EFA632]/20 text-[#EFA632] font-bold border border-[#EFA632]/40 shadow-xs'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <QrCode className="w-4 h-4 text-[#EFA632]" />
+              <span>Generar QR</span>
             </button>
 
             <button
@@ -685,6 +701,22 @@ export default function App() {
             >
               <FileText className="w-4 h-4 text-[#EFA632]" />
               <span>Reglamento</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setActiveSection('audit');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-3 py-1.5 rounded-full font-display text-sm xl:text-base tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeSection === 'audit'
+                  ? 'bg-[#EFA632]/20 text-[#EFA632] font-bold border border-[#EFA632]/40 shadow-xs'
+                  : 'text-neutral-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <ShieldCheck className="w-4 h-4 text-[#EFA632]" />
+              <span>Auditoría</span>
             </button>
           </nav>
 
@@ -783,7 +815,21 @@ export default function App() {
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5 text-[#EFA632]" />
-            El Podio
+            Resultados
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setActiveSection('tokens');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className={`px-3 py-1 rounded-full text-xs font-display tracking-wider whitespace-nowrap shrink-0 flex items-center gap-1 ${
+              activeSection === 'tokens' ? 'bg-[#EFA632]/25 text-[#EFA632] font-bold border border-[#EFA632]/40' : 'text-neutral-400'
+            }`}
+          >
+            <QrCode className="w-3.5 h-3.5 text-[#EFA632]" />
+            Generar QR
           </button>
 
           <button
@@ -903,6 +949,18 @@ export default function App() {
                 >
                   <Trophy className="w-5 h-5 shrink-0" />
                   <span>VER PANADERÍAS</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveSection('tokens');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="bg-black/60 hover:bg-white/10 text-white hover:text-[#EFA632] border-2 border-white/20 hover:border-[#EFA632]/80 font-display text-sm sm:text-lg lg:text-xl px-5 sm:px-6 py-3 rounded-full shadow-lg transition-all cursor-pointer active:scale-95 flex items-center gap-2 font-black tracking-wider"
+                >
+                  <QrCode className="w-5 h-5 text-[#EFA632] shrink-0" />
+                  <span>GENERAR QR</span>
                 </button>
 
                 <PWAInstallButton />
@@ -1260,12 +1318,12 @@ export default function App() {
           onClick={() => setActiveSection('tokens')}
           className={`flex-1 flex flex-col items-center justify-center py-1.5 rounded-full transition-colors cursor-pointer ${
             activeSection === 'tokens'
-              ? 'text-rose-600 dark:text-rose-400 font-bold'
+              ? 'text-[#EFA632] font-bold'
               : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900'
           }`}
         >
-          <Ticket className="w-4 h-4" />
-          <span className="text-[10px] tracking-tight mt-0.5">Mesas</span>
+          <QrCode className="w-4 h-4" />
+          <span className="text-[10px] tracking-tight mt-0.5">Tokens QR</span>
         </button>
 
         <button

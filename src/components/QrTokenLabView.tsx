@@ -20,6 +20,7 @@ import {
 } from '../types/competition';
 import { encodeQrTokenPayload } from '../utils/competitionLogic';
 import { PrintableQrStandModal } from './PrintableQrStandModal';
+import { NeonCrown } from './HeroDecorations';
 
 interface QrTokenLabViewProps {
   bakeries: Bakery[];
@@ -136,23 +137,29 @@ export const QrTokenLabView: React.FC<QrTokenLabViewProps> = ({
 
   return (
     <div className="space-y-8" data-testid="qr-token-lab-view">
-      {/* Header Banner */}
-      <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="text-xs font-mono text-[#F52D18] uppercase tracking-wider">
-            Sistema Criptográfico de Tokens QR · Ciudad Bolívar
+      {/* Header Banner con estética The Fucking Mejor */}
+      <div className="relative rounded-3xl bg-[#0D0B0A] border border-white/10 shadow-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 overflow-hidden text-white">
+        <NeonCrown className="absolute -top-3 right-8 w-24 h-16 opacity-20 pointer-events-none" />
+        <div className="space-y-2 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-[#EFA632]/50 text-[#EFA632] text-xs font-black uppercase tracking-wider backdrop-blur-md">
+            <QrCode className="w-3.5 h-3.5" />
+            <span>HERRAMIENTA OFICIAL PARA PANADERÍAS & JURADO</span>
           </div>
-          <h2 className="font-display text-3xl font-extrabold text-zinc-900 dark:text-white tracking-wide">
-            Laboratorio de Tokens QR Manipulables y Escaneables
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-wide uppercase">
+            GENERADOR DE QR & <span className="text-[#EFA632]">CARTELES DE MOSTRADOR</span>
           </h2>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl">
-            Genera nuevos códigos QR con el emblema oficial de la competencia, ajusta sus cupos de uso atómico, pausa o revoca tokens en tiempo real y pruébalos directamente en la cabina de cámara.
+          <p className="text-xs sm:text-sm text-neutral-300 max-w-2xl leading-relaxed">
+            Genera los códigos QR oficiales para las mesas de cata, descarga e imprime el cartel publicitario listo para vitrina o mostrador, y administra cupos de votación atómica en tiempo real.
           </p>
         </div>
 
-        <div className="text-xs font-mono text-zinc-500 dark:text-zinc-400 tabular-nums shrink-0">
-          Rol activo: <strong className="uppercase text-zinc-900 dark:text-white">{currentUserRole}</strong> ·{' '}
-          {tokens.filter((t) => t.status === 'active').length} activos / {tokens.length} totales
+        <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-2 text-xs font-mono text-neutral-400 shrink-0 relative z-10">
+          <span className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10">
+            Rol activo: <strong className="uppercase text-[#EFA632]">{currentUserRole}</strong>
+          </span>
+          <span className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-emerald-400">
+            {tokens.filter((t) => t.status === 'active').length} activos / {tokens.length} totales
+          </span>
         </div>
       </div>
 
